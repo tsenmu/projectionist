@@ -37,6 +37,8 @@ function insert_through_sqlCommand($sql)
 	
 	
 	mysql_close($conn);
+	
+	return 1;
 }
 
 function get_through_sqlCommand($sql)
@@ -75,6 +77,7 @@ function update_through_sqlCommand($sql)
 	
 	
 	mysql_close($conn);
+	return 1;
 }
 
 function delete_through_sqlCommand($sql)
@@ -91,6 +94,7 @@ function delete_through_sqlCommand($sql)
 	
 	
 	mysql_close($conn);
+	return 1;
 }
 
 
@@ -108,7 +112,10 @@ function insert_user($user_name, $user_password, $user_type)
 	
 	$sql= "INSERT INTO users(user_name,user_password,user_type) VALUES ('$user_name', '$hash_user_password', '$user_type')";
 	
-	insert_through_sqlCommand($sql);
+	if(insert_through_sqlCommand($sql))
+	{
+		return "INSERT_USER_SUCCESS";
+	}
 
 }
 
@@ -135,7 +142,10 @@ function delete_user($user_name)
 
 	$sql= "UPDATE users SET user_available = '0' WHERE user_name= $user_name";
 	
-	update_through_sqlCommand($sql);
+	if(update_through_sqlCommand($sql))
+	{
+		return "DELETE_USER_SUCCESS";
+	}
 	
 }
 function update_user_password($user_name,$user_new_password)
@@ -145,9 +155,13 @@ function update_user_password($user_name,$user_new_password)
 		return "ERROR_USER_NOT_EXIST";
 	}
 	
+	$user_new_password=md5($user_new_password);
 	$sql="UPDATE users SET user_password = '$user_new_password' WHERE user_name = '$user_name'";
 	
-	update_through_sqlCommand($sql);
+	if(update_through_sqlCommand($sql))
+	{
+		return "UPDATE_PASSWORD_SUCCESS";
+	}
 }
 
 /*judge whether this user exists or not*/
@@ -190,19 +204,71 @@ function is_password_match($user_name,$user_password)
 //==========Control Chains=========================
 function insert_chain($chain_name)
 {
+	if(is_chain_exist($chain_name))
+	{
+		return "ERROR_CHAIN_EXIST";
+	}
+	
 	$sql= "INSERT INTO chains(chain_name) VALUES ('$chain_name')";
 	
-	insert_through_sqlCommand($sql);
+	if(insert_through_sqlCommand($sql))
+	{
+		return "INSERT_CHAIN_SUCCESS";
+	}
+		
 }
 
+function update_chain($old_chain_name, $new_chain_name)
+{
+	if(!is_chain_exist($old_chain_name))
+	{
+		return "ERROR_CHAIN_NOT_EXIST";
+	}
+	
+	$sql= "UPDATE chains SET chain_name='$new_chain_name' WHERE chain_name= '$old_chain_name' ";
+	
+	if(update_through_sqlCommand($sql))
+	{
+		return "UPDATE_CHAIN_SUCCESS";
+	}
+}
+
+function get_chain_Info()
+{
+
+}
 function delete_chain($chain_name)
 {
+	if(!is_chain_exist($chain_name))
+	{
+		return "ERROR_CHAIN_NOT_EXIST";
+	}
 	$sql= "UPDATE chains SET chain_available='0' WHERE chain_name= '$chain_name' ";
 	
-	update_through_sqlCommand($sql);
+	if(update_through_sqlCommand($sql))
+	{
+		return "DELETE_CHAIN_SUCCESS";
+	}
+}
+
+function is_chain_exist($chain_name)
+{
+	$sql="SELECT * FROM chains WHERE chain_name = '$chain_name' AND chain_available = '1' ";
+	$result=get_through_sqlCommand($sql);
+	//user name doesn't exist
+	if($result == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
 
 //=============Control Film================
+
+
 
 function insert_film($film_name, $film_path, $chain_id)
 {
@@ -227,7 +293,15 @@ function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 	insert_through_sqlCommand($sql);
 }
 
-
+/*
+some confusions in here
+*/
+function update_record($film_id,$chain_id,$date_time,$location)
+{
+	$sql = "UPDATE records SET film_id='$film_id', date_time='$date_time', location='$location' WHERE film_id='$film_id' AND user_id='$user_id' )";
+	
+	update_through_sqlCommand($sql);
+}
 
 
 
@@ -238,4 +312,5 @@ function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 //$res=get_through_sqlCommand("SELECT * FROM users WHERE user_name = '77' ");
 
 //echo $res["user_password"];
+
 ?>
