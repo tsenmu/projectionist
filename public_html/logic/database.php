@@ -20,7 +20,6 @@ function connect_database()
 	{
 		die ('Could not connect: '.mysql_error());
 	}
-	echo "Connected Successfully <br>";
 	return $conn;
 }
 
@@ -36,7 +35,6 @@ function insert_through_sqlCommand($sql)
 		die('Could not insert data into the table: '.mysql_error());
 	}
 	
-	echo "Insert user data successfully!<br>";
 	
 	mysql_close($conn);
 }
@@ -57,7 +55,6 @@ function get_through_sqlCommand($sql)
 	
 	mysql_free_result($retval);
 	
-	echo "get data successfully!<br>";
 	
 	mysql_close($conn);
 	
@@ -76,7 +73,6 @@ function update_through_sqlCommand($sql)
 		die('Could not update data: '.mysql_error());
 	}
 	
-	echo "Update data successfully!<br>";
 	
 	mysql_close($conn);
 }
@@ -93,7 +89,6 @@ function delete_through_sqlCommand($sql)
 		die('Could not delete data: '.mysql_error());
 	}
 	
-	echo "Delete data successfully!<br>";
 	
 	mysql_close($conn);
 }
@@ -163,7 +158,6 @@ function is_user_exist($user_name)
 	//user name doesn't exist
 	if($result == 0)
 	{
-		echo " This user is not exist! <br>";
 		return 0;
 	}
 	else
@@ -176,7 +170,6 @@ function is_password_match($user_name,$user_password)
 {
 	if(is_user_exist($user_name) == 0)
 	{
-		echo " This user is not exist! <br>";
 		return "ERROR_USER_NAME";
 	}
 	else
@@ -184,7 +177,6 @@ function is_password_match($user_name,$user_password)
 		$user_info=get_user_Info($user_name);
 		if($user_info["user_password"] == md5($user_password))
 		{
-			echo "password match <br>";
 			return "SUCCESS";
 		}
 		else
