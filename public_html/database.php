@@ -6,7 +6,7 @@ This php file is used for basically interacting with database
 
 /* Connect Database*/
 
-require_once(dirname(__FILE__) . '/../config.php');
+//require_once(dirname(__FILE__) . '/../config.php');
 function connect_database()
 {
 	//$dbhost = $config["db"]["host"];
@@ -16,7 +16,8 @@ function connect_database()
 	$dbhost = 'localhost';
 	$dbuser = 'root';
 	
-	
+	//echo "database name: ".$config["db"]["dbname"];
+
 	$dbpass = '123qwe123';
 	$conn = mysql_connect($dbhost, $dbuser, $dbpass);
 	if(! $conn)
@@ -31,7 +32,7 @@ function insert_through_sqlCommand($sql)
 {
 	$conn=connect_database();
 	
-	mysql_select_db('$config["db"]["dbname"]');
+	mysql_select_db('projectionist');
 	$retval=mysql_query($sql,$conn);
 	
 	if(!$retval)
@@ -48,7 +49,7 @@ function get_through_sqlCommand($sql)
 {
 	$conn=connect_database();
 	
-	mysql_select_db('$config["db"]["dbname"]');
+	mysql_select_db('projectionist');
 	$retval=mysql_query($sql,$conn);
 	
 	if(!$retval)
@@ -71,7 +72,7 @@ function update_through_sqlCommand($sql)
 {
 	$conn=connect_database();
 	
-	mysql_select_db('$config["db"]["dbname"]');
+	mysql_select_db('projectionist');
 	$retval=mysql_query($sql,$conn);
 	
 	if(!$retval)
@@ -88,7 +89,7 @@ function delete_through_sqlCommand($sql)
 {
 	$conn=connect_database();
 	
-	mysql_select_db('$config["db"]["dbname"]');
+	mysql_select_db('projectionist');
 	$retval=mysql_query($sql,$conn);
 	
 	if(!$retval)
@@ -123,15 +124,30 @@ function insert_user($user_name, $user_password, $user_type)
 
 }
 
+function get_user_Info($user_name)
+{
+	if(!is_user_exist($user_name))
+	{
+		return "ERROR_USER_NOT_EXIST";
+	}
+	
+	$sql="SELECT * FROM users WHERE user_name ='$user_name'";
+	
+	$user_info=get_through_sqlCommand($sql);
+	
+	return $user_info;
+}
+
 function delete_user($user_name)
 {
 	if(!is_user_exist($user_name))
 	{
 		return "ERROR_USER_NOT_EXIST";
 	}
-	$sql= "DELETE users WHERE user_name= $user_name";
+
+	$sql= "UPDATE users SET user_available = '0' WHERE user_name= $user_name";
 	
-	delete_through_sqlCommand($sql);
+	update_through_sqlCommand($sql);
 	
 }
 function update_user_password($user_name,$user_new_password)
@@ -141,13 +157,15 @@ function update_user_password($user_name,$user_new_password)
 		return "ERROR_USER_NOT_EXIST";
 	}
 	
+	$sql="UPDATE users SET user_password = '$user_new_password' WHERE user_name = '$user_name'";
 	
+	update_through_sqlCommand($sql);
 }
 
 /*judge whether this user exists or not*/
 function is_user_exist($user_name)
 {
-	$sql="SELECT user_password FROM users WHERE user_name = '$user_name'";
+	$sql="SELECT user_password FROM users WHERE user_name = '$user_name' AND user_available = '1' ";
 	$result=get_through_sqlCommand($sql);
 	//user name doesn't exist
 	if($result == 0)
@@ -170,7 +188,8 @@ function is_password_match($user_name,$user_password)
 	}
 	else
 	{
-		if($result["user_password"] == md5($user_password))
+		$user_info=get_user_Info($user_name);
+		if($user_info["user_password"] == md5($user_password))
 		{
 			echo "password match <br>";
 			return "SUCCESS";
@@ -211,7 +230,8 @@ function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 ?>
 <?php
 /*test*/
-insert_user(177,"123qwe123",3);
+//insert_user(77,"123qwe123",3);
+echo is_password_match(177,"123qwe123");
 
 //$res=get_through_sqlCommand("SELECT * FROM users WHERE user_name = '77' ");
 
