@@ -7,7 +7,7 @@ $config = array(
         "dbname" => "projectionist",
         "username" => "projectionist",
         "password" => "123qwe123",
-        "host" => "vps.tsenmu.com"
+        "host" => "159.226.178.62"
       ),
     "urls" => array(
       "baseUrl" => "localhost"
