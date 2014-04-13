@@ -4,13 +4,26 @@ require_once('database.php');
 //print_r($config);
 
 $ret = is_password_match(177,"123qwe123");
-echo $ret;
+echo $ret."<br>";
 
+//$ret = insert_user(1, 1,0);
+//$ret = insert_user(2, 2,1);
+//$ret = insert_user(3, 3,2);
+//$ret = insert_user(4, 4,3);
 
-$ret = update_user_password(77,"77");
-echo $ret;
+//$ret = insert_chain("Beijing Movie Academy");
+//$ret = insert_chain("Xi\'an Movie Academy");
+//$ret = insert_chain("Harbin Movie Academy");
+$ret= get_all_user_info();
+echo $ret[0]["user_name"]."<br>";
+echo $ret[1]["user_name"]."<br>";
+echo $ret[2]["user_name"]."<br>";
+echo $ret[3]["user_name"]."<br>";
+echo $ret[4]["user_name"]."<br>";
+echo $ret[5]["user_name"]."<br>";
 
-
+$ret = update_chain("Xi\'an Movie Academy","LPS Movie Association");
+echo $ret."<br>";
 
 ?>
 

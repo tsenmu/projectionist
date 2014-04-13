@@ -46,6 +46,34 @@ function get_through_sqlCommand($sql)
 	return $row;
 }
 
+function get_all_sqlCommand($sql)
+{
+	$conn=connect_database();
+	
+	mysql_select_db('projectionist');
+	$retval=mysql_query($sql,$conn);
+	
+	
+	
+	if(!$retval)
+	{
+		return 0;
+		//die('Could not get data : '.mysql_error());
+	}
+	$i=0;
+	while($row = mysql_fetch_assoc($retval))
+	{
+		$res_array[$i]=$row;
+		$i++;
+	}
+	
+	mysql_free_result($retval);
+	
+	
+	mysql_close($conn);
+	return $res_array;
+	
+}
 function execute_sqlCommand($sql)
 {
 	$conn=connect_database();
@@ -65,9 +93,10 @@ function execute_sqlCommand($sql)
 }
 
 /*
-Control User 
+Control User =============
 */
-function insert_user($user_name, $user_password, $user_type)
+
+function insert_user($user_name, $user_password,$parent_user_name)
 {
 	if(is_user_exist($user_name))
 	{
@@ -75,16 +104,36 @@ function insert_user($user_name, $user_password, $user_type)
 	}
 	$hash_user_password=md5($user_password);
 	
+	$parent_user_info=get_user_info($parent_user_name);
+	$user_type=$parent_user_info["user_type"]+1;
+	$parent_user_id=$parent_user_info["user_id"];
+	
+	
 	$sql= "INSERT INTO users(user_name,user_password,user_type) VALUES ('$user_name', '$hash_user_password', '$user_type')";
 	
 	if(execute_sqlCommand($sql))
 	{
-		return "INSERT_USER_SUCCESS";
+		$child_user_id=get_user_id($user_name);
+		
+		$sql= "INSERT INTO user_tree(parent_user_id,child_user_id) VALUES ('$parent_user_id', '$child_user_id')";
+	
+		if(execute_sqlCommand($sql))
+		{
+			return "INSERT_USER_SUCCESS";
+		}
 	}
-
 }
-
-function get_user_Info($user_name)
+function get_all_user_info()
+{
+	//放映员不显示
+	$sql = "SELECT * FROM users WHERE user_available ='1' AND user_type < '3'";
+	
+	$user_array=get_all_sqlCommand($sql);
+	
+	return $user_array;
+	
+}
+function get_user_info($user_name)
 {
 	if(!is_user_exist($user_name))
 	{
@@ -99,8 +148,14 @@ function get_user_Info($user_name)
 }
 function get_user_type($user_name)
 {
-	$user_info=get_user_Info($user_name);
+	$user_info=get_user_info($user_name);
 	return $user_info["user_type"];
+}
+
+function get_user_id($user_name)
+{
+	$user_info=get_user_info($user_name);
+	return $user_info["user_id"];
 }
 function delete_user($user_name)
 {
@@ -157,7 +212,7 @@ function is_password_match($user_name,$user_password)
 	}
 	else
 	{
-		$user_info=get_user_Info($user_name);
+		$user_info=get_user_info($user_name);
 		if($user_info["user_password"] == md5($user_password))
 		{
 			return "SUCCESS";
