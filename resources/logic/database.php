@@ -64,7 +64,7 @@ function insert_user($user_name, $user_password, $user_type)
 	$hash_user_password=md5($user_password);
 	
 	$sql= "INSERT INTO users(user_name,user_password,user_type) VALUES ('$user_name', '$hash_user_password', '$user_type')";
-	
+	//$sql= "INSERT INTO users(user_name,user_password,user_type) VALUES ('hehe', 'qq', '0')";
 	insert_through_sqlCommand($sql);
 
 }
@@ -91,14 +91,14 @@ function is_user_exist($user_name,$user_password)
 	//user name doesn't exist
 	if($result == 0)
 	{
-		echo " This user is not exist! <br>"
+		echo " This user is not exist! <br>";
 		
 	}
 	else
 	{
 		if($result["user_password"] == md5($user_password))
 		{
-			echo "password match <br>"
+			echo "password match <br>";
 			return 1;
 		}
 		else
@@ -114,7 +114,7 @@ function is_user_exist($user_name,$user_password)
 ?>
 <?php
 /*test*/
-//insert_user(77,"123qwe123",0);
+insert_user(77,"123qwe123",1);
 
 $res=get_through_sqlCommand("SELECT * FROM users WHERE user_name = '12' ");
 
