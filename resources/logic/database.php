@@ -211,7 +211,7 @@ function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 ?>
 <?php
 /*test*/
-insert_user(177,"123qwe123",3);
+//insert_user(177,"123qwe123",3);
 
 //$res=get_through_sqlCommand("SELECT * FROM users WHERE user_name = '77' ");
 

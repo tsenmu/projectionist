@@ -13,7 +13,7 @@ error_reporting(E_ALL ^ E_NOTICE);
     <title><?php echo $config["vars"]["title"] ?></title>
   </head>
   <body>
-	<?php require_once(dirname(__FILE__) . '/navbar-admin.php'); ?>
+	<?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
     
     <!-- javascripts -->
     <?php require_once($config["includes"]["footer"]);?>

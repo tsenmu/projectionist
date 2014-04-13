@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-    
+<?php require_once(dirname(__FILE__) . '/../resources/config.php'); ?>
 <html>
   <head>
     <!-- common styles -->
-    <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name= "viewport" content="width=device-width, initial-scale=1.0">
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="css/common.css" rel="stylesheet">
-        
+    <?php require_once($config["includes"]["header"]);?>
     <!-- custom styles -->
     <link href="css/login.css" rel="stylesheet" type="text/css">
     <!-- generate title from config file -->
-    <title>电影放映管理系统</title>
+    <title><?php echo $config["vars"]["title"]?></title>
   </head>
   <body>
     <div class="container">
@@ -34,8 +29,7 @@
         <p id="feedback"></p>
     </div> <!-- /container -->
     <!-- javascripts -->
-    <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
+    <?php require_once($config["includes"]["footer"]);?>
     <script src="js/login.js"> </script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 This php file is used for basically interacting with database
 
@@ -6,19 +6,15 @@ This php file is used for basically interacting with database
 
 /* Connect Database*/
 
-//require_once(dirname(__FILE__) . '/../config.php');
+
+require_once(dirname(__FILE__) . '/../../resources/config.php');
+$dbhost = $config["db"]["host"];
+$dbuser = $config["db"]["username"];
+$dbpass = $config["db"]["password"];
+$dbname = $config["db"]["dbname"];
 function connect_database()
 {
-	//$dbhost = $config["db"]["host"];
-	//$dbuser = $config["db"]["username"];
-	//$dbpass = $config["db"]["password"];
-	
-	$dbhost = 'localhost';
-	$dbuser = 'root';
-	
-	//echo "database name: ".$config["db"]["dbname"];
-
-	$dbpass = '123qwe123';
+    global $dbhost, $dbuser, $dbpass, $dbname;
 	$conn = mysql_connect($dbhost, $dbuser, $dbpass);
 	if(! $conn)
 	{
@@ -101,12 +97,9 @@ function delete_through_sqlCommand($sql)
 	
 	mysql_close($conn);
 }
-?>
 
-<?php
-/*
 
-*/
+
 /*
 Control User 
 */
@@ -246,11 +239,9 @@ function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 
 
 
-?>
-<?php
 /*test*/
 //insert_user(77,"123qwe123",3);
-echo is_password_match(177,"123qwe123");
+//echo is_password_match(177,"123qwe123");
 
 //$res=get_through_sqlCommand("SELECT * FROM users WHERE user_name = '77' ");
 
