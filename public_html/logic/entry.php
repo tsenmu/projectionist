@@ -10,7 +10,7 @@ if (!isset($_SESSION['current_user']))
 }
 else if (PAGE == 'index.php')
 {
-    $_SESSION['current_user_type'] = 1
+    $_SESSION['current_user_type'] = 1;
     header("Location: ../home.php");
     exit;
 }
