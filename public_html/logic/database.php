@@ -46,6 +46,34 @@ function get_through_sqlCommand($sql)
 	return $row;
 }
 
+function get_all_sqlCommand($sql)
+{
+	$conn=connect_database();
+	
+	mysql_select_db('projectionist');
+	$retval=mysql_query($sql,$conn);
+	
+	
+	
+	if(!$retval)
+	{
+		return 0;
+		//die('Could not get data : '.mysql_error());
+	}
+	$i=0;
+	while($row = mysql_fetch_assoc($retval))
+	{
+		$res_array[$i]=$row;
+		$i++;
+	}
+	
+	mysql_free_result($retval);
+	
+	
+	mysql_close($conn);
+	return $res_array;
+	
+}
 function execute_sqlCommand($sql)
 {
 	$conn=connect_database();
@@ -67,6 +95,7 @@ function execute_sqlCommand($sql)
 /*
 Control User =============
 */
+
 function insert_user($user_name, $user_password,$parent_user_name)
 {
 	if(is_user_exist($user_name))
@@ -94,7 +123,16 @@ function insert_user($user_name, $user_password,$parent_user_name)
 		}
 	}
 }
-
+function get_all_user_info()
+{
+	//放映员不显示
+	$sql = "SELECT * FROM users WHERE user_available ='1' AND user_type < '3'";
+	
+	$user_array=get_all_sqlCommand($sql);
+	
+	return $user_array;
+	
+}
 function get_user_info($user_name)
 {
 	if(!is_user_exist($user_name))
