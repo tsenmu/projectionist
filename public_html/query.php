@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php ini_set("display_errors", 1);
 error_reporting(E_ALL ^ E_NOTICE);
+require_once('logic/entry.php');
 ?>
 <?php require_once(dirname(__FILE__) . '/../resources/config.php'); ?>
 <html>

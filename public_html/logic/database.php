@@ -97,7 +97,11 @@ function get_user_Info($user_name)
 	
 	return $user_info;
 }
-
+function get_user_type($user_name)
+{
+	$user_info=get_user_Info($user_name);
+	return $user_info["user_type"];
+}
 function delete_user($user_name)
 {
 	if(!is_user_exist($user_name))

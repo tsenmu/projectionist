@@ -2,7 +2,7 @@
 <?php ini_set("display_errors", 1);
 error_reporting(E_ALL ^ E_NOTICE);
 ?>
-<?php session_start() ?>
+<?php require_once('logic/entry.php');?>
 <?php require_once(dirname(__FILE__) . '/../resources/config.php'); ?>
 <html>
   <head>
@@ -18,7 +18,8 @@ error_reporting(E_ALL ^ E_NOTICE);
     <div class="container">
     <h1>
     <?php 
-echo $_SESSION['current_user']; ?>    
+echo $_SESSION['current_user']; ?> </br>
+<?php echo $_SESSION['current_user_type'];?> 
 </h1>
 </div>
     <!-- javascripts -->
