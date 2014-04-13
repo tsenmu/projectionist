@@ -13,13 +13,19 @@
 	  <ul class="nav navbar-nav">
 	    <li id="home"><a href="home.php">主页</a></li>
 	    <li id="query"><a href="query.php">查询</a></li>
+            <?php if ($_SESSION['current_user_type'] == 0): ?>
 	    <li id="management" class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理<b class="caret"></b></a>
 	      <ul class="dropdown-menu">
 		<li id="user-management"><a href="user-management.php">管理用户</a></li>
 		<li id="movie-management"><a href="movie-management.php">管理电影</a></li>
 	      </ul>
-	    </li>
+        </li>
+        <?php endif; ?>
+        <?php if($_SESSION['current_user_type'] == 3): ?>
+            <li id="insert"><a href="insert.php">录入</a></li>
+        <?php endif;?>
+        <li id="logout"><a href="logout.php">登出</a></li>
 	  </ul>
 		</div><!--/.nav-collapse -->
 	</div>
