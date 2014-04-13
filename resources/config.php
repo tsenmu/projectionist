@@ -1,13 +1,12 @@
 <?php
 ini_set("display_errors", 1);
 error_reporting(E_ALL ^ E_NOTICE);
-global $config;
 $config = array(
     "db" => array(
         "dbname" => "projectionist",
         "username" => "projectionist",
         "password" => "123qwe123",
-        "host" => "vps.tsenmu.com"
+        "host" => "159.226.178.62"
       ),
     "urls" => array(
       "baseUrl" => "localhost"

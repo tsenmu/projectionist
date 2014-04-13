@@ -1,10 +1,15 @@
 <?php
+session_start();
 require_once(dirname(__FILE__) . '/../../resources/config.php');
 require_once('database.php');
-//print_r($config);
 $username = $_REQUEST["username"];
 $password = $_REQUEST["password"];
-echo $username . $password;
+$remember = $_REQUEST["remember"];
 $ret = is_password_match($username, $password);
+if ($ret == "SUCCESS" )
+{
+    $_SESSION['current_user'] = $username;
+    $_SESSION['remember_user'] = True;
+}
 echo $ret;
 ?>

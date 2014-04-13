@@ -36,6 +36,6 @@ body {
 .form-signin .help-inline {
     display: none;
 }
-.form-signin .help-inline .error {
+.form-signin .error .help-inline  {
     display: inline;
 }

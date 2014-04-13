@@ -2,6 +2,7 @@
 <?php ini_set("display_errors", 1);
 error_reporting(E_ALL ^ E_NOTICE);
 ?>
+<?php session_start() ?>
 <?php require_once(dirname(__FILE__) . '/../resources/config.php'); ?>
 <html>
   <head>
@@ -14,7 +15,12 @@ error_reporting(E_ALL ^ E_NOTICE);
   </head>
   <body>
 	<?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
-    
+    <div class="container">
+    <h1>
+    <?php 
+echo $_SESSION['current_user']; ?>    
+</h1>
+</div>
     <!-- javascripts -->
     <?php require_once($config["includes"]["footer"]);?>
     <script>

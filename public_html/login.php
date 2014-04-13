@@ -22,7 +22,7 @@
             <span class="help-inline">密码不正确</span>
         </div>
         <label class="checkbox">
-          <input type="checkbox" value="remember-me"> 在这台电脑上记住我 
+          <input id="remember" type="checkbox" value="remember-me"> 在这台电脑上记住我 
         </label>
         <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
       </form>
