@@ -10,7 +10,7 @@ echo $ret;
 $ret = update_user_password(77,"77");
 echo $ret;
 
-$ret = delete_user(77);
-echo $ret;
+
+
 ?>
 

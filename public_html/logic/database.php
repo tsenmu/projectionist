@@ -23,23 +23,6 @@ function connect_database()
 	return $conn;
 }
 
-function insert_through_sqlCommand($sql)
-{
-	$conn=connect_database();
-	
-	mysql_select_db('projectionist');
-	$retval=mysql_query($sql,$conn);
-	
-	if(!$retval)
-	{
-		die('Could not insert data into the table: '.mysql_error());
-	}
-	
-	
-	mysql_close($conn);
-	
-	return 1;
-}
 
 function get_through_sqlCommand($sql)
 {
@@ -63,7 +46,7 @@ function get_through_sqlCommand($sql)
 	return $row;
 }
 
-function update_through_sqlCommand($sql)
+function execute_sqlCommand($sql)
 {
 	$conn=connect_database();
 	
@@ -72,32 +55,14 @@ function update_through_sqlCommand($sql)
 	
 	if(!$retval)
 	{
-		die('Could not update data: '.mysql_error());
+		return 0;
+		//die(mysql_error());
 	}
 	
 	
 	mysql_close($conn);
 	return 1;
 }
-
-function delete_through_sqlCommand($sql)
-{
-	$conn=connect_database();
-	
-	mysql_select_db('projectionist');
-	$retval=mysql_query($sql,$conn);
-	
-	if(!$retval)
-	{
-		die('Could not delete data: '.mysql_error());
-	}
-	
-	
-	mysql_close($conn);
-	return 1;
-}
-
-
 
 /*
 Control User 
@@ -112,7 +77,7 @@ function insert_user($user_name, $user_password, $user_type)
 	
 	$sql= "INSERT INTO users(user_name,user_password,user_type) VALUES ('$user_name', '$hash_user_password', '$user_type')";
 	
-	if(insert_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "INSERT_USER_SUCCESS";
 	}
@@ -142,7 +107,7 @@ function delete_user($user_name)
 
 	$sql= "UPDATE users SET user_available = '0' WHERE user_name= $user_name";
 	
-	if(update_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "DELETE_USER_SUCCESS";
 	}
@@ -158,7 +123,7 @@ function update_user_password($user_name,$user_new_password)
 	$user_new_password=md5($user_new_password);
 	$sql="UPDATE users SET user_password = '$user_new_password' WHERE user_name = '$user_name'";
 	
-	if(update_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "UPDATE_PASSWORD_SUCCESS";
 	}
@@ -211,7 +176,7 @@ function insert_chain($chain_name)
 	
 	$sql= "INSERT INTO chains(chain_name) VALUES ('$chain_name')";
 	
-	if(insert_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "INSERT_CHAIN_SUCCESS";
 	}
@@ -227,7 +192,7 @@ function update_chain($old_chain_name, $new_chain_name)
 	
 	$sql= "UPDATE chains SET chain_name='$new_chain_name' WHERE chain_name= '$old_chain_name' ";
 	
-	if(update_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "UPDATE_CHAIN_SUCCESS";
 	}
@@ -245,7 +210,7 @@ function delete_chain($chain_name)
 	}
 	$sql= "UPDATE chains SET chain_available='0' WHERE chain_name= '$chain_name' ";
 	
-	if(update_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "DELETE_CHAIN_SUCCESS";
 	}
@@ -289,7 +254,7 @@ function insert_film($film_userdefine_id, $film_name, $film_path, $chain_id)
 	$sql= "INSERT INTO films(film_userdefine_id,film_name,film_path,chain_id)".
 	"VALUES ('$film_userdefine_id','$film_name', '$film_path', '$chain_id')";
 	
-	if(insert_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "INSERT_FILM_SUCCESS";
 	}
@@ -304,7 +269,7 @@ function delete_film($film_id)
 	
 	$sql= "UPDATE films SET film_available='0' WHERE film_userdefine_id= '$film_userdefine_id' ";
 	
-	if(update_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "DELETE_FILM_SUCCESS";
 	}
@@ -316,11 +281,11 @@ function update_film($film_id,$film_userdefine_id, $film_name, $film_path, $chai
 	{
 		return "ERROR_FILM_NOT_EXIST";
 	}
-	$sql= "UPDATE films SET film_userdefine_id='$film_userdefine_id'",.
+	$sql= "UPDATE films SET film_userdefine_id='$film_userdefine_id'," .
 	"film_name='$film_name',film_path='$film_path',chain_id='$chain_id'".
 	"WHERE film_id ='$film_id' ";
 	
-	if(update_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "UPDATE_FILM_SUCCESS";
 	}
@@ -338,7 +303,7 @@ function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 	$sql= "INSERT INTO records(user_id,film_id,chain_id,date_time,location)".
 	" VALUES ('$user_id', '$film_id', '$chain_id','$date_time','$location')";
 	
-	if(insert_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "INSERT_RECORD_SUCCESS";
 	}
@@ -351,12 +316,22 @@ function update_record($record_id, $film_id,$chain_id,$date_time,$location)
 {
 	$sql = "UPDATE records SET film_id='$film_id', date_time='$date_time', location='$location' WHERE record_id='$record_id')";
 	
-	if(update_through_sqlCommand($sql))
+	if(execute_sqlCommand($sql))
 	{
 		return "UPDATE_RECORD_SUCCESS";
 	}
 }
 
+
+function delete_record($record_id)
+{
+	$sql="DELETE record WHERE record_id = '$record_id'";
+	
+	if(execute_sqlCommand($sql))
+	{
+		return "DELETE_RECORD_SUCCESS";
+	}
+}
 
 //==============Control User Tree=========
 
