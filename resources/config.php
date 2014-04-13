@@ -19,7 +19,8 @@ $config = array(
         "includes" => $_SERVER["DOCUMENT_ROOT"] . "/includes"
     ),
     "vars" => array(
-        "title" => "电影放映管理系统"
+        "title" => "电影放映管理系统",
+        "project_name" => "电影放映管理系统"
     ),
     "includes" => array(
         "header" => $_SERVER["DOCUMENT_ROOT"] ."/includes" . "/header.inc.php",
