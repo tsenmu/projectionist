@@ -4,7 +4,8 @@ $(document).ready(function() {
         $.ajax( {
             url: "logic/validate.php",
             type: "POST",
-            data: {'username' : $("#username").val(), 
+            data: {
+                'username' : $("#username").val(), 
                 'password' : $("#password").val()
             },
             success: function() {
