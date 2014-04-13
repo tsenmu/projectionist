@@ -267,42 +267,98 @@ function is_chain_exist($chain_name)
 }
 
 //=============Control Film================
-
-
-
-function insert_film($film_name, $film_path, $chain_id)
+function is_film_exist($film_id)
 {
-	$sql= "INSERT INTO films(film_name,film_path,chain_id) VALUES ('$film_name', '$film_path', '$chain_id')";
-	
-	insert_through_sqlCommand($sql);
+	$sql="SELECT * FROM chains WHERE film_id = '$film_id' AND film_available = '1' ";
+	$result=get_through_sqlCommand($sql);
+	//user name doesn't exist
+	if($result == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
 
-function delete_film($film_name, $film_path, $chain_id)
+
+function insert_film($film_userdefine_id, $film_name, $film_path, $chain_id)
 {
-	$sql= "UPDATE films SET film_available='0' WHERE film_name= '$film_name' ";
 	
-	update_through_sqlCommand($sql);
+	$sql= "INSERT INTO films(film_userdefine_id,film_name,film_path,chain_id)".
+	"VALUES ('$film_userdefine_id','$film_name', '$film_path', '$chain_id')";
+	
+	if(insert_through_sqlCommand($sql))
+	{
+		return "INSERT_FILM_SUCCESS";
+	}
 }
 
+function delete_film($film_id)
+{
+	if(!is_film_exist($film_id))
+	{
+		return "ERROR_FILM_NOT_EXIST";
+	}
+	
+	$sql= "UPDATE films SET film_available='0' WHERE film_userdefine_id= '$film_userdefine_id' ";
+	
+	if(update_through_sqlCommand($sql))
+	{
+		return "DELETE_FILM_SUCCESS";
+	}
+}
+
+function update_film($film_id,$film_userdefine_id, $film_name, $film_path, $chain_id)
+{
+	if(!is_film_exist($film_id))
+	{
+		return "ERROR_FILM_NOT_EXIST";
+	}
+	$sql= "UPDATE films SET film_userdefine_id='$film_userdefine_id'",.
+	"film_name='$film_name',film_path='$film_path',chain_id='$chain_id'".
+	"WHERE film_id ='$film_id' ";
+	
+	if(update_through_sqlCommand($sql))
+	{
+		return "UPDATE_FILM_SUCCESS";
+	}
+	
+}
+
+function get_film($film_name)
+{
+	
+}
 
 //============Control Record=========
 function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 {
-	$sql= "INSERT INTO records(user_id,film_id,chain_id,date_time,location) VALUES ('$user_id', '$film_id', '$chain_id','$date_time','$location')";
+	$sql= "INSERT INTO records(user_id,film_id,chain_id,date_time,location)".
+	" VALUES ('$user_id', '$film_id', '$chain_id','$date_time','$location')";
 	
-	insert_through_sqlCommand($sql);
+	if(insert_through_sqlCommand($sql))
+	{
+		return "INSERT_RECORD_SUCCESS";
+	}
 }
 
 /*
 some confusions in here
 */
-function update_record($film_id,$chain_id,$date_time,$location)
+function update_record($record_id, $film_id,$chain_id,$date_time,$location)
 {
-	$sql = "UPDATE records SET film_id='$film_id', date_time='$date_time', location='$location' WHERE film_id='$film_id' AND user_id='$user_id' )";
+	$sql = "UPDATE records SET film_id='$film_id', date_time='$date_time', location='$location' WHERE record_id='$record_id')";
 	
-	update_through_sqlCommand($sql);
+	if(update_through_sqlCommand($sql))
+	{
+		return "UPDATE_RECORD_SUCCESS";
+	}
 }
 
+
+//==============Control User Tree=========
 
 
 /*test*/
