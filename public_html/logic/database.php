@@ -209,6 +209,16 @@ function insert_chain($chain_name)
 	
 	insert_through_sqlCommand($sql);
 }
+
+function delete_chain($chain_name)
+{
+	$sql= "UPDATE chains SET chain_available='0' WHERE chain_name= '$chain_name' ";
+	
+	update_through_sqlCommand($sql);
+}
+
+//=============Control Film================
+
 function insert_film($film_name, $film_path, $chain_id)
 {
 	$sql= "INSERT INTO films(film_name,film_path,chain_id) VALUES ('$film_name', '$film_path', '$chain_id')";
@@ -216,6 +226,15 @@ function insert_film($film_name, $film_path, $chain_id)
 	insert_through_sqlCommand($sql);
 }
 
+function delete_film($film_name, $film_path, $chain_id)
+{
+	$sql= "UPDATE films SET film_available='0' WHERE film_name= '$film_name' ";
+	
+	update_through_sqlCommand($sql);
+}
+
+
+//============Control Record=========
 function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 {
 	$sql= "INSERT INTO records(user_id,film_id,chain_id,date_time,location) VALUES ('$user_id', '$film_id', '$chain_id','$date_time','$location')";
