@@ -19,12 +19,10 @@ $(document).ready(function() {
                 } else if (data.indexOf("ERROR_USER_PASSWORD") != -1) {
                     $("#password_field").addClass("error"); 
                 }
-                console.log(data.indexOf("SUCCESS"));
-                console.log(data.indexOf("ERROR_USER_NAME"));
-                console.log(data.indexOf("ERROR_USER_PASSWORD"));
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                $("#feedback").html(thrownError); 
+                console.log(thrownError);
+                alert("服务器发生错误，请联系管理员");
             }
         }); 
     });
