@@ -10,13 +10,13 @@
             <div class="form-group">
                 <label for="insert-movie">电影</label>
                 <select class="form-control" id="insert-movie" required>
-                    <?php generate_films(); ?>
+                    <?php echo generate_films(); ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="insert-chain">院线</label>
                 <select class="form-control" id="insert-chain" required>
-                    <?php generate_chains(); ?>
+                    <?php echo generate_chains(); ?>
                 </select>
             </div>
             <div class="form-group">
@@ -45,17 +45,29 @@
 
 <?php 
 require_once('logic/database.php');
-generate_films();
+generate_chains();
 function generate_films()
 {
+    $ret = '';
     $film_info = get_all_film_info();
-    print_r($film_info);
+    foreach($film_info as $film)
+    {
+        $append_str = '<option>' . $film['film_name'].'</option>';
+        $ret = $ret .$append_str;
+    }
+    return $ret;
 }
 
 function generate_chains()
 {
+    $ret = '';
     $chain_info = get_all_chain_info();
-    print_r($chain_info);
+    foreach($chain_info as $chain)
+    {
+        $append_str = '<option>'. $chain['chain_name'].'</option>';
+        $ret = $ret.$append_str; 
+    }
+    return $ret;
 }
 function generate_parents()
 {
@@ -75,4 +87,4 @@ function generate_parents()
     }
     return $ret;
 }
-?>
+    ?>
