@@ -17,14 +17,9 @@ require_once('logic/entry.php');
     <?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
 <div class="container">
     <h1> </h1>
-    <div class="row-fluid">
-    <span class="span3">
     <button class="btn btn-lg" data-toggle="modal" data-target="#insert-user">添加用户</button>
-    </span>
-    <span class="span3">
     <button class="btn btn-lg" data-toggle="modal" data-target="#delete-user">删除用户</button>
-    </span>
-	</div>
+</div>
     <?php require_once(dirname(__FILE__) . '/user-management-query.php'); ?>
     <?php require_once(dirname(__FILE__) . '/user-management-insert.php'); ?>
     <?php require_once(dirname(__FILE__) . '/user-management-delete.php'); ?>

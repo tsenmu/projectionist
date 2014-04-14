@@ -1,11 +1,12 @@
 <div class="container">
+
+<div class="panel panel-default">
+    <div class="panel-heading">查询用户</div>
+        <div class="panel-body">
 <ul class="pager">
     <li class="previous"><a href="#">&larr; 上一页</a></li>
     <li class="next"><a href="#">下一页 &rarr;</a></li>
 </ul>
-<div class="panel panel-default">
-    <div class="panel-heading">查询用户</div>
-        <div class="panel-body">
             <table class="table table-striped" id="query-user">
                 <thead>
                     <th>用户名</th>
