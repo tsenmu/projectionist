@@ -59,6 +59,7 @@ require_once('logic/entry.php');
     <!-- javascripts -->
     <?php require_once($config["includes"]["footer"]);?>
     <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     <script>
         $(document).ready(function() {
         set_active_navbar_button('#records');  
@@ -66,7 +67,7 @@ require_once('logic/entry.php');
     </script>
     <script type="text/javascript">
     $(".form_datetime").datetimepicker({
-        format: "yyyy/mm/dd hh:ii:ss"
+        format: "yyyy/mm/dd hh:ii"
     });
     </script> 
     <script src="js/records.js"></script>
@@ -81,11 +82,16 @@ function generate_records()
     $records = get_record($current_user);
     if ( count($records) == 0)
         return;
-    foreach($records as $record)
+    foreach($records as $record_id => $record)
     {
-        $user_name = $record['user_id'];
-        $film_name = $record['film_id'];
-        $chain_name = $record['chain_id'];
+        $record_text = show_record($record_id);
+        $film_name = $record_text['film_name'];
+        $user_name = $record_text['user_name'];
+        $chain_name = $record_text['chain_name'];
+        $user_name = $record_text['user_name'];
+        $user_id = $record['user_id'];
+        $film_id  = $record['film_id'];
+        $chain_id = $record['chain_id'];
         $date_time = $record['date_time'];
         $location = $record['location'];
         $push_str = '<tr><td>'."$film_name".'</td><td>'."$chain_name".'</td><td>'."$user_name".'</td><td>'."$date_time".'</td><td>'."$location"  .'</td></tr>';

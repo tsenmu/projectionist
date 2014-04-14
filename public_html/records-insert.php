@@ -9,11 +9,15 @@
         <form role="form">
             <div class="form-group">
                 <label for="insert-movie">电影</label>
-                <input type="text" class="form-control" id="insert-movie" required>
+                <select class="form-control" id="insert-movie" required>
+                    <?php echo generate_films(); ?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="insert-chain">院线</label>
-                <input type="text" class="form-control" id="insert-chain" required>
+                <select class="form-control" id="insert-chain" required>
+                    <?php echo generate_chains(); ?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="insert-date-time">时间</label>
@@ -37,10 +41,34 @@
     </div>
   </div>
 </div>
-<div id="insert-user-id"><?php echo $_SESSION['current_user']; ?> </div>
+<label style="display: none;" id="insert-user-id"><?php echo $_SESSION['current_user']; ?></label>
 
 <?php 
 require_once('logic/database.php');
+generate_chains();
+function generate_films()
+{
+    $ret = '';
+    $film_info = get_all_film_info();
+    foreach($film_info as $film)
+    {
+        $append_str = '<option>' . $film['film_name'].'</option>';
+        $ret = $ret .$append_str;
+    }
+    return $ret;
+}
+
+function generate_chains()
+{
+    $ret = '';
+    $chain_info = get_all_chain_info();
+    foreach($chain_info as $chain)
+    {
+        $append_str = '<option>'. $chain['chain_name'].'</option>';
+        $ret = $ret.$append_str; 
+    }
+    return $ret;
+}
 function generate_parents()
 {
     $ret = '';
@@ -59,4 +87,4 @@ function generate_parents()
     }
     return $ret;
 }
-?>
+    ?>

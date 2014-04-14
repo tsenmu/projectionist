@@ -18,7 +18,7 @@
             
             <div class="form-group">
                 <label for="insert-parent">上级行政单位</label>
-                <select id="insert-parent" class="parent">
+                <select id="insert-parent" class="form-control">
                     <?php echo generate_parents(); ?>
                 </select>
             </div>
