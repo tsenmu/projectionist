@@ -20,11 +20,7 @@ echo $ret."<br>";
 //print_r(get_all_chain());
 
 
-$sql = "SELECT * FROM films WHERE film_name =  '大闹天宫' AND chain_id = '11' ";
-	$film_info=get_through_sqlCommand($sql);
-	print_r($film_info);
-
-print_r(get_all_film_info());	
+print_r(insert_user(77,"123qwe123",1));
 	
 ?>
 

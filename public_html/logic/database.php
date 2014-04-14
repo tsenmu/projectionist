@@ -121,6 +121,14 @@ function insert_user($user_name, $user_password,$parent_user_name)
 		{
 			return "INSERT_USER_SUCCESS";
 		}
+		else
+		{
+			return "ERROR_INSERT_USER_TREE";
+		}
+	}
+	else
+	{
+		return "ERROR_INSERT_USER";
 	}
 }
 function get_parent_user_info()
@@ -162,7 +170,7 @@ function get_user_info($user_name)
 		return "ERROR_USER_NOT_EXIST";
 	}
 	
-	$sql="SELECT * FROM users WHERE user_name ='$user_name'";
+	$sql="SELECT * FROM users WHERE user_name ='$user_name' AND user_available = '1'";
 	
 	$user_info=get_through_sqlCommand($sql);
 	
@@ -195,7 +203,7 @@ function delete_user($user_name)
 		return "ERROR_USER_NOT_EXIST";
 	}
 
-	$sql= "UPDATE users SET user_available = '0' WHERE user_name= $user_name";
+	$sql= "UPDATE users SET user_available = '0' WHERE user_name= $user_name AND user_available= '1'";
 	
 	if(execute_sqlCommand($sql))
 	{
@@ -211,7 +219,7 @@ function update_user_password($user_name,$user_new_password)
 	}
 	
 	$user_new_password=md5($user_new_password);
-	$sql="UPDATE users SET user_password = '$user_new_password' WHERE user_name = '$user_name'";
+	$sql="UPDATE users SET user_password = '$user_new_password' WHERE user_name = '$user_name' AND user_available = '1' ";
 	
 	if(execute_sqlCommand($sql))
 	{
