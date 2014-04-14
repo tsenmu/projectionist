@@ -13,10 +13,18 @@ echo $ret."<br>";
 
 //$ret = insert_chain("Beijing Movie Academy");
 //$ret = insert_chain("Xi\'an Movie Academy");
-$ret = insert_chain("嘻哈工作室");
-print_r($ret);
+
+
 //print_r(get_all_film());
 
 //print_r(get_all_chain());
+
+
+$sql = "SELECT * FROM films WHERE film_name =  '大闹天宫' AND chain_id = '11' ";
+	$film_info=get_through_sqlCommand($sql);
+	print_r($film_info);
+
+print_r(get_all_film_info());	
+	
 ?>
 
