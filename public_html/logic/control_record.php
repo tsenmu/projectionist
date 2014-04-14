@@ -103,4 +103,4 @@ function get_record($user_id)
 	else
 		return array();
 }
-
+?>
