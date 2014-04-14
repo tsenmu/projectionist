@@ -2,8 +2,9 @@
 require_once('database.php');
 
 //============Control Record=========
-function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
+function insert_record($user_id,$film_name,$chain_name,$date_time,$location)
 {
+	//$film_id=get;
 	$sql= "INSERT INTO records(user_id,film_id,chain_id,date_time,location)".
 	" VALUES ('$user_id', '$film_id', '$chain_id','$date_time','$location')";
 	
@@ -13,6 +14,7 @@ function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
 	}
 }
 
+ 
 /*
 some confusions in here
 */
@@ -90,7 +92,10 @@ function get_record($user_id)
 	}
 	$str_command .=')';
 	$record=get_all_sqlCommand($str_command);
-	return $record;
+	if($record != NULL)	
+		return $record;
+	else
+		return array();
 }
 
 ?>
