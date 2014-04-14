@@ -378,41 +378,7 @@ function get_film($film_name)
 	
 }
 
-//============Control Record=========
-function insert_record($user_id,$film_id,$chain_id,$date_time,$location)
-{
-	$sql= "INSERT INTO records(user_id,film_id,chain_id,date_time,location)".
-	" VALUES ('$user_id', '$film_id', '$chain_id','$date_time','$location')";
-	
-	if(execute_sqlCommand($sql))
-	{
-		return "INSERT_RECORD_SUCCESS";
-	}
-}
 
-/*
-some confusions in here
-*/
-function update_record($record_id, $film_id,$chain_id,$date_time,$location)
-{
-	$sql = "UPDATE records SET film_id='$film_id', date_time='$date_time', location='$location' WHERE record_id='$record_id')";
-	
-	if(execute_sqlCommand($sql))
-	{
-		return "UPDATE_RECORD_SUCCESS";
-	}
-}
-
-
-function delete_record($record_id)
-{
-	$sql="DELETE record WHERE record_id = '$record_id'";
-	
-	if(execute_sqlCommand($sql))
-	{
-		return "DELETE_RECORD_SUCCESS";
-	}
-}
 
 //==============Control User Tree=========
 
