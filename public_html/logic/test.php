@@ -14,17 +14,6 @@ echo $ret."<br>";
 //$ret = insert_chain("Beijing Movie Academy");
 //$ret = insert_chain("Xi\'an Movie Academy");
 //$ret = insert_chain("Harbin Movie Academy");
-$ret= get_all_user_info();
-echo $ret[0]["user_name"]."<br>";
-echo $ret[1]["user_name"]."<br>";
-echo $ret[2]["user_name"]."<br>";
-echo $ret[3]["user_name"]."<br>";
-echo $ret[4]["user_name"]."<br>";
-echo $ret[5]["user_name"]."<br>";
 
-$ret = update_chain("Xi\'an Movie Academy","LPS Movie Association");
-echo $ret."<br>";
-
-echo delete_user(12);
 ?>
 
