@@ -103,4 +103,26 @@ function get_record($user_id)
 	else
 		return array();
 }
+
+
+function show_record($record_id)
+{
+	$sql = "SELECT * FROM records WHERE record_id='$record_id'";
+	$res=get_through_sqlCommand($sql);
+	$film_name=get_film_name_by_id($res["film_id"]);
+	$chain_name=get_chain_name_by_id($res["chain_id"]);
+	$user_name=get_user_name_by_id($res["user_id"]);
+	$time=$res["date_time"];
+	$location=$res["location"];
+	
+	$record["film_name"]=$film_name;
+	$record["chain_name"]=$chain_name;
+	$record["user_name"]=$user_name;
+	$record["date_time"]=$time;
+	$record["location"]=$location;
+	
+	return $record;
+}
+
+	
 ?>

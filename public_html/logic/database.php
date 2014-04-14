@@ -180,7 +180,7 @@ function get_user_id($user_name)
 	return $user_info["user_id"];
 }
 
-function get_user_name_by_user_id($user_id)
+function get_user_name_by_id($user_id)
 {
 	$sql="SELECT * FROM users WHERE user_id ='$user_id'";
 	
@@ -418,10 +418,23 @@ function get_film_name_by_id($film_id)
 	$film_info=get_through_sqlCommand($sql);
 	return $film_info["film_name"];
 }
+function get_film_info_by_film_name_and_chain_id($film_name,$chain_id)
+{
+	$sql = "SELECT * FROM films WHERE film_name =  '$film_name' AND chain_id = '$chain_id' AND film_available='1' ";
+	$film_info=get_through_sqlCommand($sql);
+	return $film_info;
+}
+
+function get_film_info_by_film_name($film_name)
+{
+	$sql = "SELECT * FROM films WHERE film_name =  '$film_name' AND film_available = '1' ";
+	$film_info=get_all_sqlCommand($sql);
+	return $film_info;
+}	
 
 function get_all_film_info()
 {
-	$sql = "SELECT * FROM films";
+	$sql = "SELECT * FROM films ORDER BY film_name";
 	$film_info=get_all_sqlCommand($sql);
 	return $film_info;
 }
