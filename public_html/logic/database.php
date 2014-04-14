@@ -179,6 +179,15 @@ function get_user_id($user_name)
 	$user_info=get_user_info($user_name);
 	return $user_info["user_id"];
 }
+
+function get_user_name_by_user_id($user_id)
+{
+	$sql="SELECT * FROM users WHERE user_id ='$user_id'";
+	
+	$user_info=get_through_sqlCommand($sql);
+	
+	return $user_info["user_name"];
+}
 function delete_user($user_name)
 {
 	if(!is_user_exist($user_name))
@@ -279,8 +288,12 @@ function update_chain($old_chain_name, $new_chain_name)
 	}
 }
 
-function get_chain_Info()
+function get_all_chain_info()
 {
+	$sql = "SELECT * FROM chains";
+	$all_chain_info=get_all_sqlCommand($sql);
+	
+	return $all_chain_info;
 
 }
 function delete_chain($chain_name)
@@ -315,7 +328,7 @@ function is_chain_exist($chain_name)
 //=============Control Film================
 function is_film_exist($film_id)
 {
-	$sql="SELECT * FROM chains WHERE film_id = '$film_id' AND film_available = '1' ";
+	$sql="SELECT * FROM films WHERE film_id = '$film_id' AND film_available = '1' ";
 	$result=get_through_sqlCommand($sql);
 	//user name doesn't exist
 	if($result == 0)
@@ -348,7 +361,7 @@ function delete_film($film_id)
 		return "ERROR_FILM_NOT_EXIST";
 	}
 	
-	$sql= "UPDATE films SET film_available='0' WHERE film_userdefine_id= '$film_userdefine_id' ";
+	$sql= "UPDATE films SET film_available='0' WHERE film_id= '$film_id' ";
 	
 	if(execute_sqlCommand($sql))
 	{

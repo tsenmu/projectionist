@@ -61,15 +61,23 @@ function get_all_child($parent_user_id)
 		$temp_child=get_child_user_tree($temp_parent);
 		for($i=0;$i<count($temp_child);$i++)
 		{
-			$queue[$tail]=$temp_child[$i]["child_user_id"];
-			$tail++;
+			//judge whether this child exists or not
+			
+			$temp_id=$temp_child[$i]["child_user_id"];
+			$temp_user_name=get_user_name_by_user_id($temp_id);
+			if(is_user_exist($temp_user_name))
+			{
+			
+				$queue[$tail]=$temp_child[$i]["child_user_id"];
+				$tail++;
+			}
 		}
 		$cur++;
 	}
 	
 	return $queue;
 }
-	
+
 	
 //return all the record which is subordinated by the user 	
 function get_record($user_id)
