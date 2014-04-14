@@ -254,6 +254,14 @@ function is_password_match($user_name,$user_password)
 		}
 	}
 }
+
+function get_parent_user_id($child_user_id)
+{
+	$sql= "SELECT * FROM user_tree WHERE child_user_id='$child_user_id'";
+	$result=get_through_sqlCommand($sql);
+	return $result["parent_user_id"];
+	
+}
 //----------------------------------------------------------
 
 //==========Control Chains=========================
@@ -325,6 +333,20 @@ function is_chain_exist($chain_name)
 	}
 }
 
+function get_chain_name_by_id($chain_id)
+{
+	$sql="SELECT * FROM chains WHERE chain_id = '$chain_id' AND chain_available = '1' ";
+	$result=get_through_sqlCommand($sql);
+	//user name doesn't exist
+	if($result == 0)
+	{
+		return "ERROR_CHAIN_NOT_EXIST";
+	}
+	
+	return $result["chain_name"];
+}
+
+
 //=============Control Film================
 function is_film_exist($film_id)
 {
@@ -386,9 +408,15 @@ function update_film($film_id,$film_userdefine_id, $film_name, $film_path, $chai
 	
 }
 
-function get_film($film_name)
+function get_film_name_by_id($film_id)
 {
-	
+	if(!is_film_exist($film_id))
+	{
+		return "ERROR_FILM_NOT_EXIST";
+	}
+	$sql = "SELECT * FROM films WHERE film_id =  '$film_id'";
+	$film_info=get_through_sqlCommand($sql);
+	return $film_info["film_name"];
 }
 
 
