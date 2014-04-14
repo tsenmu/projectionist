@@ -8,8 +8,8 @@
       <div class="modal-body">
         <form role="form">
             <div class="form-group">
-                <label for="delete-user">用户名</label>
-                <select id="delete-user" class="parent">
+                <label for="delete-username">用户名</label>
+                <select id="delete-username" class="parent">
                     <?php echo generate_children(); ?>
                 </select>
             </div>
@@ -27,7 +27,7 @@ require_once('logic/database.php');
 function generate_children()
 {
     $ret = '';
-    $users = get_all_user_info();
+    $users = get_child_user_info();
     foreach($users as $user)
     {
         $user_id = $user["user_id"];

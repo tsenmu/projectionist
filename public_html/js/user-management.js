@@ -35,7 +35,8 @@ $(document).ready(function() {
 
     $("#delete-submit").click(function(event) {
         event.preventDefault();
-        delete_username = $('#delete-username').val();
+        delete_username = $("#delete-username").val();
+        console.log(delete_username);
         $.ajax( {
             url: "logic/user_management.php",
             type: "POST",
@@ -52,7 +53,7 @@ $(document).ready(function() {
                     alert("用户不存在，删除失败");
                 }
                 else {
-                    alert("未知错误，添加失败");
+                    alert("未知错误，删除失败");
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

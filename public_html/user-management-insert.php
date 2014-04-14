@@ -36,7 +36,7 @@ require_once('logic/database.php');
 function generate_parents()
 {
     $ret = '';
-    $users = get_all_user_info();
+    $users = get_parent_user_info();
     foreach($users as $user)
     {
         $user_id = $user["user_id"];
