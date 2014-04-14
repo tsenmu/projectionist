@@ -109,6 +109,11 @@ function show_record($record_id)
 {
 	$sql = "SELECT * FROM records WHERE record_id='$record_id'";
 	$res=get_through_sqlCommand($sql);
+	
+	if($res == NULL)
+	{
+		return array();
+	}
 	$film_name=get_film_name_by_id($res["film_id"]);
 	$chain_name=get_chain_name_by_id($res["chain_id"]);
 	$user_name=get_user_name_by_id($res["user_id"]);
