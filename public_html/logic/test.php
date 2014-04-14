@@ -20,7 +20,8 @@ echo $ret."<br>";
 //print_r(get_all_chain());
 
 
-print_r(insert_user(77,"123qwe123",1));
+print_r(get_film_info_by_film_name_and_chain_name("大闹天宫","万达院线"));
+
 	
 ?>
 

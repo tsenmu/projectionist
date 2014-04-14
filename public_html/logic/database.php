@@ -296,7 +296,7 @@ function update_chain($old_chain_name, $new_chain_name)
 		return "ERROR_CHAIN_NOT_EXIST";
 	}
 	
-	$sql= "UPDATE chains SET chain_name='$new_chain_name' WHERE chain_name= '$old_chain_name' ";
+	$sql= "UPDATE chains SET chain_name='$new_chain_name' WHERE chain_name= '$old_chain_name' AND chain_available = '1' ";
 	
 	if(execute_sqlCommand($sql))
 	{
@@ -306,7 +306,7 @@ function update_chain($old_chain_name, $new_chain_name)
 
 function get_all_chain_info()
 {
-	$sql = "SELECT * FROM chains";
+	$sql = "SELECT * FROM chains AND chain_available = '1'";
 	$all_chain_info=get_all_sqlCommand($sql);
 	
 	return $all_chain_info;
@@ -318,7 +318,7 @@ function delete_chain($chain_name)
 	{
 		return "ERROR_CHAIN_NOT_EXIST";
 	}
-	$sql= "UPDATE chains SET chain_available='0' WHERE chain_name= '$chain_name' ";
+	$sql= "UPDATE chains SET chain_available='0' WHERE chain_name= '$chain_name' AND chain_available = '1' ";
 	
 	if(execute_sqlCommand($sql))
 	{
@@ -352,6 +352,19 @@ function get_chain_name_by_id($chain_id)
 	}
 	
 	return $result["chain_name"];
+}
+
+function get_chain_id_by_name($chain_name)
+{
+	$sql="SELECT * FROM chains WHERE chain_name = '$chain_name' AND chain_available = '1' ";
+	$result=get_through_sqlCommand($sql);
+	//user name doesn't exist
+	if($result == 0)
+	{
+		return "ERROR_CHAIN_NOT_EXIST";
+	}
+	
+	return $result["chain_id"];
 }
 
 
@@ -433,6 +446,14 @@ function get_film_info_by_film_name_and_chain_id($film_name,$chain_id)
 	return $film_info;
 }
 
+function get_film_info_by_film_name_and_chain_name($film_name,$chain_name)
+{
+	$chain_id=get_chain_id_by_name($chain_name);
+	$sql = "SELECT * FROM films WHERE film_name =  '$film_name' AND chain_id = '$chain_id' AND film_available='1' ";
+	$film_info=get_through_sqlCommand($sql);
+	return $film_info;
+}
+
 function get_film_info_by_film_name($film_name)
 {
 	$sql = "SELECT * FROM films WHERE film_name =  '$film_name' AND film_available = '1' ";
@@ -442,7 +463,7 @@ function get_film_info_by_film_name($film_name)
 
 function get_all_film_info()
 {
-	$sql = "SELECT * FROM films ORDER BY film_name";
+	$sql = "SELECT * FROM films WHERE film_available = '1' ORDER BY film_name";
 	$film_info=get_all_sqlCommand($sql);
 	return $film_info;
 }
