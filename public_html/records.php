@@ -28,7 +28,7 @@ require_once('logic/entry.php');
     <?php require_once($config["includes"]["footer"]);?>
     <script>
         $(document).ready(function() {
-        set_active_navbar_button('#query');  
+        set_active_navbar_button('#records');  
         });
     </script>
   </body>

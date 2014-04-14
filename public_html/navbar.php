@@ -24,8 +24,8 @@
         <?php endif; ?>
 	  </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
+            <li class="dropdown" id="user">
+            <a  href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li id="change-password"><a href="user.php?option=cp">更改密码</a></li>
                <li class="divider"></li> 
