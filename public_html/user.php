@@ -20,7 +20,7 @@ require_once('logic/entry.php');
     <?php require_once($config["includes"]["footer"]);?>
     <script>
         $(document).ready(function() {
-        set_active_navbar_button('#insert');  
+        set_active_navbar_button('#user');  
         });
     </script>
   </body>

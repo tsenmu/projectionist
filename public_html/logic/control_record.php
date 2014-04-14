@@ -104,4 +104,3 @@ function get_record($user_id)
 		return array();
 }
 
-?>

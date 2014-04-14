@@ -12,7 +12,7 @@
 	<div class="collapse navbar-collapse">
 	  <ul class="nav navbar-nav">
 	    <li id="home"><a href="home.php">主页</a></li>
-	    <li id="query"><a href="query.php">查询</a></li>
+	    <li id="records"><a href="records.php">记录</a></li>
             <?php if ($_SESSION['current_user_type'] == 0): ?>
 	    <li id="management" class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理<b class="caret"></b></a>
@@ -22,11 +22,17 @@
 	      </ul>
         </li>
         <?php endif; ?>
-        <?php if($_SESSION['current_user_type'] == 3): ?>
-            <li id="insert"><a href="insert.php">录入</a></li>
-        <?php endif;?>
-        <li id="logout"><a href="logout.php">登出</a></li>
 	  </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown" id="user">
+            <a  href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li id="change-password"><a href="user.php?option=cp">更改密码</a></li>
+               <li class="divider"></li> 
+                <li id="logout"><a href="logout.php">登出</a></li>
+         
+            </ul>
+        </ul>
 		</div><!--/.nav-collapse -->
 	</div>
 </div>
