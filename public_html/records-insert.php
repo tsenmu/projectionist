@@ -45,14 +45,17 @@
 
 <?php 
 require_once('logic/database.php');
+generate_films();
 function generate_films()
 {
-
+    $film_info = get_all_film_info();
+    print_r($film_info);
 }
 
 function generate_chains()
 {
     $chain_info = get_all_chain_info();
+    print_r($chain_info);
 }
 function generate_parents()
 {
