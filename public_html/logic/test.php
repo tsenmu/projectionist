@@ -25,5 +25,6 @@ echo $ret[5]["user_name"]."<br>";
 $ret = update_chain("Xi\'an Movie Academy","LPS Movie Association");
 echo $ret."<br>";
 
+echo delete_user(12);
 ?>
 
