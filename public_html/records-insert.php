@@ -9,11 +9,15 @@
         <form role="form">
             <div class="form-group">
                 <label for="insert-movie">电影</label>
-                <input type="text" class="form-control" id="insert-movie" required>
+                <select class="form-control" id="insert-movie" required>
+                    <?php generate_films(); ?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="insert-chain">院线</label>
-                <input type="text" class="form-control" id="insert-chain" required>
+                <select class="form-control" id="insert-chain" required>
+                    <?php generate_chains(); ?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="insert-date-time">时间</label>
@@ -41,6 +45,15 @@
 
 <?php 
 require_once('logic/database.php');
+function generate_films()
+{
+
+}
+
+function generate_chains()
+{
+    $chain_info = get_all_chain_info();
+}
 function generate_parents()
 {
     $ret = '';
