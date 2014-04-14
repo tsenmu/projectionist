@@ -37,7 +37,7 @@
     </div>
   </div>
 </div>
-<div id="insert-user-id"><?php echo $_SESSION['current_user']; ?> </div>
+<label style="display: none;" id="insert-user-id"><?php echo $_SESSION['current_user']; ?></label>
 
 <?php 
 require_once('logic/database.php');

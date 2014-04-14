@@ -5,7 +5,7 @@ $(document).ready(function() {
         insert_chain= $("#insert-chain").val();
         insert_date_time = $("#insert-date-time").val();
         insert_location = $("#insert-location").val();
-        insert_user_id = $("#insert-user-id").val();
+        insert_user_id = $("#insert-user-id").text();
         console.log(insert_movie);
         console.log(insert_chain);
         console.log(insert_date_time);
@@ -16,6 +16,11 @@ $(document).ready(function() {
             type: "POST",
             data: {
                 'type' : 'insert',
+                'movie' : insert_movie,
+                'chain' : insert_chain,
+                'date_time' : insert_date_time,
+                'location' : insert_location,
+                'user_id' : insert_user_id
             },
             success: function(data, status) {
                 console.log(data);

@@ -59,6 +59,7 @@ require_once('logic/entry.php');
     <!-- javascripts -->
     <?php require_once($config["includes"]["footer"]);?>
     <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     <script>
         $(document).ready(function() {
         set_active_navbar_button('#records');  
@@ -66,7 +67,7 @@ require_once('logic/entry.php');
     </script>
     <script type="text/javascript">
     $(".form_datetime").datetimepicker({
-        format: "yyyy/mm/dd hh:ii:ss"
+        format: "yyyy/mm/dd hh:ii"
     });
     </script> 
     <script src="js/records.js"></script>
