@@ -13,20 +13,21 @@ function get_record($user_id)
 	
 	$all_id=$all_child_user;
 	$all_id[count($all_id)+1]["child_user_id"]=$parent_user_id;
+	
 	echo count($all_id);
 	
 	
 	
-	for($i=0;$i<3;$i++)
+	for($i=0;$i<count($all_id);$i++)
 	{
-		echo $all_id[$i]["child_user_id"];
-		$temp=$all_id[$i]["child_user_id"];
-		$sql="SELECT * FROM records WHERE user_id = '$temp'";
-		$record[$i]=get_all_sqlCommand($sql);
+		echo $all_id[$i]["child_user_id"]."<br>";
+		$temp[$i]=$all_id[$i]["child_user_id"];		
 	}
 	
-	
-	echo "count:";
+	$sql="SELECT * FROM records WHERE user_id = '$temp[0]'";
+	$record=get_all_sqlCommand($sql);
+		
+	echo "count:$temp[0]"."<br>";
 	echo count(record);
 	return $record;
 }

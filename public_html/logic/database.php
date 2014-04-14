@@ -144,6 +144,17 @@ function get_child_user_info()
 	return $user_array;
 	
 }
+
+function get_all_user_info()
+{
+	//管理员不显示
+	$sql = "SELECT * FROM users WHERE user_available ='1' ";
+	
+	$user_array=get_all_sqlCommand($sql);
+	
+	return $user_array;
+	
+}
 function get_user_info($user_name)
 {
 	if(!is_user_exist($user_name))
