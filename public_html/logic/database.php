@@ -345,18 +345,7 @@ function get_chain_name_by_id($chain_id)
 	
 	return $result["chain_name"];
 }
-function get_all_chain()
-{
-	$sql="SELECT * FROM chains";
-	$result=get_all_sqlCommand($sql);
-	//user name doesn't exist
-	if($result == NULL)
-	{
-		return "ERROR_CHAIN_NOT_EXIST";
-	}
-	
-	return $result;
-}
+
 
 //=============Control Film================
 function is_film_exist($film_id)
@@ -430,7 +419,7 @@ function get_film_name_by_id($film_id)
 	return $film_info["film_name"];
 }
 
-function get_all_film()
+function get_all_film_info()
 {
 	$sql = "SELECT * FROM films";
 	$film_info=get_all_sqlCommand($sql);
