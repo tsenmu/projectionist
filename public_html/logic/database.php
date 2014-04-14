@@ -306,7 +306,7 @@ function update_chain($old_chain_name, $new_chain_name)
 
 function get_all_chain_info()
 {
-	$sql = "SELECT * FROM chains AND chain_available = '1'";
+	$sql = "SELECT * FROM chains WHERE chain_available = '1'";
 	$all_chain_info=get_all_sqlCommand($sql);
 	
 	return $all_chain_info;
