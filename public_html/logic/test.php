@@ -14,6 +14,8 @@ echo $ret."<br>";
 //$ret = insert_chain("Beijing Movie Academy");
 //$ret = insert_chain("Xi\'an Movie Academy");
 //$ret = insert_chain("Harbin Movie Academy");
+print_r(get_all_film());
 
+print_r(get_all_chain());
 ?>
 
