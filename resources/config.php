@@ -6,7 +6,8 @@ $config = array(
         "dbname" => "projectionist",
         "username" => "projectionist",
         "password" => "123qwe123",
-        "host" => "159.226.178.62"
+      //  "host" => "159.226.178.62"
+        "host" => "localhost"
       ),
     "urls" => array(
       "baseUrl" => "localhost"

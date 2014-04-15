@@ -1,7 +1,7 @@
 <div class="container">
 
 <div class="panel panel-default">
-    <div class="panel-heading">查询用户</div>
+    <div class="panel-heading"><h3 class="panel-title">查询用户</h3></div>
         <div class="panel-body">
 <ul class="pager">
     <li class="previous"><a href="#">&larr; 上一页</a></li>

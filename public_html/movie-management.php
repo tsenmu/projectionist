@@ -5,24 +5,19 @@ require_once('logic/entry.php');
 ?>
 <?php require_once(dirname(__FILE__) . '/../resources/config.php'); ?>
 <html>
-  <head>
-    <!-- common styles -->
-    <?php require_once($config["includes"]["header"]);?>
-    <!-- custom styles -->
-    <link href="css/login.css" rel="stylesheet">
-    <!-- generate title from config file -->
-    <title><?php echo $config["vars"]["title"] ?></title>
-  </head>
-  <body>
-	<?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
-    
-    <!-- javascripts -->
-    <?php require_once($config["includes"]["footer"]);?>
-    <script>
-        $(document).ready(function() {
-        set_active_navbar_button('#movie-management');  
-        set_active_navbar_button('#management');
-        });
-    </script>
-  </body>
+    <head>
+        <!-- common styles -->
+        <?php require_once($config["includes"]["header"]);?>
+        <!-- custom styles -->
+        <!-- generate title from config file -->
+        <title><?php echo $config["vars"]["title"] ?></title>
+    </head>
+    <body role="document">
+        <?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
+        <?php require_once('movie-management-film.php'); ?>    
+        <?php require_once('movie-management-chain.php'); ?>
+        <!-- javascripts -->
+        <?php require_once($config["includes"]["footer"]);?>
+        <script src="js/movie-management.js"></script>
+    </body>
 </html>

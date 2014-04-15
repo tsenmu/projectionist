@@ -50,6 +50,10 @@ function generate_films()
 {
     $ret = '';
     $film_info = get_all_film_info();
+    if ( !isset($film_info) )
+    {
+        return $ret;
+    }
     foreach($film_info as $film)
     {
         $append_str = '<option>' . $film['film_name'].'</option>';
@@ -62,6 +66,10 @@ function generate_chains()
 {
     $ret = '';
     $chain_info = get_all_chain_info();
+    if ( !isset($chain_info) )
+    {
+        return $ret;
+    }
     foreach($chain_info as $chain)
     {
         $append_str = '<option>'. $chain['chain_name'].'</option>';

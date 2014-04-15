@@ -9,7 +9,6 @@ require_once('logic/entry.php');
     <!-- common styles -->
     <?php require_once($config["includes"]["header"]);?>
     <!-- custom styles -->
-    <link href="css/login.css" rel="stylesheet">
     <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
     <!-- generate title from config file -->
     <title><?php echo $config["vars"]["title"] ?></title>
@@ -17,10 +16,9 @@ require_once('logic/entry.php');
   <body>
 	<?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
     <div class="container">
-    <h1></h1>
     <button class="btn btn-lg" data-toggle="modal" data-target="#insert-record">添加放映记录</button>    
     <div class="panel panel-default">
-        <div class="panel-heading"><h3>查询放映记录</h3></div>
+        <div class="panel-heading"><h3 class="panel-title">查询放映记录</h3></div>
 
 
 
