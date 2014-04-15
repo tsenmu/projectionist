@@ -3,12 +3,14 @@ $(document).ready(function() {
     set_active_navbar_button('#management');
     update_chain();
     update_film();
+    var update_film_id;
     $("#alert").fadeOut();
 
     $('#insert-film').on('hidden.bs.modal', function () {
-        $('#insert-film .form-group').removeClass('has-error');
+        init_validation();
    });
     $("#insert-film-submit").click(function(event) {
+        init_validation();
         if(!validate_insert_film())
         {
             return;
@@ -35,12 +37,13 @@ $(document).ready(function() {
 
             }
         } else {
-            generate_alert("#insert-chain #alert", "alert-error", "添加失败：服务器错误");
+            generate_alert("#insert-chain #alert", "alert-danger", "添加失败：服务器错误");
 
         }
             });
     });
     $("#insert-chain-submit").click(function(event) {
+        init_validation();
         if (!validate_insert_chain())
         {
             return;
@@ -65,7 +68,7 @@ $(document).ready(function() {
         }
         }
                 else {
-                    generate_alert("#insert-chain #alert", "alert-error", "添加失败：服务器错误");
+                    generate_alert("#insert-chain #alert", "alert-danger", "添加失败：服务器错误");
                 }
             }
         );
@@ -82,6 +85,8 @@ $(document).ready(function() {
     function update_chain_name_options()
     {
         $("#insert-film #chain-name").load('logic/ajax_target.php', {'func' : 'movie_management_get_chain_name_options'});
+    $("#update-film #chain-name").load('logic/ajax_target.php', {'func' : 'movie_management_get_chain_name_options'});
+ 
     }
 
     function update_film()
@@ -125,6 +130,11 @@ $(document).ready(function() {
              $("#div-film-path").addClass("has-error");
              ret = false;
          }
+         if (!ret)
+         {
+            generate_alert("#insert-film #alert", "alert-danger", "添加失败：信息填写不完整");
+
+         }
          return ret;
     }
     function validate_insert_chain()
@@ -139,10 +149,71 @@ $(document).ready(function() {
         return ret;
     }
 
+    function init_validation()
+    {
+        console.log('init validation');
+        $('#insert-film .form-group').removeClass('has-error');
+        $('#insert-chain .form-group').removeClass('has-error');
+    }
     function trim_all_white_space(str)
     {
         return str.replace(/\s+/g, '');
     }
+    $(document).on("click", ".open-update-film-dialog", function() {
+        film_id = $(this).data('id');
+        update_film_id = film_id;
+        load_film_info_on_update_dialog(film_id);
+        
+    });
+    $('#update-film').on('shown.bs.modal', function() {
+        //update_chain_name_options();
+    });
+    $("#update-film-submit").click( function() {
+        
+        console.log(update_film_id);
+        $.post('logic/ajax_target.php',
+            {
+                'func' : 'movie_management_update_film',
+                'film-id' : update_film_id, 
+                'film-userdefine-id' : $("#update-film #film-userdefine-id").val(),
+                'film-name': $('#update-film #film-name').val(),
+                'film-path': $('#update-film #film-path').val(),
+    'chain-name' : $('#update-film #chain-name option:selected').text(),
+            }, function(data, status) {
+                if (data.indexOf('SUCCESS') != -1)
+                {
+                    generate_alert('#update-film .alert')
+generate_alert("#update-film #alert", "alert-success", "成功更新电影：" + $('#update-film #film-name').val());
+                }
+            });
+    });
+    function load_film_info_on_update_dialog(film_id)
+    {
+        update_chain_name_options();
+        $.post('logic/ajax_target.php',
+            {
+                'func' : 'movie_management_load_film_info',
+            'film-id' : film_id 
+            },
+            function(data, status)
+            {
+                info = jQuery.parseJSON(data);
+                if (status == "success")
+                {
+                    $('#update-film #film-name').val(info.film_name);
+                    $('#update-film #film-userdefine-id').val(info.film_userdefine_id);
+                    $('#update-film #film-path').val(info.film_path);
+                    $('#update-film #chain-name')
+                    $("#update-film #chain-name option:contains(" + info.chain_name + ")").attr('selected', 'selected'); 
+                }
+                else 
+                {
+                    log.console(data);
+                }
+            }
+        );
+    }
 });
+
 
 
