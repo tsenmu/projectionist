@@ -395,6 +395,7 @@ function insert_film($film_userdefine_id, $film_name, $film_path, $chain_id)
 	{
 		return "INSERT_FILM_SUCCESS";
 	}
+	return "ERROR_INSERT_FILM";
 }
 
 function delete_film($film_id)
