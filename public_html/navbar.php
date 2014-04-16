@@ -11,7 +11,7 @@
 	</div>
 	<div class="collapse navbar-collapse">
 	  <ul class="nav navbar-nav">
-	    <li id="home"><a href="home.php">主页</a></li>
+<!--	    <li id="home"><a href="home.php">主页</a></li> -->
 	    <li id="records"><a href="records.php">记录</a></li>
             <?php if ($_SESSION['current_user_type'] == 0): ?>
 	    <li id="management" class="dropdown">

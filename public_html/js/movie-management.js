@@ -4,6 +4,9 @@ $(document).ready(function() {
     update_chain();
     update_film();
     var update_film_id;
+    var delete_film_id;
+    var update_chain_id;
+    var delete_chain_id;
     $("#alert").fadeOut();
 
     $('#insert-film').on('hidden.bs.modal', function () {
@@ -165,9 +168,61 @@ $(document).ready(function() {
         load_film_info_on_update_dialog(film_id);
         
     });
+    $(document).on("click", ".open-update-chain-dialog", function() {
+        chain_id = $(this).data('id');
+        update_chain_id = chain_id;
+        load_chain_info_on_update_dialog(chain_id);
+    });
+    $(document).on("click", ".open-delete-film-dialog", function() {
+        film_id = $(this).data('id');
+        delete_film_id = film_id;
+        load_film_info_on_delete_dialog(film_id);
+    });
+    $(document).on("click", ".open-delete-chain-dialog", function() {
+        chain_id = $(this).data('id');
+        delete_chain_id = chain_id;
+        load_chain_info_on_delete_dialog(chain_id);
+    });
     $('#update-film').on('shown.bs.modal', function() {
         //update_chain_name_options();
     });
+    $("#delete-film-submit").click( function() {
+        $.post('logic/ajax_target.php',
+            {
+                'func' : 'movie_management_delete_film',
+                'film-id' : delete_film_id, 
+            }, function(data, status) {
+                if (data.indexOf('SUCCESS') != -1)
+                {
+generate_alert("#panel-film #alert", "alert-success", "成功删除电影：" + $('#delete-film #delete-film-name').text());
+$('#delete-film').modal('hide');
+update_film();
+    return;
+                }
+generate_alert("#delete-film #alert", "alert-danger", "删除电影失败：电影可能已被删除或服务器发生错误" );
+
+            });
+    });
+
+$("#delete-chain-submit").click( function() {
+        $.post('logic/ajax_target.php',
+            {
+                'func' : 'movie_management_delete_chain',
+                'chain-id' : delete_chain_id, 
+            }, function(data, status) {
+                if (data.indexOf('SUCCESS') != -1)
+                {
+generate_alert("#panel-chain #alert", "alert-success", "成功删除院线：" + $('#delete-chain #delete-chain-name').text());
+$('#delete-chain').modal('hide');
+update_chain();
+    return;
+                }
+generate_alert("#delete-chain #alert", "alert-danger", "删除院线失败：院线可能已被删除或服务器发生错误" );
+
+            });
+    });
+
+
     $("#update-film-submit").click( function() {
         
         console.log(update_film_id);
@@ -182,11 +237,61 @@ $(document).ready(function() {
             }, function(data, status) {
                 if (data.indexOf('SUCCESS') != -1)
                 {
-                    generate_alert('#update-film .alert')
 generate_alert("#update-film #alert", "alert-success", "成功更新电影：" + $('#update-film #film-name').val());
+                update_film();
                 }
             });
     });
+    function load_chain_info_on_delete_dialog(chain_id)
+    {
+        $.post('logic/ajax_target.php',
+                {
+                    'func' : 'movie_management_load_chain_info',
+                    'chain-id' : chain_id
+                },
+                function (data, status)
+                {
+                    info = jQuery.parseJSON(data);
+                    if (status == 'success')
+                    {
+                        $('#delete-chain #delete-chain-name').html(info.chain_name);
+                    }
+                });
+    }
+    function load_film_info_on_delete_dialog(film_id)
+    {
+        $.post('logic/ajax_target.php',
+                {
+                    'func' : 'movie_management_load_film_info',
+                    'film-id' : film_id
+                },
+                function (data, status)
+                {
+                    info = jQuery.parseJSON(data);
+                    if (status == 'success')
+                    {
+                        $('#delete-film #delete-film-name').html(info.film_name);
+                    }
+                }
+              );
+    }
+    function load_chain_info_on_update_dialog(chain_id)
+    {
+        $.post('logic/ajax_target.php',
+                {
+                    'func' : 'movie_management_load_chain_info',
+                'chain-id' : chain_id
+                },
+                function(data, status)
+                {
+                    info = jQuery.parseJSON(data);
+                    if (status == 'success')
+                    {
+                        $('#update-chain #chain-name').val(info.chain_name);
+                    }
+                }
+              );
+    }
     function load_film_info_on_update_dialog(film_id)
     {
         update_chain_name_options();

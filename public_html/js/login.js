@@ -13,7 +13,7 @@ $(document).ready(function() {
                 $("#username_field").removeClass("error");
                 $("#password_field").removeClass("error");
                 if(data.indexOf("SUCCESS") != -1) {
-                    window.location = "home.php";
+                    window.location = "records.php";
                 } else if (data.indexOf("ERROR_USER_NAME") != -1) {
                     $("#username_field").addClass("error");
                 } else if (data.indexOf("ERROR_USER_PASSWORD") != -1) {

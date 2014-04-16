@@ -22,13 +22,28 @@ function movie_management_get_chain_list()
     $chains = get_all_chain_info();
     if (count($chains) == 0)
     {
+
+echo "<thead><tr><th>暂无院线</th></tr></thead>";
         return;
     }
-    $ret = '';
+    $ret = '<thead><th>院线名称</th><th>操作</th></thead>';
     foreach ($chains as $chain)
     {
         $chain_name = $chain['chain_name'];
-        $append_str = '<tr><td>'.$chain_name.'</td></tr>';
+        $chain_id = $chain['chain_id'];
+        $append_str= <<<EOA
+<tr><td>$chain_name</td><td>
+<button role="update-chain" class="btn btn-primary open-update-chain-dialog" type="button" data-toggle="modal"data-target="#update-chain" data-id="$chain_id">
+<span class="glyphicon glyphicon-pencil"></span>
+编辑
+</button>
+<button role="delete-chain" class="btn btn-danger open-delete-chain-dialog" type="button" data-toggle="modal" data-target="#delete-chain" data-id="$chain_id">
+<span class="glyphicon glyphicon-trash"></span>
+删除
+</button>
+</td>
+</tr>
+EOA;
         $ret = $ret . $append_str;
     }
     echo $ret;
@@ -39,6 +54,7 @@ function movie_management_get_chain_name_options()
     $chains = get_all_chain_info();
     if (count($chains) == 0)
     {
+
         return;
     }
     $ret = '';
@@ -56,9 +72,10 @@ function movie_management_get_film_list()
     $films = get_all_film_info();
     if (count($films) == 0)
     {
+        echo "<thead><tr><th>暂无电影</th></tr></thead>";
         return;
     }
-    $ret = '';
+    $ret= '<thead><tr><th>电影名称</th><th>电影编号</th><th>电影院线</th><th>电影路径</th><th>操作</th></tr></thead><tbody>';
     foreach ($films as $film)
     {
         $film_id = $film['film_id'];
@@ -73,7 +90,7 @@ function movie_management_get_film_list()
 <span class="glyphicon glyphicon-pencil"></span>
 编辑
 </button>
-<button role="delete-film" class="btn btn-danger open-delete-film-dialog" type="button" data-toggle="modal" data-target="#delete-film" data-id"$film_id">
+<button role="delete-film" class="btn btn-danger open-delete-film-dialog" type="button" data-toggle="modal" data-target="#delete-film" data-id="$film_id">
 <span class="glyphicon glyphicon-trash"></span>
 删除
 </button>
@@ -82,6 +99,7 @@ function movie_management_get_film_list()
 EOD;
         $ret = $ret . $append_str;
     }
+	$ret = $ret . '</tobdy>';
     echo $ret;
 }
 function movie_management_load_film_info()
@@ -90,6 +108,14 @@ function movie_management_load_film_info()
     $film_info = get_film_info_by_id($film_id);
     $film_info['chain_name'] = get_chain_name_by_id($film_info['chain_id']);
     echo json_encode($film_info);
+}
+function movie_management_load_chain_info()
+{
+    $chain_id = $_REQUEST['chain-id'];
+    $chain_info = array();
+    $chain_info['chain_id'] = $chain_id;
+    $chain_info['chain_name'] = get_chain_name_by_id($chain_id);
+    echo json_encode($chain_info);
 }
 function movie_management_update_film()
 {
@@ -104,6 +130,15 @@ function movie_management_update_film()
 
 function movie_management_delete_film()
 {
+    $film_id = $_REQUEST['film-id'];
+    $ret = delete_film($film_id);
+    echo $ret;
+}
 
+function movie_management_delete_chain()
+{
+    $chain_id = $_REQUEST['chain-id'];
+    $ret = delete_chain(get_chain_name_by_id($chain_id));
+    echo $ret;
 }
 ?>
