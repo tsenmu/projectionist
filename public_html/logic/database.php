@@ -202,7 +202,15 @@ function delete_user($user_name)
 	{
 		return "ERROR_USER_NOT_EXIST";
 	}
-
+	
+	$sql="SELECT * FROM users WHERE user_name = '$user_name'";
+	$res=get_through_sqlCommand($sql);
+	
+	if($res["user_type"]==0)
+	{
+		return "ERROR_DELETE_USER_ADMIN";
+	}
+	
 	$sql= "UPDATE users SET user_available = '0' WHERE user_name= '$user_name' AND user_available= '1'";
 	
 	if(execute_sqlCommand($sql))
