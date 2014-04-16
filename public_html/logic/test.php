@@ -3,8 +3,8 @@ header("Content-Type: text/html; charset=utf-8");
 require_once('database.php');
 //print_r($config);
 
-$ret = is_password_match(177,"123qwe123");
-echo $ret."<br>";
+//$ret = is_password_match(177,"123qwe123");
+//echo $ret."<br>";
 
 //$ret = insert_user(1, 1,0);
 //$ret = insert_user(2, 2,1);
@@ -20,8 +20,14 @@ echo $ret."<br>";
 //print_r(get_all_chain());
 
 
-print_r(get_all_chain_info());
+//print_r(get_all_chain_info());
 
-	
+print_r(delete_user("admin"));
+
+//print_r(update_user(19,"pig","123qwe123","admin"));
+
+//print_r(update_user(1,"pig","123qwe123","admin"));
+
+//print_r(update_user(3,"pig","123qwe123","7"));
 ?>
 

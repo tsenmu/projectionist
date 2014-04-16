@@ -203,11 +203,15 @@ function delete_user($user_name)
 		return "ERROR_USER_NOT_EXIST";
 	}
 
-	$sql= "UPDATE users SET user_available = '0' WHERE user_name= $user_name AND user_available= '1'";
+	$sql= "UPDATE users SET user_available = '0' WHERE user_name= '$user_name' AND user_available= '1'";
 	
 	if(execute_sqlCommand($sql))
 	{
 		return "DELETE_USER_SUCCESS";
+	}
+	else
+	{
+		return "ERROR_DELETE_USER";
 	}
 	
 }
@@ -226,11 +230,63 @@ function update_user_password($user_name,$user_new_password)
 		return "UPDATE_PASSWORD_SUCCESS";
 	}
 }
+function update_user_name($user_name,$user_new_name)
+{
+	if(!is_user_exist($user_name))
+	{
+		return "ERROR_USER_NOT_EXIST";
+	}
+	
+	$user_new_password=md5($user_new_password);
+	$sql="UPDATE users SET user_name = '$user_new_name' WHERE user_name = '$user_name' AND user_available = '1' ";
+	
+	if(execute_sqlCommand($sql))
+	{
+		return "UPDATE_PASSWORD_SUCCESS";
+	}
+}
 
+function update_user($user_id, $user_new_name, $user_new_password,$new_parent_user_name)
+{
+	$sql = "SELECT * FROM users WHERE user_id = '$user_id' AND user_available='1'";
+	print_r(get_through_sqlCommand($sql));
+	
+	if(!get_through_sqlCommand($sql))
+	{
+		return "ERROR_USER_ID";
+	}
+	
+	$hash_user_password=md5($user_new_password);
+	
+	$parent_user_info=get_user_info($new_parent_user_name);
+	$user_type=$parent_user_info["user_type"]+1;
+	$parent_user_id=$parent_user_info["user_id"];
+	
+	
+	$sql= "UPDATE users SET user_name = '$user_new_name', user_password = '$hash_user_password',user_type='$user_type' WHERE user_id = '$user_id'";
+	
+	if(execute_sqlCommand($sql))
+	{
+		$sql= "UPDATE user_tree SET parent_user_id='$parent_user_id' WHERE child_user_id='$user_id'";
+	
+		if(execute_sqlCommand($sql))
+		{
+			return "UPDATE_USER_SUCCESS";
+		}
+		else
+		{
+			return "ERROR_UPDATE_USER_TREE";
+		}
+	}
+	else
+	{
+		return "ERROR_UPDATE_USER";
+	}
+}
 /*judge whether this user exists or not*/
 function is_user_exist($user_name)
 {
-	$sql="SELECT user_password FROM users WHERE user_name = '$user_name' AND user_available = '1' ";
+	$sql="SELECT * FROM users WHERE user_name = '$user_name' AND user_available = '1' ";
 	$result=get_through_sqlCommand($sql);
 	//user name doesn't exist
 	if($result == 0)
