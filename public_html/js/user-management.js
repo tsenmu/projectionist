@@ -36,7 +36,7 @@ $(document).ready(function() {
             {
 
  generate_alert('#panel-user #alert', 'alert-success', '成功删除用户：' + $("#delete-user #delete-user-name").text());
-
+            $('#delete-user').modal('hide');
             }
         });
     });

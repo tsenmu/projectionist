@@ -1,9 +1,12 @@
 <?php
 require_once(dirname(__FILE__).'/../control_record.php');
+require_once(dirname(__FILE__).'/../database.php');
 function records_get_record_list()
 {
+    session_start();
     $current_user = $_SESSION['current_user'];
-    $records= get_record($curret_user);
+    $current_user_id = get_user_id($current_user);
+    $records= get_record($current_user_id);
     if (count ($records) == 0)
     {
         echo '<thead><tr><th>当前管辖范围内暂无任何记录</th></tr></thead>';
@@ -67,20 +70,22 @@ EOD;
     }
     echo $ret;
 }
-function records_insert_film()
+function records_insert_record()
 {
     $film = $_REQUEST['film'];
     $chain = $_REQUEST['chain'];
     $date_time = $_REQUEST['date_time'];
-    $location = $_REQUEST['insert_location'];
-    $user_id = $_REQUEST['user_id'];
-    $film_info = get_film_info_by_film_name_and_chain_name($film, $chain_name);
-    if (!isset($film_info))
+    $location = $_REQUEST['location'];
+    $username = $_REQUEST['username'];
+    $film_info = get_film_info_by_film_name_and_chain_name($film, $chain);
+    if (count($film_info) == 0)
     {
         echo "ERROR_FILM_CHAIN_NOT_MATCH";
         return;
     }
     $film_id = $film_info['film_id'];
+    $chain_id = $film_info['chain_id']; 
+    $user_id = get_user_id($user_name);
     echo insert_record($user_id, $film_id, $chain_id, $date_time, $location);
 }
 ?>

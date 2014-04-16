@@ -45,30 +45,3 @@ format: "yyyy/mm/dd hh:ii"
 <script src="js/records.js"></script>
   </body>
 </html>
-<?php
-function generate_records()
-{
-    require_once('logic/control_record.php');
-    $ret = '';
-    $current_user = $_SESSION['current_user'];
-    $records = get_record($current_user);
-    if ( count($records) == 0)
-    return;
-    foreach($records as $record_id => $record)
-    {
-        $record_text = show_record($record_id);
-        $film_name = $record_text['film_name'];
-        $user_name = $record_text['user_name'];
-        $chain_name = $record_text['chain_name'];
-        $user_name = $record_text['user_name'];
-        $user_id = $record['user_id'];
-        $film_id  = $record['film_id'];
-        $chain_id = $record['chain_id'];
-        $date_time = $record['date_time'];
-        $location = $record['location'];
-        $push_str = '<tr><td>'."$film_name".'</td><td>'."$chain_name".'</td><td>'."$user_name".'</td><td>'."$date_time".'</td><td>'."$location"  .'</td></tr>';
-        $ret = $ret.$push_str;
-    }
-    return $ret;
-}
-?>
