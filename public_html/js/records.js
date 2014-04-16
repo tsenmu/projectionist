@@ -1,43 +1,59 @@
 $(document).ready(function() {
+    update_record();
+    update_film();
+    update_chain();
+    function update_record()
+    {
+        update_record_list();
+    }
+    function update_record_list()
+    {
+        $('#panel-record #record-list').load('logic/ajax_target.php', {
+            'func' : 'records_get_record_list'
+        });
+    }   
+    function update_film()
+{
+    update_film_options();
+}
+    function update_film_options()
+{
+    $('#insert-record #insert-film').load('logic/ajax_target.php', {'func': 'records_get_film_options'});
+}
+function update_chain()
+{
+    update_chain_options();
+}
+function update_chain_options()
+{
+    $('#insert-record #insert-chain').load('logic/ajax_target.php', {'func' : 'records_get_chain_options' });
+}
     $("#insert-submit").click(function(event) {
-        event.preventDefault();
-        insert_movie = $("#insert-movie").val();
+        insert_film = $("#insert-film").val();
         insert_chain= $("#insert-chain").val();
         insert_date_time = $("#insert-date-time").val();
         insert_location = $("#insert-location").val();
         insert_user_id = $("#insert-user-id").text();
-        console.log(insert_movie);
-        console.log(insert_chain);
-        console.log(insert_date_time);
-        console.log(insert_location);
-        console.log(insert_user_id);
-        $.ajax( {
-            url: "logic/records.php",
-            type: "POST",
-            data: {
-                'type' : 'insert',
-                'movie' : insert_movie,
+        $.post(
+            "logic/ajax_target.php",
+            {
+                'func' : 'records_insert_film',
+                'film' : insert_film,
                 'chain' : insert_chain,
                 'date_time' : insert_date_time,
                 'location' : insert_location,
                 'user_id' : insert_user_id
             },
-            success: function(data, status) {
+             function(data, status) {
                 console.log(data);
-                if (data.indexOf('INSERT_USER_SUCCESS') != -1) {
-                    alert("添加成功");
-                    $("#insert-user").modal('hide');
+                if (data.indexOf('INSERT_RECORD_SUCCESS') != -1) {
+                    generate_alert('#insert-record #alert', 'alert-success', '记录添加成功');
+                    update_record();
                 }
-                else if(data.indexOf('ERROR_USER_EXIST') != -1) {
-                    alert("用户已存在，添加失败");
+                else{
+                    generate_alert('#insert-record #alert', 'alert-danger', '记录添加失败：不匹配的电影和院线记录或服务器发生错误');
                 }
-                else {
-                    alert("未知错误，添加失败");
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log("error");
             }
-        });
+        );
     });
 });

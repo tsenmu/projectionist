@@ -1,22 +1,21 @@
-<div class="modal fade" id="insert-record" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="insert-record" tabindex="-1" role="dialog" aria-labelledby="insert-record-label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">添加放映</h4>
+        <h4 class="modal-title" id="insert-chain-label">添加放映</h4>
       </div>
       <div class="modal-body">
+        <div id="alert"></div>
         <form role="form">
             <div class="form-group">
-                <label for="insert-movie">电影</label>
-                <select class="form-control" id="insert-movie" required>
-                    <?php echo generate_films(); ?>
+                <label for="insert-film">电影</label>
+                <select class="form-control" id="insert-film" required>
                 </select>
             </div>
             <div class="form-group">
                 <label for="insert-chain">院线</label>
                 <select class="form-control" id="insert-chain" required>
-                    <?php echo generate_chains(); ?>
                 </select>
             </div>
             <div class="form-group">
@@ -30,12 +29,10 @@
                 <label for="insert-location">地点</label>
                 <input type="text" class="form-control" id="insert-location" required>
             </div>
-
-
         </form>
       </div>
       <div class="modal-footer">
-        <button id="insert-cancel" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button id="insert-cancel" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
         <button id="insert-submit" type="button" class="btn btn-primary">添加</button>
       </div>
     </div>

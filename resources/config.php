@@ -4,8 +4,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 $config = array(
     "db" => array(
         "dbname" => "projectionist",
-      //  "username" => "projectionist",
-        "username" => "root",
+        "username" => "projectionist",
+      //  "username" => "root",
         "password" => "123qwe123",
       //  "host" => "159.226.178.62"
         "host" => "localhost"
