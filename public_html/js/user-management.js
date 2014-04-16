@@ -1,36 +1,68 @@
 $(document).ready(function() {
-    $("#insert-submit").click(function(event) {
-        event.preventDefault();
-        insert_username = $("#insert-username").val();
-        insert_password = $("#insert-password").val();
-        insert_parent =  $("#insert-parent").val();
-        $.ajax( {
-            url: "logic/user_management.php",
-            type: "POST",
-            data: {
-                'type' : 'insert',
-                'username' : insert_username,
-                'password' : insert_password,
-                'parent' : insert_parent
+    set_active_navbar_button('#user-management');  
+    set_active_navbar_button('#management');
+    update_user();
+    var update_user_id;
+    var delete_user_id;
+    function load_user_info_on_delete_dialog(user_id)
+    {
+        $.post('logic/ajax_target.php',
+            {
+                'func' : 'user_management_load_user_info',
+                'user-id' : delete_user_id 
             },
-            success: function(data, status) {
-                console.log(data);
-                if (data.indexOf('INSERT_USER_SUCCESS') != -1) {
-                    alert("添加成功");
-                    $("#insert-user").modal('hide');
+            function (data, status)
+            {
+                info = jQuery.parseJSON(data);
+                if (status == "success")
+                {
+                    $('#delete-user #delete-user-name').html(info.user_name);
                 }
-                else if(data.indexOf('ERROR_USER_EXIST') != -1) {
-                    alert("用户已存在，添加失败");
-                }
-                else {
-                    alert("未知错误，添加失败");
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log("error");
+            });
+    }
+    $(document).on("click", ".open-delete-user-dialog", function() {
+        delete_user_id = $(this).data('id');
+        load_user_info_on_delete_dialog(delete_user_id);
+    });
+    $('#delete-user-submit').click(function(event) {
+        console.log("aaaaa");
+        delete_username = $("#delete-user #delete-user-name").text(); 
+        $.post('logic/ajax_target.php', {
+            'func' : 'user_management_delete_user',
+            'username' : delete_username
+        }, function(data, status)
+        {
+            if (data.indexOf("SUCCESS") != -1)
+            {
+
+ generate_alert('#panel-user #alert', 'alert-success', '成功删除用户：' + $("#delete-user #delete-user-name").text());
+
             }
         });
     });
+    $("#insert-user-submit").click(function(event) {
+        insert_username = $("#insert-username").val();
+        insert_password = $("#insert-password").val();
+        insert_parent =  $("#insert-parent").val();
+        $.post('logic/ajax_target.php', {
+            'func': 'user_management_insert_user',
+            'username' : insert_username,
+            'password' : insert_password,
+            'parent' : insert_parent
+        }, function(data, status) {
+            if (data.indexOf("SUCCESS") != -1)
+        {
+            generate_alert('#insert-user #alert', 'alert-success', '成功添加用户：' + insert_username);
+            update_user();
+        }
+            else 
+        {
+            generate_alert('#insert-user #alert', 'alert-danger', '添加用户失败：用户已存在或服务器错误');
+
+            update_user();
+        }
+        });
+    }); 
 
 
     $("#delete-submit").click(function(event) {
@@ -42,7 +74,7 @@ $(document).ready(function() {
             type: "POST",
             data: {
                 'type' : 'delete',
-                'username' : delete_username 
+            'username' : delete_username 
             },
             success: function(data, status) {
                 if (data.indexOf('DELETE_USER_SUCCESS') != -1) {
@@ -61,4 +93,18 @@ $(document).ready(function() {
             }
         });
     });
+    function update_user()
+    {
+        update_user_list();
+        update_parent_options();
+    }
+    function update_user_list()
+    {
+        $('#panel-user #user-list').load('logic/ajax_target.php', {'func':'user_management_get_user_list'});
+    }
+    function update_parent_options()
+    {
+        $('#insert-user #insert-parent').load('logic/ajax_target.php', {'func' : 'user_management_get_parent_options'});
+    }
+
 });

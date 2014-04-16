@@ -127,6 +127,17 @@ function movie_management_update_film()
     $ret = update_film($film_id, $film_userdefine_id, $film_name, $film_path, $chain_id);
     echo $ret;
 }
+function movie_management_update_chain()
+{
+    $chain_id = $_REQUEST['chain-id'];
+    echo $chain_id;
+    $old_chain_name = get_chain_name_by_id($chain_id);
+    echo $old_chain_name;
+    $new_chain_name = $_REQUEST['chain-name'];
+    $ret = update_chain($old_chain_name, $new_chain_name);
+    echo $ret;
+}
+
 
 function movie_management_delete_film()
 {
