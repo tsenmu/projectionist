@@ -9,7 +9,7 @@ $(document).ready(function() {
     var delete_chain_id;
     $("#alert").fadeOut();
 
-    $('#insert-film').on('hidden.bs.modal', function () {
+    $('.modal').on('hidden.bs.modal', function () {
         init_validation();
     });
     $("#insert-film-submit").click(function(event) {
@@ -129,7 +129,7 @@ $(document).ready(function() {
         }
         if (!ret)
         {
-            generate_alert("#update-film #alert", "alert-danger", "添加失败：信息填写不完整");
+            generate_alert("#update-film #alert", "alert-danger", "更新失败：信息填写不完整");
 
         }
         return ret;
@@ -185,6 +185,23 @@ $(document).ready(function() {
         }
         return ret;
     }
+function validate_update_chain()
+    {
+        chain_name = $('#update-chain #chain-name');
+        ret = true;
+        if (trim_all_white_space(chain_name.val()).length  == 0)
+        {
+            $('#update-chain #div-chain-name').addClass("has-error");
+            ret = false;
+        }
+        if (!ret)
+        {
+             generate_alert("#update-chain #alert", "alert-danger", "更新失败：信息填写不完整");
+
+        }
+        return ret;
+    }
+
 
     function init_validation()
     {
@@ -257,6 +274,7 @@ $(document).ready(function() {
 
     $("#update-film-submit").click( function() {
         init_validation();
+        
         if(!validate_update_film())
     {
         return;
@@ -274,13 +292,18 @@ $(document).ready(function() {
         {
             generate_alert("#update-film #alert", "alert-success", "成功更新电影：" + $('#update-film #film-name').val());
             update_film();
+        } else 
+        {
         }
             });
     });
 
     $("#update-chain-submit").click( function() {
-
-        console.log(update_chain_id);
+        init_validation();
+        if (!validate_update_chain())
+    {
+        return;
+    }
         $.post('logic/ajax_target.php',
             {
                 'func' : 'movie_management_update_chain',
@@ -291,6 +314,9 @@ $(document).ready(function() {
         {
             generate_alert("#update-chain #alert", "alert-success", "成功更新院线：" + $('#update-chain #chain-name').val());
             update_chain();
+        } else 
+        {
+            generate_alert("#update-chain #alert", "alert-danger", "更新失败：院线名已存在或服务器错误");
         }
             });
     });

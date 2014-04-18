@@ -3,6 +3,64 @@ $(document).ready(function() {
     set_active_navbar_button('#user-management');  
     set_active_navbar_button('#management');
     update_user();
+// Validations
+    $('.modal').on('hidden.bs.modal', function() {
+        init_validation();
+    });
+    function trim_all_white_space(str) {
+        return str.replace(/\s+/g, '');
+    }
+    function init_validation() {
+       $('.form-group').removeClass('has-error'); 
+    }
+    function validate_insert_user() {
+        user_name = $('#insert-user #user-name');
+        password = $('#insert-user #password');
+        parent_user_name = $('#insert-user #parent-user-name');
+        ret = true;
+        if (trim_all_white_space(user_name.val()).length == 0) {
+            $('#insert-user #div-user-name').addClass('has-error');
+            ret = false;
+        }
+        if(trim_all_white_space(password.val()).length == 0) {
+           $('#insert-user #div-password').addClass('has-error');
+           ret = false;
+        }
+        if(trim_all_white_space(parent_user_name.val()).length == 0) {
+            $('#insert-user #div-parent-user-name').addClass('has-error');
+            ret = false;
+        }
+        if (!ret)
+        {
+            generate_alert("#insert-user #alert", "alert-danger", "添加失败：信息填写不完整");
+        }
+        return ret;
+    }
+    function validate_update_user() {
+        user_name = $('#update-user #user-name');
+        change_password = ($("#update-user #change-password:checked").val() == "on")
+        password = $('#update-user #password');
+        parent_user_name = $('#update-user #parent-user-name');
+        ret = true;
+        if (trim_all_white_space(user_name.val()).length == 0) {
+            $('#update-user #div-user-name').addClass('has-error');
+            ret = false;
+        }
+        if(change_password && trim_all_white_space(password.val()).length == 0) {
+           $('#update-user #div-password').addClass('has-error');
+           ret = false;
+        }
+        if(trim_all_white_space(parent_user_name.val()).length == 0) {
+            $('#update-user #div-parent-user-name').addClass('has-error');
+            ret = false;
+        }
+        if (!ret)
+        {
+            generate_alert("#update-user #alert", "alert-danger", "添加失败：信息填写不完整");
+        }
+        return ret;
+        
+    }
 
 //------ delete user scripts ------
     // global variable storing current user info for deletion
@@ -58,6 +116,10 @@ $(document).ready(function() {
 //------ insert user scripts ------
     // submit insert user
     $("#insert-user-submit").click(function(event) {
+        init_validation();
+        if (!validate_insert_user()) {
+            return;
+        }
         user_name = $("#insert-user #user-name").val();
         password = $("#insert-user #password").val();
         parent_user_name =  $("#insert-user #parent-user-name").val();
@@ -126,11 +188,14 @@ $(document).ready(function() {
 
     // submit update user
     $("#update-user-submit").click(function(event) {
+        init_validation();
+        if (!validate_update_user()) {
+            return;
+        }
         user_name = $("#update-user #user-name").val();
         password = "";
         if ($("#update-user #change-password:checked").val() == "on")
         {
-            console.log('I am here');
             password = $("#update-user #password").val();
         }
         parent_user_name =  $("#update-user #parent-user-name").val();
