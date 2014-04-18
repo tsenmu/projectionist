@@ -87,11 +87,10 @@ $(document).ready(function() {
     var update_user_id;
     var update_user_name;
     $(document).on("click", ".open-update-user-dialog", function() {
-        console.log("opened");
         update_user_id = $(this).data('id');
         load_user_info_on_update_dialog();
     });
-    // load user info on delete dialog
+    // load user info on update dialog
     function load_user_info_on_update_dialog()
     {
         $.post('logic/ajax_target.php',
@@ -105,9 +104,10 @@ $(document).ready(function() {
                 {
                     info = jQuery.parseJSON(data);
                     update_user_name = info.user_name;
-                    $('#update-user #user-name').html(delete_user_name);
-                }
-                else
+                    $('#update-user #user-name').val(update_user_name);
+                    $('#update-user #parent-user-name').val(info.parent_user_name);
+                    $("#update-user #parent-user-name option[user-id="+update_user_id+"]").remove(); }
+                    else
                 {
                     console.log("Error: load_user_info_on_update_dialog");
                 }
@@ -148,7 +148,7 @@ $(document).ready(function() {
             function(data, status) {
                 if (data.indexOf("SUCCESS") != -1)
                 {
-                    generate_alert('#update-user #alert', 'alert-success', '成功更新用户：' + user_name);
+                    generate_alert('#update-user #alert', 'alert-success', '成功更新用户：' + update_user_name);
                 }
                 else 
                 {

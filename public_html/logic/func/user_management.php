@@ -7,8 +7,9 @@ function user_management_get_parent_options()
     foreach($users as $user)
     {
         $user_name = $user["user_name"];
+        $user_id = $user["user_id"];
         $append_str =<<<  EOS
-<option>$user_name</option>
+<option user-id="$user_id">$user_name</option>
 EOS;
         if($user["user_available"] == 1)
         {
@@ -32,8 +33,32 @@ function user_management_get_user_list()
     {
         $user_id = $user['user_id'];
         $user_name = $user['user_name'];
+        $user_type = $user['user_type'];
         $user_parent = get_user_name_by_id(get_parent_user_id($user['user_id']));
+        if ( $user_type == 0)
+        {
         $append_str = <<< EM
+<tr><td>$user_name</td><td>********</td><td>无</td>
+<td>
+<span data-toggle="tooltip" data-placement="left" title="请在屏幕右上角更改区级用户信息">
+<button role="update-user" class="btn btn-primary open-update-user-dialog" type="button" disabled>
+<span class="glyphicon glyphicon-pencil"></span>
+编辑
+</button></span>
+<span data-toggle="tooltip" data-placement="left" title="区级用户不能被删除">
+<button role="delete-user" class="btn btn-danger" type="button" data-toggle="tooltip" data-placement="left" title="ssss" disabled>
+<span class="glyphicon glyphicon-trash"></span>
+删除
+</button>
+</span>
+
+</td>
+</tr>
+EM;
+        }
+        else 
+        {
+            $append_str = <<< EM
 <tr><td>$user_name</td><td>********</td><td>$user_parent</td>
 <td>
 <button role="update-user" class="btn btn-primary open-update-user-dialog" type="button" data-toggle="modal"data-target="#update-user" data-id="$user_id">
@@ -48,6 +73,8 @@ function user_management_get_user_list()
 </td>
 </tr>
 EM;
+
+        }
         $ret = $ret . $append_str;
     }
     $ret = $ret. '</tbody>';
@@ -68,7 +95,12 @@ function user_management_delete_user()
 function user_management_load_user_info()
 {
     $user_id = $_REQUEST['user-id'];
-    echo json_encode(get_user_info(get_user_name_by_id($user_id)));
+    $info = get_user_info(get_user_name_by_id($user_id));
+    $parent_user_id = get_parent_user_id($user_id);
+    $parent_user_name = get_user_name_by_id($parent_user_id);
+    unset($info['user_password']);
+    $info['parent_user_name'] = $parent_user_name;
+    echo json_encode($info);
 }
 function user_management_update_user()
 {
