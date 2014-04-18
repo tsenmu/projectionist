@@ -23,7 +23,7 @@ require_once('database.php');
 //print_r(get_all_chain_info());
 //print_r(get_all_film_name());
 
-print_r(update_user(19,"pig","123qwe123","3"));
+print_r(update_chain(1,5));
 
 //print_r(update_user(1,"pig","123qwe123","admin"));
 

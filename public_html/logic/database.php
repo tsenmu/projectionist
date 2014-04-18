@@ -366,11 +366,18 @@ function insert_chain($chain_name)
 
 function update_chain($old_chain_name, $new_chain_name)
 {
+	if($new_chain_name==NULL)
+	{
+		return "ERROR_CHAIN_NAME_NULL";
+	}
 	if(!is_chain_exist($old_chain_name))
 	{
 		return "ERROR_CHAIN_NOT_EXIST";
 	}
-	
+	if(is_chain_exist($new_chain_name)&&($new_chain_name!=$old_chain_name))
+	{
+		return "ERROR_CHAIN_EXIST";
+	}
 	$sql= "UPDATE chains SET chain_name='$new_chain_name' WHERE chain_name= '$old_chain_name' AND chain_available = '1' ";
 	
 	if(execute_sqlCommand($sql))
