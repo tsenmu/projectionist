@@ -106,9 +106,8 @@ $(document).ready(function() {
                     update_user_name = info.user_name;
                     $('#update-user #user-name').val(update_user_name);
                     $('#update-user #parent-user-name').val(info.parent_user_name);
-                    update_user();
-                }
-                else
+                    $("#update-user #parent-user-name option[user-id="+update_user_id+"]").remove(); }
+                    else
                 {
                     console.log("Error: load_user_info_on_update_dialog");
                 }
@@ -128,13 +127,11 @@ $(document).ready(function() {
     // submit update user
     $("#update-user-submit").click(function(event) {
         user_name = $("#update-user #user-name").val();
-        if ($("#update-user #change-password").attr('checked'))
+        password = "";
+        if ($("#update-user #change-password:checked").val() == "on")
         {
+            console.log('I am here');
             password = $("#update-user #password").val();
-        }
-        else
-        {
-            password = "";
         }
         parent_user_name =  $("#update-user #parent-user-name").val();
         $.post(
@@ -156,6 +153,7 @@ $(document).ready(function() {
                     generate_alert('#insert-user #alert', 'alert-danger', '更新用户失败：用户已被删除或服务器错误');
                 }
                 update_user();
+                load_user_info_on_update_dialog();
             }
         );
     }); 

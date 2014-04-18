@@ -112,7 +112,7 @@ function user_management_update_user()
     $user_id = $_REQUEST['user-id'];
     $user_name = $_REQUEST['user-name'];
     $password = $_REQUEST['password'];
-    $parent_user_name = $_REQUEST['parent_user_name'];
+    $parent_user_name = $_REQUEST['parent-user-name'];
     echo update_user($user_id, $user_name, $password, $parent_user_name); 
 }
 ?>

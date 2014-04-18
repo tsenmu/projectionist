@@ -100,7 +100,41 @@ $(document).ready(function() {
     {
         $("#film-list").load('logic/ajax_target.php', {'func' : 'movie_management_get_film_list'});
     }
+    function validate_update_film()
+    {
+        film_name = $("#update-film #film-name");
+        film_userdefine_id = $("#update-film #film-userdefine-id");
+        chain_name = $("#update-film #chain-name");
+        film_path = $("#update-film #film-path");
+        ret = true;
+        if (trim_all_white_space(film_name.val()).length == 0)
+        {
+            $("#update-film #div-film-name").addClass("has-error");
+            ret = false;
+        }
+        if(trim_all_white_space(film_userdefine_id.val()).length == 0)
+        {
+            $("#update-film #div-film-userdefine-id").addClass("has-error");
+            ret = false; 
+        }
+        if(trim_all_white_space(chain_name.val()).length == 0)
+        {
+            $("#update-film #div-chain-name").addClass("has-error");
+            ret = false;
+        }
+        if (trim_all_white_space(film_path.val()).length == 0)
+        {
+            $("#update-film #div-film-path").addClass("has-error");
+            ret = false;
+        }
+        if (!ret)
+        {
+            generate_alert("#update-film #alert", "alert-danger", "添加失败：信息填写不完整");
 
+        }
+        return ret;
+    }
+ 
     function validate_insert_film()
     {
         film_name = $("#insert-film #film-name");
@@ -144,14 +178,18 @@ $(document).ready(function() {
             $('#insert-chain #div-chain-name').addClass("has-error");
             ret = false;
         }
+        if (!ret)
+        {
+             generate_alert("#insert-chain #alert", "alert-danger", "添加失败：信息填写不完整");
+
+        }
         return ret;
     }
 
     function init_validation()
     {
-        console.log('init validation');
-        $('#insert-film .form-group').removeClass('has-error');
-        $('#insert-chain .form-group').removeClass('has-error');
+        $('.form-group').removeClass('has-error');
+        
     }
     function trim_all_white_space(str)
     {
@@ -218,8 +256,11 @@ $(document).ready(function() {
     });
 
     $("#update-film-submit").click( function() {
-
-        console.log(update_film_id);
+        init_validation();
+        if(!validate_update_film())
+    {
+        return;
+    }
         $.post('logic/ajax_target.php',
             {
                 'func' : 'movie_management_update_film',
