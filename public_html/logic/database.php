@@ -259,12 +259,13 @@ function update_user($user_id, $user_new_name, $user_new_password,$new_parent_us
 	$sql = "SELECT * FROM users WHERE user_id = '$user_id' AND user_available='1'";
 	print_r(get_through_sqlCommand($sql));
 	
-	if(!get_through_sqlCommand($sql))
+	$res=get_through_sqlCommand($sql);
+	if(!$res)
 	{
 		return "ERROR_USER_ID";
 	}
 	
-	if(is_user_exist($user_new_name))
+	if(is_user_exist($user_new_name)&&($res["user_name"]!=$user_new_name))
 	{
 		return "ERROR_USER_NEW_NAME_EXIST";
 	}
