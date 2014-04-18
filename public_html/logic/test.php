@@ -21,8 +21,7 @@ require_once('database.php');
 
 
 //print_r(get_all_chain_info());
-
-print_r(delete_user("admin"));
+print_r(get_user_id('admin'));
 
 //print_r(update_user(19,"pig","123qwe123","admin"));
 

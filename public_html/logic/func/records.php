@@ -13,9 +13,11 @@ function records_get_record_list()
         return;
     }
     $ret = '<thead><tr><th>电影</th><th>院线</th><th>放映员</th><th>时间</th><th>地点</th><th>操作</th></tr></thead>';
-    foreach ( $records as $record_id => $record)
+    
+    foreach ( $records as $record)
     {
-        $record_text = show_record($records_id);    
+        $record_text = show_record($record['record_id']);    
+        print_r($record_text);
         $film_name = $record_text['film_name'];
         $user_name = $record_text['user_name'];
         $chain_name = $record_text['chain_name'];
@@ -85,7 +87,7 @@ function records_insert_record()
     }
     $film_id = $film_info['film_id'];
     $chain_id = $film_info['chain_id']; 
-    $user_id = get_user_id($user_name);
+    $user_id = get_user_id($username);
     echo insert_record($user_id, $film_id, $chain_id, $date_time, $location);
 }
 ?>
