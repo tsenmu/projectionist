@@ -16,18 +16,21 @@ require_once('logic/entry.php');
     <body>
         <?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
         <div class="container">
-                        <div id="panel-record" class="panel panel-default">
+            <div id="panel-record" class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">放映记录</h3></div>
                 <div class="panel-body">
                     <div id="alert"></div>
-<button class="btn btn-default btn-lg" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>添加放映记录</button>    
-                    <table class="table table-striped" id="record-list">
-                    </table>
+                    <button class="btn btn-default" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>添加放映记录</button>    
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="record-list">
+                        </table>
+                    </div>
                 </div>  
             </div>    
         </div>
         <?php require_once(dirname(__FILE__) . '/records-insert.php'); ?>
-
+        <?php require_once(dirname(__FILE__) . '/records-update.php'); ?>
+        <?php require_oncE(dirname(__FILE__) . '/records-delete.php'); ?>
         <!-- javascripts -->
         <?php require_once($config["includes"]["footer"]);?>
         <script src="js/bootstrap-datetimepicker.min.js"></script>

@@ -23,13 +23,13 @@ require_once('logic/entry.php');
                 <div class="panel-body">
                     <div id="alert"></div>
 
-                    <button type="button" class="btn btn-default btn-lg"
+                    <button type="button" class="btn btn-default"
                         data-toggle="modal" data-target="#insert-user"> <span
                             class="glyphicon glyphicon-plus"></span> 添加新用户</button>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-striped" id="user-list">
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="user-list">
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -12,8 +12,9 @@ function records_get_record_list()
         echo '<thead><tr><th>当前管辖范围内暂无任何记录</th></tr></thead>';
         return;
     }
-    $ret = '<thead><tr><th>电影</th><th>院线</th><th>放映员</th><th>时间</th><th>地点</th><th>操作</th></tr></thead>';
-    
+    $ret =<<< EOD
+<thead><tr><th>电影</th><th>院线</th><th>放映员</th><th>时间</th><th>地点</th><th>操作</th></tr></thead>
+EOD;
     foreach ( $records as $record)
     {
         $record_text = show_record($record['record_id']);    
@@ -28,7 +29,16 @@ function records_get_record_list()
         $date_time = $record['date_time'];
         $location = $record['location'];
         $push_str = <<<EOT
-<tr><td>$film_name</td><td>$chain_name</td><td>$user_name</td><td>$date_time</td><td>$location</td></tr>
+<tr><td>$film_name</td><td>$chain_name</td><td>$user_name</td><td>$date_time</td><td>$location</td><td>
+<button role="update-record" class="btn btn-primary open-update-record-dialog" type="button" data-toggle="modal"data-target="#update-record" data-id="$record_id">
+<span class="glyphicon glyphicon-pencil"></span>
+编辑
+</button>
+<button role="delete-record" class="btn btn-danger open-delete-record-dialog" type="button" data-toggle="modal" data-target="#delete-record" data-id="$record_id">
+<span class="glyphicon glyphicon-trash"></span>
+删除
+</button>
+</td></tr>
 EOT;
         $ret = $ret.$push_str;
     }
