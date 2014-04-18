@@ -556,6 +556,13 @@ function get_all_film_info()
 	return $film_info;
 }
 
+function get_all_film_name()
+{
+	$sql = "SELECT DISTINCT film_name FROM films WHERE film_available = '1' ORDER BY film_name";
+	$film_info=get_all_sqlCommand($sql);
+	return $film_info;
+}
+
 
 //==============Control User Tree=========
 
