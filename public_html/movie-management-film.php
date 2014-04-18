@@ -6,7 +6,7 @@
         <div class="panel-body">
             <div id="alert"></div>
 
-            <button type="button" class="btn btn-default"
+            <button type="button" class="btn btn-default btn-success"
                 data-toggle="modal" data-target="#insert-film"> <span
                     class="glyphicon glyphicon-plus"></span> 添加新电影</button>
             <div class="table-responsive">

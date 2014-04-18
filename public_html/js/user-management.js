@@ -1,10 +1,20 @@
 $(document).ready(function() {
+// init
     set_active_navbar_button('#user-management');  
     set_active_navbar_button('#management');
     update_user();
-    var update_user_id;
+
+//------ delete user scripts ------
+    // global variable storing current user info for deletion
     var delete_user_id;
-    function load_user_info_on_delete_dialog(user_id)
+    var delete_user_name;
+    // delete button clicks
+    $(document).on("click", ".open-delete-user-dialog", function() {
+        delete_user_id = $(this).data('id');
+        load_user_info_on_delete_dialog();
+    });
+    // load user info on delete dialog
+    function load_user_info_on_delete_dialog()
     {
         $.post('logic/ajax_target.php',
             {
@@ -13,86 +23,144 @@ $(document).ready(function() {
             },
             function (data, status)
             {
-                info = jQuery.parseJSON(data);
                 if (status == "success")
                 {
-                    $('#delete-user #delete-user-name').html(info.user_name);
+                    info = jQuery.parseJSON(data);
+                    delete_user_name = info.user_name;
+                    $('#delete-user #delete-user-name').html(delete_user_name);
+                }
+                else
+                {
+                    console.log("Error: load_user_info_on_delete_dialog");
+
                 }
             });
     }
-    $(document).on("click", ".open-delete-user-dialog", function() {
-        delete_user_id = $(this).data('id');
-        load_user_info_on_delete_dialog(delete_user_id);
-    });
+    // submit delete user 
     $('#delete-user-submit').click(function(event) {
-        console.log("aaaaa");
-        delete_username = $("#delete-user #delete-user-name").text(); 
         $.post('logic/ajax_target.php', {
             'func' : 'user_management_delete_user',
-            'username' : delete_username
+            'username' : delete_user_name
         }, function(data, status)
         {
             if (data.indexOf("SUCCESS") != -1)
             {
-
- generate_alert('#panel-user #alert', 'alert-success', '成功删除用户：' + $("#delete-user #delete-user-name").text());
-            $('#delete-user').modal('hide');
+                generate_alert('#panel-user #alert', 'alert-success', '成功删除用户：' + delete_user_name);
+                $('#delete-user').modal('hide');
             }
+            else 
+            {
+                generate_alert('#delete-user #alert', 'alert-danger', '删除用户失败：用户已被删除或服务器错误'); 
+            }
+            update_user();
         });
     });
+//------ insert user scripts ------
+    // submit insert user
     $("#insert-user-submit").click(function(event) {
-        insert_username = $("#insert-username").val();
-        insert_password = $("#insert-password").val();
-        insert_parent =  $("#insert-parent").val();
-        $.post('logic/ajax_target.php', {
-            'func': 'user_management_insert_user',
-            'username' : insert_username,
-            'password' : insert_password,
-            'parent' : insert_parent
-        }, function(data, status) {
-            if (data.indexOf("SUCCESS") != -1)
+        user_name = $("#insert-user #user-name").val();
+        password = $("#insert-user #password").val();
+        parent_user_name =  $("#insert-user #parent-user-name").val();
+        $.post(
+            'logic/ajax_target.php',
+            {
+                'func': 'user_management_insert_user',
+                'user-name' : user_name,
+                'password' : password,
+                'parent-user-name' : parent_user_name
+            },
+            function(data, status) {
+                if (data.indexOf("SUCCESS") != -1)
+                {
+                    generate_alert('#insert-user #alert', 'alert-success', '成功添加用户：' + user_name);
+                }
+                else 
+                {
+                    generate_alert('#insert-user #alert', 'alert-danger', '添加用户失败：用户已存在或服务器错误');
+                }
+                update_user();
+            }
+        );
+    }); 
+//------ update user scripts ------
+    // global variable storing current user info for update 
+    var update_user_id;
+    var update_user_name;
+    $(document).on("click", ".open-update-user-dialog", function() {
+        console.log("opened");
+        update_user_id = $(this).data('id');
+        load_user_info_on_update_dialog();
+    });
+    // load user info on delete dialog
+    function load_user_info_on_update_dialog()
+    {
+        $.post('logic/ajax_target.php',
+            {
+                'func' : 'user_management_load_user_info',
+                'user-id' : update_user_id 
+            },
+            function (data, status)
+            {
+                if (status == "success")
+                {
+                    info = jQuery.parseJSON(data);
+                    update_user_name = info.user_name;
+                    $('#update-user #user-name').html(delete_user_name);
+                }
+                else
+                {
+                    console.log("Error: load_user_info_on_update_dialog");
+                }
+            });
+    }
+    $("#update-user #change-password").change( function(event) {
+        if (this.checked) 
         {
-            generate_alert('#insert-user #alert', 'alert-success', '成功添加用户：' + insert_username);
-            update_user();
+            $("#update-user #password").removeAttr("disabled");
         }
-            else 
+        else
         {
-            generate_alert('#insert-user #alert', 'alert-danger', '添加用户失败：用户已存在或服务器错误');
+            $("#update-user #password").attr("disabled", "");
+        }
+    });
 
-            update_user();
+    // submit update user
+    $("#update-user-submit").click(function(event) {
+        user_name = $("update-user #user-name").val();
+        if ($("#update-user #change-password").attr('checked'))
+        {
+            password = $("#update-user #password").val();
         }
-        });
+        else
+        {
+            password = "";
+        }
+        parent_user_name =  $("#update-user #parent-user-name").val();
+        $.post(
+            'logic/ajax_target.php',
+            {
+                'func': 'user_management_update_user',
+                'user-id' : update_user_id,
+                'user-name' : user_name,
+                'password' : password,
+                'parent-user-name' : parent_user_name
+            },
+            function(data, status) {
+                if (data.indexOf("SUCCESS") != -1)
+                {
+                    generate_alert('#update-user #alert', 'alert-success', '成功更新用户：' + user_name);
+                }
+                else 
+                {
+                    generate_alert('#insert-user #alert', 'alert-danger', '更新用户失败：用户已被删除或服务器错误');
+                }
+                update_user();
+            }
+        );
     }); 
 
 
-    $("#delete-submit").click(function(event) {
-        event.preventDefault();
-        delete_username = $("#delete-username").val();
-        console.log(delete_username);
-        $.ajax( {
-            url: "logic/user_management.php",
-            type: "POST",
-            data: {
-                'type' : 'delete',
-            'username' : delete_username 
-            },
-            success: function(data, status) {
-                if (data.indexOf('DELETE_USER_SUCCESS') != -1) {
-                    alert("删除成功");
-                    $("#delete-user").modal('hide');
-                }
-                else if(data.indexOf('ERROR_USER_NOT_EXIST') != -1) {
-                    alert("用户不存在，删除失败");
-                }
-                else {
-                    alert("未知错误，删除失败");
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log("error");
-            }
-        });
-    });
+    // Ajax reload functions
     function update_user()
     {
         update_user_list();
@@ -104,7 +172,7 @@ $(document).ready(function() {
     }
     function update_parent_options()
     {
-        $('#insert-user #insert-parent').load('logic/ajax_target.php', {'func' : 'user_management_get_parent_options'});
+        $('#insert-user #parent-user-name').load('logic/ajax_target.php', {'func' : 'user_management_get_parent_options'});
+        $('#update-user #parent-user-name').load('logic/ajax_target.php', {'func' : 'user_management_get_parent_options'});
     }
-
 });

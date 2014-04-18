@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    update_record();
-    update_film();
-    update_chain();
-    function update_record()
+update_record();
+update_film();
+update_chain();
+function update_record()
 {
     update_record_list();
 }
@@ -18,7 +18,8 @@ function update_film()
 }
 function update_film_options()
 {
-    $('#insert-record #insert-film').load('logic/ajax_target.php', {'func': 'records_get_film_options' });
+    $('#insert-record #film-name').load('logic/ajax_target.php', {'func': 'records_get_film_options' });
+    $('#update-record #film-name').load('logic/ajax_target.php', {'func': 'records_get_film_options' });
 }
 function update_chain()
 {
@@ -26,23 +27,24 @@ function update_chain()
 }
 function update_chain_options()
 {
-    $('#insert-record #insert-chain').load('logic/ajax_target.php', {'func' : 'records_get_chain_options' });
+    $('#insert-record #chain-name').load('logic/ajax_target.php', {'func' : 'records_get_chain_options' });
+    $('#update-record #chain-name').load('logic/ajax_target.php', {'func' : 'records_get_chain_options' });
 }
-$("#insert-submit").click(function(event) {
-    insert_film = $("#insert-film").val();
-    insert_chain= $("#insert-chain").val();
-    insert_date_time = $("#insert-date-time").val();
-    insert_location = $("#insert-location").val();
-    insert_user_name = $("#insert-user-id").text();
+$("#insert-record-submit").click(function(event) {
+    film_name = $("#insert-record #film-name").val();
+    chain_name = $("#insert-record #chain-name").val();
+    date_time = $("#insert-record #date-time").val();
+    the_location = $("#insert-record #location").val();
+    user_name = $("#insert-record #user-name").text();
     $.post(
         "logic/ajax_target.php",
         {
             'func' : 'records_insert_record',
-        'film' : insert_film,
-        'chain' : insert_chain,
-        'date_time' : insert_date_time,
-        'location' : insert_location,
-        'username' : insert_user_name
+        'film-name' : film_name,
+        'chain-name' : chain_name,
+        'date-time' : date_time,
+        'location' : the_location,
+        'user-name' : user_name
         },
         function(data, status) {
             console.log(data);

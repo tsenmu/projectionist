@@ -9,31 +9,31 @@
         <div id="alert"></div>
         <form role="form">
             <div class="form-group">
-                <label for="insert-film">电影</label>
-                <select class="form-control" id="insert-film" required>
+                <label for="film-name">电影</label>
+                <select class="form-control" id="film-name" required>
                 </select>
             </div>
             <div class="form-group">
-                <label for="insert-chain">院线</label>
-                <select class="form-control" id="insert-chain" required>
+                <label for="chain-name">院线</label>
+                <select class="form-control" id="chain-name" required>
                 </select>
             </div>
             <div class="form-group">
-                <label for="insert-date-time">时间</label>
+                <label for="date-time">时间</label>
 <div class="input-append date form_datetime">
-<input class="form-control" id="insert-date-time" type="text" value="" readonly required>
+<input class="form-control" id="date-time" type="text" value="" readonly required>
 <span class="add-on"><i class="icon-th"></i></span>
 </div>
             </div>
             <div class="form-group">
-                <label for="insert-location">地点</label>
-                <input type="text" class="form-control" id="insert-location" required>
+                <label for="location">地点</label>
+                <input type="text" class="form-control" id="location" required>
             </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button id="insert-cancel" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button id="insert-submit" type="button" class="btn btn-primary">添加</button>
+        <button id="insert-record-cancel" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="insert-record-submit" type="button" class="btn btn-success">添加</button>
       </div>
     </div>
   </div>

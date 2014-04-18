@@ -84,12 +84,12 @@ EOD;
 }
 function records_insert_record()
 {
-    $film = $_REQUEST['film'];
-    $chain = $_REQUEST['chain'];
-    $date_time = $_REQUEST['date_time'];
+    $film_name = $_REQUEST['film-name'];
+    $chain_name = $_REQUEST['chain-name'];
+    $date_time = $_REQUEST['date-time'];
     $location = $_REQUEST['location'];
-    $username = $_REQUEST['username'];
-    $film_info = get_film_info_by_film_name_and_chain_name($film, $chain);
+    $user_name = $_REQUEST['user-name'];
+    $film_info = get_film_info_by_film_name_and_chain_name($film_name, $chain_name);
     if (count($film_info) == 0)
     {
         echo "ERROR_FILM_CHAIN_NOT_MATCH";
@@ -97,7 +97,7 @@ function records_insert_record()
     }
     $film_id = $film_info['film_id'];
     $chain_id = $film_info['chain_id']; 
-    $user_id = get_user_id($username);
+    $user_id = get_user_id($user_name);
     echo insert_record($user_id, $film_id, $chain_id, $date_time, $location);
 }
 ?>

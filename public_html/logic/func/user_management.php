@@ -55,9 +55,9 @@ EM;
 }
 function user_management_insert_user()
 {
-    $username = $_REQUEST['username'];
+    $username = $_REQUEST['user-name'];
     $password = $_REQUEST['password'];
-    $parent = $_REQUEST['parent'];
+    $parent = $_REQUEST['parent-user-name'];
     echo insert_user($username, $password, $parent);
 }
 function user_management_delete_user()
@@ -69,5 +69,13 @@ function user_management_load_user_info()
 {
     $user_id = $_REQUEST['user-id'];
     echo json_encode(get_user_info(get_user_name_by_id($user_id)));
+}
+function user_management_update_user()
+{
+    $user_id = $_REQUEST['user-id'];
+    $user_name = $_REQUEST['user-name'];
+    $password = $_REQUEST['password'];
+    $parent_user_name = $_REQUEST['parent_user_name'];
+    echo update_user($user_id, $user_name, $password, $parent_user_name); 
 }
 ?>
