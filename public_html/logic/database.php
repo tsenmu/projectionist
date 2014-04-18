@@ -264,14 +264,25 @@ function update_user($user_id, $user_new_name, $user_new_password,$new_parent_us
 		return "ERROR_USER_ID";
 	}
 	
-	$hash_user_password=md5($user_new_password);
+	if(is_user_exist($user_new_name))
+	{
+		return "ERROR_USER_NEW_NAME_EXIST";
+	}
 	
 	$parent_user_info=get_user_info($new_parent_user_name);
 	$user_type=$parent_user_info["user_type"]+1;
 	$parent_user_id=$parent_user_info["user_id"];
 	
-	
-	$sql= "UPDATE users SET user_name = '$user_new_name', user_password = '$hash_user_password',user_type='$user_type' WHERE user_id = '$user_id'";
+	if($user_new_password!=NULL)
+	{
+			
+		$hash_user_password=md5($user_new_password);
+		$sql= "UPDATE users SET user_name = '$user_new_name', user_password = '$hash_user_password',user_type='$user_type' WHERE user_id = '$user_id'";
+	}
+	else
+	{
+		$sql= "UPDATE users SET user_name = '$user_new_name',user_type='$user_type' WHERE user_id = '$user_id'";
+	}
 	
 	if(execute_sqlCommand($sql))
 	{
