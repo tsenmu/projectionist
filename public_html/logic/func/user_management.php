@@ -4,10 +4,15 @@ function user_management_get_parent_options()
 {
     $users = get_parent_user_info();
     $ret = '';
+    $exclude_user_id = $_REQUEST['exclude-user-id'];
     foreach($users as $user)
     {
         $user_name = $user["user_name"];
         $user_id = $user["user_id"];
+        if (isset($exclude_user_id) && $user_id == $exclude_user_id)
+        {
+            continue;
+        } 
         $append_str =<<<  EOS
 <option user-id="$user_id">$user_name</option>
 EOS;

@@ -257,7 +257,6 @@ function update_user_name($user_name,$user_new_name)
 function update_user($user_id, $user_new_name, $user_new_password,$new_parent_user_name)
 {
 	$sql = "SELECT * FROM users WHERE user_id = '$user_id' AND user_available='1'";
-	print_r(get_through_sqlCommand($sql));
 	
 	if(!get_through_sqlCommand($sql))
 	{
