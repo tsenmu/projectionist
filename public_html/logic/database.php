@@ -98,6 +98,10 @@ Control User =============
 
 function insert_user($user_name, $user_password,$parent_user_name)
 {
+	if($user_name==NULL)
+	{
+		return "ERROR_USER_NAME_NULL";
+	}
 	if(is_user_exist($user_name))
 	{
 		return "ERROR_USER_EXIST";
@@ -240,6 +244,10 @@ function update_user_password($user_name,$user_new_password)
 }
 function update_user_name($user_name,$user_new_name)
 {
+	if($user_name==NULL||$user_new_name==NULL)
+	{
+		return "ERROR_USER_NAME_NULL";
+	}
 	if(!is_user_exist($user_name))
 	{
 		return "ERROR_USER_NOT_EXIST";
@@ -256,6 +264,10 @@ function update_user_name($user_name,$user_new_name)
 
 function update_user($user_id, $user_new_name, $user_new_password,$new_parent_user_name)
 {
+	if($user_new_name==NULL)
+	{
+		return "ERROR_USER_NEW_NAME_NULL";
+	}
 	$sql = "SELECT * FROM users WHERE user_id = '$user_id' AND user_available='1'";
 	
 	$res=get_through_sqlCommand($sql);
@@ -350,6 +362,10 @@ function get_parent_user_id($child_user_id)
 //==========Control Chains=========================
 function insert_chain($chain_name)
 {
+	if($chain_name==NULL)
+	{
+		return "ERROR_CHAIN_NAME_NULL";
+	}
 	if(is_chain_exist($chain_name))
 	{
 		return "ERROR_CHAIN_EXIST";
@@ -469,7 +485,10 @@ function is_film_exist($film_id)
 
 function insert_film($film_userdefine_id, $film_name, $film_path, $chain_id)
 {
-	
+	if($film_name==NULL)
+	{
+		return "ERROR_FILM_NAME_NULL";
+	}
 	$sql= "INSERT INTO films(film_userdefine_id,film_name,film_path,chain_id)".
 	"VALUES ('$film_userdefine_id','$film_name', '$film_path', '$chain_id')";
 	
@@ -497,6 +516,10 @@ function delete_film($film_id)
 
 function update_film($film_id,$film_userdefine_id, $film_name, $film_path, $chain_id)
 {
+	if($film_name==NULL)
+	{
+		return "ERROR_FILM_NAME_NULL";
+	}
 	if(!is_film_exist($film_id))
 	{
 		return "ERROR_FILM_NOT_EXIST";
