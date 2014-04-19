@@ -8,29 +8,29 @@
       <div class="modal-body">
         <div id="alert"></div>
         <form role="form">
-            <div class="form-group">
+            <div class="form-group" id="div-chain-name">
                 <label for="chain-name">院线</label>
                 <select class="form-control" id="chain-name" required>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="div-film-name">
                 <label for="film-name">电影</label>
                 <select class="form-control" id="film-name" required>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="div-user-name">
                 <label for="user-name">放影员</label>
                 <select class="form-control" id="user-name"> 
                 </select>
             </div>
-           <div class="form-group">
+           <div class="form-group" id="div-date-time">
                 <label for="date-time">时间</label>
 <div class="input-append date form_datetime">
 <input class="form-control" id="date-time" type="text" value="" readonly required>
 <span class="add-on"><i class="icon-th"></i></span>
 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="div-location">
                 <label for="location">地点</label>
                 <input type="text" class="form-control" id="location" required>
             </div>

@@ -51,11 +51,13 @@ $("#update-record-submit").click(function(event) {
     if (!validate_update_record()) {
         return;
     }
+    console.log('update record submit');
     film_name = $("#update-record #film-name").val();
     chain_name = $("#update-record #chain-name").val();
     date_time = $("#update-record #date-time").val();
     the_location = $("#update-record #location").val();
     user_name = $("#update-record #user-name").val();
+    console.log(user_name);
     $.post(
         "logic/ajax_target.php",
         {
@@ -64,7 +66,7 @@ $("#update-record-submit").click(function(event) {
         'chain-name' : chain_name,
         'date-time' : date_time,
         'location' : the_location,
-        'user-name' : user_name
+        'user-name' : user_name,
         'record-id' : update_record_id
         },
         function(data, status) {
@@ -118,34 +120,35 @@ function trim_all_white_space(str) {
 function validate_update_record()
 {
     chain_name = $('#update-record #chain-name');
-    film_name = $('#udpate-record #film-name');
-    user_name = $('#udpate-record #user-name');
-    date_time = $('#udpate-record #date-time');
-    the_location = $('#udpate-record #location');
+    film_name = $('#update-record #film-name');
+    user_name = $('#update-record #user-name');
+    date_time = $('#update-record #date-time');
+    the_location = $('#update-record #location');
     ret = true;
     if (chain_name.val() == null || trim_all_white_space(chain_name.val()).length == 0) {
-        $('#udpate-record #div-chain-name').addClass('has-error');
+        $('#update-record #div-chain-name').addClass('has-error');
         ret = false;
     }
     
+    console.log();
     if (film_name.val() == null || trim_all_white_space(film_name.val()).length == 0) {
-        $('#udpate-record #div-film-name').addClass('has-error');
+        $('#update-record #div-film-name').addClass('has-error');
         ret = false;
     }
     if (user_name.val() == null || trim_all_white_space(user_name.val()).length == 0) {
-        $('#udpate-record #div-user-name').addClass('has-error');
+        $('#update-record #div-user-name').addClass('has-error');
         ret = false;
     }
     if (date_time.val() == null || trim_all_white_space(date_time.val()).length == 0) {
-        $('#udpate-record #div-date-time').addClass('has-error');
+        $('#update-record #div-date-time').addClass('has-error');
         ret = false;
     }
     if (the_location.val() == null || trim_all_white_space(the_location.val()).length == 0) {
-        $('#udpate-record #div-location').addClass('has-error');
+        $('#update-record #div-location').addClass('has-error');
         ret = false;
     }
     if (!ret) {
-        generate_alert('#udpate-record #alert', 'alert-danger', '添加失败：信息填写不完整');
+        generate_alert('#update-record #alert', 'alert-danger', '添加失败：信息填写不完整');
     }
     return ret;
 }
@@ -184,12 +187,29 @@ function validate_insert_record()
     return ret;
 }
 var update_record_id;
+var delete_record_id;
+$(document).on('click', '.open-delete-record-dialog', function() {
+   delete_record_id = $(this).data('id'); 
+});
+$("#delete-record-submit").click(function(event) {
+     $.post('logic/ajax_target.php', {
+        'func' : 'records_delete_record',
+        'record-id' : delete_record_id
+     }, function(data, status) {
+        if (data.indexOf("SUCCESS") != -1) {
+            generate_alert("#panel-record #alert", "alert-success", "成功删除记录");
+            $('delete-record').modal('hide');
+        }else {
+            generate_alert("#delete-record #alert", "alert-danger", "删除失败：记录已被删除或服务器错误");
+        }
+        update_record();
+     });
+});
 $(document).on('click', '.open-insert-record-dialog', function() {
     update_film_options();
 });
 $(document).on('click', '.open-update-record-dialog', function() {
     update_record_id = $(this).data('id');
-    console.log('hello');
     load_record_info_on_update_dialog();
 });
 function load_record_info_on_update_dialog()
@@ -214,36 +234,6 @@ function load_record_info_on_update_dialog()
 $('.modal').on('hidden.bs.modal', function() {
     init_validation(); 
 });
-$("#update-record-submit").click(function(event) {
-    film_name = $("#update-record #film-name").val();
-    chain_name = $("#update-record #chain-name").val();
-    date_time = $("#update-record #date-time").val();
-    the_location = $("#update-record #location").val();
-    user_name = $("#update-record #user-name").text();
-    $.post(
-        "logic/ajax_target.php",
-        {
-            'func' : 'records_update_record',
-        'record-id' : update_record_id,
-        'film-name' : film_name,
-        'chain-name' : chain_name,
-        'date-time' : date_time,
-        'location' : the_location,
-        'user-name' : user_name
-        },
-        function(data, status) {
-            console.log(data);
-            if (data.indexOf('SUCCESS') != -1) {
-                generate_alert('#update-record #alert', 'alert-success', '记录更新成功');
-                update_record();
-            }
-            else{
-                generate_alert('#update-record #alert', 'alert-danger', '记录更新失败：不匹配的电影和院线记录或服务器发生错误');
-            }
-        }
-        );
-});
-
 function init_validation()
 {
     $('.form-group').removeClass('has-error');

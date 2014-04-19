@@ -42,7 +42,7 @@ require_once('logic/entry.php');
         </script>
         <script type="text/javascript">
             $(".form_datetime").datetimepicker({
-format: "yyyy/mm/dd hh:ii"
+format: "yyyy-mm-dd hh:ii"
 });
 </script> 
 <script src="js/records.js"></script>

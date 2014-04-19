@@ -1,6 +1,11 @@
 <?php
 require_once(dirname(__FILE__).'/../control_record.php');
 require_once(dirname(__FILE__).'/../database.php');
+function records_delete_record()
+{
+    $record_id = $_REQUEST['record-id'];
+    echo delete_record($record_id);
+}
 function records_load_record_info()
 {
     $record_id = $_REQUEST['record-id'];
@@ -140,6 +145,7 @@ function records_insert_record()
     $chain_id = $film_info['chain_id']; 
     $user_id = get_user_id($user_name);
     echo insert_record($user_id, $film_id, $chain_id, $date_time, $location);
+}
 function records_update_record()
 {
     $record_id = $_REQUEST['record-id'];
@@ -157,7 +163,8 @@ function records_update_record()
     $film_id = $film_info['film_id'];
     $chain_id = $film_info['chain_id']; 
     $user_id = get_user_id($user_name);
-    echo update_record($record_id, $film_id, $chain_id, $date_time, $location);
+    echo update_record_by_admin($record_id, $film_id, $chain_id,$user_name, $date_time, $location);
 }
-}
+
+
 ?>
