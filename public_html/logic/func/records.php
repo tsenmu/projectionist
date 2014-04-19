@@ -16,6 +16,7 @@ function records_get_record_list()
 {
     session_start();
     $current_user = $_SESSION['current_user'];
+    $current_user_type = get_user_type($current_user);
     $current_user_id = get_user_id($current_user);
     $records= get_record($current_user_id);
     if (count ($records) == 0)
@@ -23,9 +24,19 @@ function records_get_record_list()
         echo '<thead><tr><th>当前管辖范围内暂无任何记录</th></tr></thead>';
         return;
     }
+    if ($current_user_type == 0 || $current_user_type == 3)
+    {
     $ret =<<< EOD
 <thead><tr><th>电影</th><th>院线</th><th>放映员</th><th>时间</th><th>地点</th><th>操作</th></tr></thead>
 EOD;
+    }
+    else 
+    {
+    $ret =<<< EOD
+<thead><tr><th>电影</th><th>院线</th><th>放映员</th><th>时间</th><th>地点</th></tr></thead>
+EOD;
+
+    }
     foreach ( $records as $record)
     {
         $record_id = $record['record_id'];
@@ -40,6 +51,8 @@ EOD;
         $chain_id = $record['chain_id'];
         $date_time = $record['date_time'];
         $location = $record['location'];
+        if ($current_user_type == 0 || $current_user_type == 3)
+        {
         $push_str = <<<EOT
 <tr><td>$film_name</td><td>$chain_name</td><td>$user_name</td><td>$date_time</td><td>$location</td><td>
 <button role="update-record" class="btn btn-primary open-update-record-dialog" type="button" data-toggle="modal"data-target="#update-record" data-id="$record_id">
@@ -52,6 +65,13 @@ EOD;
 </button>
 </td></tr>
 EOT;
+        }
+        else
+        {
+         $push_str = <<<EOT
+<tr><td>$film_name</td><td>$chain_name</td><td>$user_name</td><td>$date_time</td><td>$location</td>
+EOT;
+        }
         $ret = $ret.$push_str;
     }
     echo $ret;

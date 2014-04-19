@@ -14,7 +14,7 @@ require_once('logic/entry.php');
   </head>
   <body>
 	<?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
-    
+    <?php require_once(dirname(__FILE__) . '/user-cp.php'); ?>    
     <!-- javascripts -->
     <?php require_once($config["includes"]["footer"]);?>
     <script>

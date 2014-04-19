@@ -20,7 +20,9 @@ require_once('logic/entry.php');
                 <div class="panel-heading"><h3 class="panel-title">放映记录</h3></div>
                 <div class="panel-body">
                     <div id="alert"></div>
+                    <?php if ($_SESSION['current_user_type'] == 0 || $_SESSION['current_user_type'] == 3) : ?>
                     <button class="btn btn-default btn-success open-insert-record-dialog" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>添加放映记录</button>    
+                    <?php endif; ?>
                     <div class="table-responsive">
                         <table class="table table-striped" id="record-list">
                         </table>
