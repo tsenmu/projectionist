@@ -416,6 +416,19 @@ function delete_chain($chain_name)
 	{
 		return "ERROR_CHAIN_NOT_EXIST";
 	}
+	
+	//delete related films
+	$chain_id=get_chain_id_by_name($chain_name);
+	$sql = "SELECT * FROM films WHERE chain_id = '$chain_id' AND film_available = '1'";
+	$film=get_all_sqlCommand($sql);
+	if($film!=NULL)
+	{
+		foreach($film as $res)
+		{
+			delete_film($res["film_id"]);
+		}
+	}
+		
 	$sql= "UPDATE chains SET chain_available='0' WHERE chain_name= '$chain_name' AND chain_available = '1' ";
 	
 	if(execute_sqlCommand($sql))
