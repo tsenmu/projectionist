@@ -441,7 +441,7 @@ function is_chain_exist($chain_name)
 
 function get_chain_name_by_id($chain_id)
 {
-	$sql="SELECT * FROM chains WHERE chain_id = '$chain_id' AND chain_available = '1' ";
+	$sql="SELECT * FROM chains WHERE chain_id = '$chain_id'";
 	$result=get_through_sqlCommand($sql);
 	//user name doesn't exist
 	if($result == 0)
@@ -537,23 +537,22 @@ function update_film($film_id,$film_userdefine_id, $film_name, $film_path, $chai
 
 function get_film_name_by_id($film_id)
 {
-	if(!is_film_exist($film_id))
+	$sql = "SELECT * FROM films WHERE film_id =  '$film_id'";
+	$film_info=get_through_sqlCommand($sql);
+	if($film_info==0)
 	{
 		return "ERROR_FILM_NOT_EXIST";
 	}
-	$sql = "SELECT * FROM films WHERE film_id =  '$film_id'";
-	$film_info=get_through_sqlCommand($sql);
 	return $film_info["film_name"];
 }
 
 function get_film_info_by_id($film_id)
 {
-	if(!is_film_exist($film_id))
-	{
-		return "ERROR_FILM_NOT_EXIST";
-	}
 	$sql = "SELECT * FROM films WHERE film_id =  '$film_id'";
 	$film_info=get_through_sqlCommand($sql);
+	if($film_info==0)
+		return "ERROR_FILM_NOT_EXIST";
+		
 	return $film_info;
 }
 

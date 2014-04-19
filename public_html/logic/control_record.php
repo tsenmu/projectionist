@@ -52,7 +52,7 @@ function update_record_by_admin($record_id, $film_id,$chain_id,$user_name,$date_
 
 function delete_record($record_id)
 {
-	$sql="DELETE record WHERE record_id = '$record_id'";
+	$sql="DELETE FROM records WHERE record_id = '$record_id'";
 	
 	if(execute_sqlCommand($sql))
 	{
