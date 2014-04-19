@@ -117,7 +117,7 @@ $(document).ready(function() {
             $("#update-film #div-film-userdefine-id").addClass("has-error");
             ret = false; 
         }
-        if(trim_all_white_space(chain_name.val()).length == 0)
+        if(chain_name.val() == null || trim_all_white_space(chain_name.val()).length == 0)
         {
             $("#update-film #div-chain-name").addClass("has-error");
             ret = false;
@@ -152,7 +152,7 @@ $(document).ready(function() {
             $("#div-film-userdefine-id").addClass("has-error");
             ret = false; 
         }
-        if(trim_all_white_space(chain_name.val()).length == 0)
+        if(chain_name.val() == null || trim_all_white_space(chain_name.val()).length == 0)
         {
             $("#div-chain-name").addClass("has-error");
             ret = false;

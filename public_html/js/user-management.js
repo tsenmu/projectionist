@@ -26,7 +26,7 @@ $(document).ready(function() {
            $('#insert-user #div-password').addClass('has-error');
            ret = false;
         }
-        if(trim_all_white_space(parent_user_name.val()).length == 0) {
+        if(parent_user_name.val() == null || trim_all_white_space(parent_user_name.val()).length == 0) {
             $('#insert-user #div-parent-user-name').addClass('has-error');
             ret = false;
         }
@@ -50,7 +50,7 @@ $(document).ready(function() {
            $('#update-user #div-password').addClass('has-error');
            ret = false;
         }
-        if(trim_all_white_space(parent_user_name.val()).length == 0) {
+        if(parent_user_name.val() == null || trim_all_white_space(parent_user_name.val()).length == 0) {
             $('#update-user #div-parent-user-name').addClass('has-error');
             ret = false;
         }
