@@ -178,7 +178,7 @@ function get_record_order_by_time($user_id)
 	{
 		return "ERROR_RECORD_NULL";
 	}
-	$res=multi_array_sort($record,"date_time",SORT_ASC);
+	$res=multi_array_sort($record,"date_time",SORT_DESC);
 	return $res;
 }
 
