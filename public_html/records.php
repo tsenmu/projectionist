@@ -21,8 +21,9 @@ require_once('logic/entry.php');
                 <div class="panel-body">
                     <div id="alert"></div>
                     <?php if ($_SESSION['current_user_type'] == 0 || $_SESSION['current_user_type'] == 3) : ?>
-                    <button class="btn btn-default btn-success open-insert-record-dialog" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>添加放映记录</button>    
+                    <button class="btn btn-success open-insert-record-dialog" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>添加放映记录</button>    
                     <?php endif; ?>
+                    <button class="btn btn-default btn-warning download-records"> <span class="glyphicon glyphicon-download"></span>导出放映记录</button>
                     <div class="table-responsive">
                         <table class="table table-striped" id="record-list">
                         </table>
@@ -37,16 +38,6 @@ require_once('logic/entry.php');
         <?php require_once($config["includes"]["footer"]);?>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
         <script src="js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-        <script>
-            $(document).ready(function() {
-                set_active_navbar_button('#records');  
-            });
-        </script>
-        <script type="text/javascript">
-            $(".form_datetime").datetimepicker({
-format: "yyyy-mm-dd hh:ii"
-});
-</script> 
-<script src="js/records.js"></script>
+        <script src="js/records.js"></script>
   </body>
 </html>

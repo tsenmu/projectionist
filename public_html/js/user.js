@@ -44,7 +44,10 @@ $(document).ready( function() {
         {
             if(data.indexOf("SUCCESS") != -1) {
                 generate_alert('#panel-user-cp #alert', 'alert-success', "更改成功");
-            }
+            } else
+        {
+            generate_alert('#panel-user-cp #alert', 'alert-danger', '更改失败：旧密码输入错误');
+        }
         });
     }
     function init_validation() {

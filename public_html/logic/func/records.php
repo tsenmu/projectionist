@@ -1,6 +1,14 @@
 <?php
 require_once(dirname(__FILE__).'/../control_record.php');
 require_once(dirname(__FILE__).'/../database.php');
+require_once(dirname(__FILE__).'/../output.php');
+function records_download_records()
+{
+    session_start();
+    $current_user = $_SESSION['current_user'];
+    $user_id = get_user_id($current_user);
+    export_record_excel($user_id); 
+}
 function records_delete_record()
 {
     $record_id = $_REQUEST['record-id'];
@@ -18,7 +26,7 @@ function records_get_record_list()
     $current_user = $_SESSION['current_user'];
     $current_user_type = get_user_type($current_user);
     $current_user_id = get_user_id($current_user);
-    $records= get_record($current_user_id);
+    $records= get_record_order_by_time($current_user_id);
     if (count ($records) == 0)
     {
         echo '<thead><tr><th>当前管辖范围内暂无任何记录</th></tr></thead>';
@@ -139,8 +147,8 @@ function records_get_user_name_options()
 EOS;
                 $ret = $ret . $append_str;
             }
-            echo $ret;
         }
+            echo $ret;
     } elseif ($current_user_type == 3) {
         $ret = <<<EOS
 <option>$current_user</option>

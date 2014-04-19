@@ -265,6 +265,7 @@ function validate_update_chain()
             generate_alert("#panel-chain #alert", "alert-success", "成功删除院线：" + $('#delete-chain #delete-chain-name').text());
             $('#delete-chain').modal('hide');
             update_chain();
+            update_film();
             return;
         }
         generate_alert("#delete-chain #alert", "alert-danger", "删除院线失败：院线可能已被删除或服务器发生错误" );

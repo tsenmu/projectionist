@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+set_active_navbar_button('#records');  
+$(".form_datetime").datetimepicker({
+format: "yyyy-mm-dd hh:ii"
+});
 update_record();
 update_film();
 update_chain();
@@ -188,6 +193,10 @@ function validate_insert_record()
 }
 var update_record_id;
 var delete_record_id;
+$(document).on('click', '.download-records', function(e) {
+    e.preventDefault();
+    window.location.href='logic/ajax_target.php?func=records_download_records';
+});
 $(document).on('click', '.open-delete-record-dialog', function() {
    delete_record_id = $(this).data('id'); 
 });
@@ -198,7 +207,7 @@ $("#delete-record-submit").click(function(event) {
      }, function(data, status) {
         if (data.indexOf("SUCCESS") != -1) {
             generate_alert("#panel-record #alert", "alert-success", "成功删除记录");
-            $('delete-record').modal('hide');
+            $('#delete-record').modal('hide');
         }else {
             generate_alert("#delete-record #alert", "alert-danger", "删除失败：记录已被删除或服务器错误");
         }
