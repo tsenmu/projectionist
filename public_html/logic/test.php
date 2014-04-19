@@ -1,6 +1,7 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 require_once('database.php');
+require_once('control_record.php');
 //print_r($config);
 
 //$ret = is_password_match(177,"123qwe123");
@@ -23,7 +24,7 @@ require_once('database.php');
 //print_r(get_all_chain_info());
 //print_r(get_all_film_name());
 
-print_r(update_chain(1,5));
+print_r(get_record(2));
 
 //print_r(update_user(1,"pig","123qwe123","admin"));
 
