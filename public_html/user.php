@@ -17,10 +17,6 @@ require_once('logic/entry.php');
     <?php require_once(dirname(__FILE__) . '/user-cp.php'); ?>    
     <!-- javascripts -->
     <?php require_once($config["includes"]["footer"]);?>
-    <script>
-        $(document).ready(function() {
-        set_active_navbar_button('#user');  
-        });
-    </script>
-  </body>
+    <script src="js/user.js"></script>
+    </body>
 </html>
