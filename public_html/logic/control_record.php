@@ -90,12 +90,12 @@ function get_all_child($parent_user_id)
 			
 			$temp_id=$temp_child[$i]["child_user_id"];
 			$temp_user_name=get_user_name_by_id($temp_id);
-			if(is_user_exist($temp_user_name))
-			{
+			//if(is_user_exist($temp_user_name))
+			//{
 			
 				$queue[$tail]=$temp_child[$i]["child_user_id"];
 				$tail++;
-			}
+			//}
 		}
 		$cur++;
 	}
