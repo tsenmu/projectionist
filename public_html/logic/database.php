@@ -227,20 +227,29 @@ function delete_user($user_name)
 	}
 	
 }
-function update_user_password($user_name,$user_new_password)
+function update_user_password($user_name,$user_old_password,$user_new_password)
 {
 	if(!is_user_exist($user_name))
 	{
 		return "ERROR_USER_NOT_EXIST";
 	}
+	$user_old_password=md5($user_old_password);
+	$sql = "SELECT * FROM users WHERE user_name = '$user_name' AND user_available = '1' AND user_password = '$user_old_password'";
+	$ret=get_through_sqlCommand($sql);
+	if($ret==NULL)
+	{
+		return "ERROR_USER_OLD_PASSWORD";
+	}
 	
 	$user_new_password=md5($user_new_password);
+	
 	$sql="UPDATE users SET user_password = '$user_new_password' WHERE user_name = '$user_name' AND user_available = '1' ";
 	
 	if(execute_sqlCommand($sql))
 	{
 		return "UPDATE_PASSWORD_SUCCESS";
 	}
+	return "ERROR_UPDATE_USER_PASSWORD";
 }
 function update_user_name($user_name,$user_new_name)
 {
