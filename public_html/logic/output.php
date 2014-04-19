@@ -1,16 +1,16 @@
-<?php
+ï»¿<?php
 require_once('control_record.php');
 
 
 /**
-    * µ¼³öÊý¾ÝÎªexcel±í¸ñ
-    *@param $data    Ò»¸ö¶þÎ¬Êý×é,½á¹¹ÈçÍ¬´ÓÊý¾Ý¿â²é³öÀ´µÄÊý×é
-    *@param $title   excelµÄµÚÒ»ÐÐ±êÌâ,Ò»¸öÊý×é,Èç¹ûÎª¿ÕÔòÃ»ÓÐ±êÌâ
-    *@param $filename ÏÂÔØµÄÎÄ¼þÃû
+    * å¯¼å‡ºæ•°æ®ä¸ºexcelè¡¨æ ¼
+    *@param $data    ä¸€ä¸ªäºŒç»´æ•°ç»„,ç»“æž„å¦‚åŒä»Žæ•°æ®åº“æŸ¥å‡ºæ¥çš„æ•°ç»„
+    *@param $title   excelçš„ç¬¬ä¸€è¡Œæ ‡é¢˜,ä¸€ä¸ªæ•°ç»„,å¦‚æžœä¸ºç©ºåˆ™æ²¡æœ‰æ ‡é¢˜
+    *@param $filename ä¸‹è½½çš„æ–‡ä»¶å
     *@examlpe 
     $stu = M ('User');
     $arr = $stu -> select();
-    exportexcel($arr,array('id','ÕË»§','ÃÜÂë','êÇ³Æ'),'ÎÄ¼þÃû!');
+    exportexcel($arr,array('id','è´¦æˆ·','å¯†ç ','æ˜µç§°'),'æ–‡ä»¶å!');
 */
  function exportexcel($data=array(),$title=array(),$filename='report')
  {
@@ -20,12 +20,12 @@ require_once('control_record.php');
     header("Content-Disposition:attachment;filename=".$filename.".xls");
     header("Pragma: no-cache");
     header("Expires: 0");
-    //µ¼³öxls ¿ªÊ¼
+    //å¯¼å‡ºxls å¼€å§‹
     if (!empty($title)){
         foreach ($title as $k => $v) {
-           // $title[$k]=iconv("UTF-8", "GB2312",$v);
+            $title[$k]=iconv("UTF-8", "GB2312",$v);
         }
-        $title= implode("\t", $title);
+        $title= implode(",", $title);
         echo "$title\n";
     }
     if (!empty($data)){
@@ -33,7 +33,7 @@ require_once('control_record.php');
             foreach ($val as $ck => $cv) {
                 $data[$key][$ck]=iconv("UTF-8", "GB2312", $cv);
             }
-            $data[$key]=implode("\t", $data[$key]);
+            $data[$key]=implode(",", $data[$key]);
             
         }
         echo implode("\n",$data);
@@ -44,6 +44,6 @@ require_once('control_record.php');
  function export_record_excel($user_id)
  {
 	$res=output_record($user_id);
-	exportexcel($res,array('µçÓ°',"ÔºÏß",'·ÅÓ³Ô±','·ÅÓ³Ê±¼ä','µØµã'),'·ÅÓ³¼ÇÂ¼');
+	exportexcel($res,array('ç”µå½±',"é™¢çº¿",'æ”¾æ˜ å‘˜','æ”¾æ˜ æ—¶é—´','åœ°ç‚¹'),'æ”¾æ˜ è®°å½•');
  }
 ?>
