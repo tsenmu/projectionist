@@ -39,7 +39,7 @@ require_once('control_record.php');
         echo implode("\n",$data);
     }
  }
- ///export_record_excel(10);
+ export_record_excel(1);
 
  function export_record_excel($user_id)
  {
