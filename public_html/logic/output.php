@@ -23,7 +23,7 @@ require_once('control_record.php');
     //导出xls 开始
     if (!empty($title)){
         foreach ($title as $k => $v) {
-            $title[$k]=iconv("UTF-8", "GB2312",$v);
+           // $title[$k]=iconv("UTF-8", "GB2312",$v);
         }
         $title= implode("\t", $title);
         echo "$title\n";
@@ -39,11 +39,11 @@ require_once('control_record.php');
         echo implode("\n",$data);
     }
  }
- //export_record_excel(10);
+ ///export_record_excel(10);
 
  function export_record_excel($user_id)
  {
 	$res=output_record($user_id);
-	exportexcel($res,array('movie',"院线",'放映员','放映时间','地点'),'放映记录');
+	exportexcel($res,array('电影',"院线",'放映员','放映时间','地点'),'放映记录');
  }
 ?>
