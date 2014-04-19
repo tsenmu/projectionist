@@ -186,7 +186,7 @@ function get_record_order_by_time($user_id)
 function output_record($user_id)
 {
 	$resval=get_record_order_by_time($user_id);
-	foreach($resval as $res)
+    foreach($resval as $res)
 	{
 		$records[]=show_record($res["record_id"]);
 	}
