@@ -22,7 +22,7 @@ some confusions in here
 */
 function update_record($record_id, $film_id,$chain_id,$date_time,$location)
 {
-	$sql = "UPDATE records SET film_id='$film_id', date_time='$date_time', location='$location' WHERE record_id='$record_id')";
+	$sql = "UPDATE records SET film_id='$film_id',chain_id='$chain_id', date_time='$date_time', location='$location' WHERE record_id='$record_id'";
 	
 	if(execute_sqlCommand($sql))
 	{
@@ -32,6 +32,23 @@ function update_record($record_id, $film_id,$chain_id,$date_time,$location)
 		return "ERROR_UPDATE_RECORD";
 }
 
+function update_record_by_admin($record_id, $film_id,$chain_id,$user_name,$date_time,$location)
+{
+	$user_id=get_user_id($user_name);
+	if($user_id==NULL)
+	{
+		return "ERROR_USER_NAME";
+	}
+	echo $user_id;
+	$sql = "UPDATE records SET film_id='$film_id',chain_id='$chain_id', date_time='$date_time', location='$location',user_id='$user_id' WHERE record_id='$record_id'";
+	
+	if(execute_sqlCommand($sql))
+	{
+		return "UPDATE_RECORD_SUCCESS";
+	}
+	else
+		return "ERROR_UPDATE_RECORD";
+}
 
 function delete_record($record_id)
 {
@@ -129,5 +146,51 @@ function show_record($record_id)
 	return $record;
 }
 
+//-------------------multi array sort----------
+function multi_array_sort($multi_array, $sort_key, $sort=SORT_ASC)
+{
+	if(is_array($multi_array))
+	{
+		foreach($multi_array as $row_array)
+		{
+			if(is_array($row_array))
+			{
+				$key_array[]=$row_array[$sort_key];
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		return false;
+	}
+	array_multisort($key_array,$sort,$multi_array);
+	return $multi_array;
+}
+
+function get_record_order_by_time($user_id)
+{
+	$record=get_record($user_id);
+	if($record==NULL)
+	{
+		return "ERROR_RECORD_NULL";
+	}
+	$res=multi_array_sort($record,"date_time",SORT_ASC);
+	return $res;
+}
+
+//==============test multiple table connection======
+function output_record($user_id)
+{
+	$resval=get_record_order_by_time($user_id);
+	foreach($resval as $res)
+	{
+		$records[]=show_record($res["record_id"]);
+	}
+	return $records;
+}
 	
 ?>
