@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 set_active_navbar_button('#records');  
+set_active_sidebar_button('#sidebar-records');
 $(".form_datetime").datetimepicker({
 format: "yyyy-mm-dd hh:ii"
 });

@@ -2,6 +2,7 @@ $(document).ready(function() {
 // init
     set_active_navbar_button('#user-management');  
     set_active_navbar_button('#management');
+    set_active_sidebar_button('#sidebar-user-management');
     update_user();
 // Validations
     $('.modal').on('hidden.bs.modal', function() {

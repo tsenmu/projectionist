@@ -20,6 +20,7 @@ require_once('logic/entry.php');
             <?php require_once(dirname(__FILE__) . '/sidebar.php'); ?>
                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2
                     main">
+                    
                     <div id="panel-record" class="panel panel-default">
                         <div class="panel-heading"><h3 class="panel-title">放映记录</h3></div>
                         <div class="panel-body">

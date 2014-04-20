@@ -1,6 +1,7 @@
 $(document).ready(function() {
     set_active_navbar_button('#movie-management');  
     set_active_navbar_button('#management');
+    set_active_sidebar_button('#sidebar-movie-management');
     update_chain();
     update_film();
     var update_film_id;

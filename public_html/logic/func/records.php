@@ -193,6 +193,4 @@ function records_update_record()
     $user_id = get_user_id($user_name);
     echo update_record_by_admin($record_id, $film_id, $chain_id,$user_name, $date_time, $location);
 }
-
-
 ?>

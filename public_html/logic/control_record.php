@@ -39,7 +39,7 @@ function update_record_by_admin($record_id, $film_id,$chain_id,$user_name,$date_
 	{
 		return "ERROR_USER_NAME";
 	}
-	echo $user_id;
+	//echo $user_id;
 	$sql = "UPDATE records SET film_id='$film_id',chain_id='$chain_id', date_time='$date_time', location='$location',user_id='$user_id' WHERE record_id='$record_id'";
 	
 	if(execute_sqlCommand($sql))
