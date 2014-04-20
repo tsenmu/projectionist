@@ -10,6 +10,7 @@
     <title><?php echo $config["vars"]["title"]?></title>
   </head>
   <body>
+    <?php require_once(dirname(__FILE__) . '/navbar.php');?>
     <div class="container">
       <form class="form-signin" role="form">
         <h2 class="form-signin-heading">请登录</h2>

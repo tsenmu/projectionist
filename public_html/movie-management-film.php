@@ -1,4 +1,3 @@
-<div class="container" role="main-film">
     <div id="panel-film" class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">电影管理</h3>
@@ -15,7 +14,6 @@
             </div>
         </div>
     </div>
-</div>
 <?php
 require_once(dirname(__FILE__) . '/movie-management-film-insert.php');
 require_once(dirname(__FILE__) . '/movie-management-film-update.php');

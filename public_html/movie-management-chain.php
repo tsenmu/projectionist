@@ -1,4 +1,3 @@
-<div class="container" role="chain-main">
     <div id="panel-chain" class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">院线管理</h3>
@@ -15,7 +14,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <?php
 require_once(dirname(__FILE__) . '/movie-management-chain-insert.php');

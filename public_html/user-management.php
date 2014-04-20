@@ -15,19 +15,25 @@ require_once('logic/entry.php');
     <body>
         <?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
 
-        <div class="container" role="user-main">
-            <div id="panel-user" class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">用户管理</h3>
-                </div>
-                <div class="panel-body">
-                    <div id="alert"></div>
-                    <button type="button" class="btn btn-default btn-success"
-                        data-toggle="modal" data-target="#insert-user"> <span
-                            class="glyphicon glyphicon-plus"></span> 添加新用户</button>
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="user-list">
-                        </table>
+        <div class="container-fluid" role="user-main">
+            <div class="row">
+                <?php require_once(dirname(__FILE__) . '/sidebar.php'); ?>
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2
+                    main">
+                    <div id="panel-user" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">用户管理</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="alert"></div>
+                            <button type="button" class="btn btn-default btn-success"
+                                data-toggle="modal" data-target="#insert-user"> <span
+                                    class="glyphicon glyphicon-plus"></span> 添加新用户</button>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="user-list">
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

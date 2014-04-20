@@ -15,21 +15,27 @@ require_once('logic/entry.php');
     </head>
     <body>
         <?php require_once(dirname(__FILE__) . '/navbar.php'); ?>
-        <div class="container">
-            <div id="panel-record" class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">放映记录</h3></div>
-                <div class="panel-body">
-                    <div id="alert"></div>
-                    <?php if ($_SESSION['current_user_type'] == 0 || $_SESSION['current_user_type'] == 3) : ?>
-                    <button class="btn btn-success open-insert-record-dialog" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>添加放映记录</button>    
-                    <?php endif; ?>
-                    <button class="btn btn-default btn-warning download-records"> <span class="glyphicon glyphicon-download"></span>导出放映记录</button>
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="record-list">
-                        </table>
-                    </div>
-                </div>  
-            </div>    
+        <div class="container-fluid">
+            <div class="row">
+            <?php require_once(dirname(__FILE__) . '/sidebar.php'); ?>
+               <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2
+                    main">
+                    <div id="panel-record" class="panel panel-default">
+                        <div class="panel-heading"><h3 class="panel-title">放映记录</h3></div>
+                        <div class="panel-body">
+                            <div id="alert"></div>
+                            <?php if ($_SESSION['current_user_type'] == 0 || $_SESSION['current_user_type'] == 3) : ?>
+                            <button class="btn btn-success open-insert-record-dialog" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>添加放映记录</button>    
+                            <?php endif; ?>
+                            <button class="btn btn-default btn-warning download-records"> <span class="glyphicon glyphicon-download"></span>导出放映记录</button>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="record-list">
+                                </table>
+                            </div>
+                        </div>  
+                    </div>    
+                </div>
+            </div>
         </div>
         <?php require_once(dirname(__FILE__) . '/records-insert.php'); ?>
         <?php require_once(dirname(__FILE__) . '/records-update.php'); ?>
@@ -39,5 +45,5 @@ require_once('logic/entry.php');
         <script src="js/bootstrap-datetimepicker.min.js"></script>
         <script src="js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
         <script src="js/records.js"></script>
-  </body>
+    </body>
 </html>
