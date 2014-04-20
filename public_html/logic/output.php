@@ -45,4 +45,9 @@ require_once('control_record.php');
 	$res=output_record($user_id);
 	exportexcel($res,array('电影',"院线",'放映员','放映时间','地点'),'放映记录');
  }
+ 
+ function export_result_excel($result)
+ {
+	exportexcel($result,array('电影',"院线",'放映员','放映时间','地点'),'放映记录搜索结果');
+ }
 ?>
