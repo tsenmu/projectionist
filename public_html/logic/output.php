@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once('control_record.php');
 /**
  * 导出数据为excel表格
@@ -40,8 +40,13 @@ function exportexcel($data=array(),$title=array(),$filename='report')
 }
 
 function export_record_excel($user_id)
-{
-    $res=output_record($user_id);
-    exportexcel($res,array('电影',"院线",'放映员','放映时间','地点'),'放映记录');
-}
+ {
+	$res=output_record($user_id);
+	exportexcel($res,array('电影',"院线",'放映员','放映时间','地点'),'放映记录');
+ }
+ 
+ function export_result_excel($result)
+ {
+	exportexcel($result,array('电影',"院线",'放映员','放映时间','地点'),'放映记录搜索结果');
+ }
 ?>

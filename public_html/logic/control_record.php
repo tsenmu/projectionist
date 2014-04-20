@@ -192,5 +192,85 @@ function output_record($user_id)
 	}
 	return $records;
 }
+
+//===============Search Records====================
+
+//just for split show result
+function split_result($res,$per_page,$page_number)
+{
+	if(count($res)<$per_page)
+		return $res;
+	else
+	{
+		$start_index=($page_number-1)*$per_page;
+		for($i=$start_index;$i<$start_index+$per_page && $i<count($res);$i++)
+		{
+			$sub_res[]=$res[$i];
+		}
+	}
+	return $sub_res;
+
+}
+//user restrict: itself and its child
+function search_record_by_single_item($mode="",$search_str,$begin_time="1900-01-01",$end_time="2300-12-12")
+{
+	$search_result;
+	switch($mode)
+	{
+		case "FILM":
+				$sql="SELECT * FROM records WHERE film_id IN (".
+				"SELECT film_id FROM films WHERE film_name LIKE '%$search_str%')";
+			break;
+		case "CHAIN":
+				$sql="SELECT * FROM records WHERE chain_id IN (".
+				"SELECT chain_id FROM chains WHERE chain_name LIKE '%$search_str%')";
+			break;
+		case "USER":
+				$sql="SELECT * FROM records WHERE user_id IN (".
+				"SELECT user_id FROM users WHERE user_name LIKE '%$search_str%')";
+			break;
+		case "TIME":
+				// here should use between and
+				$sql="SELECT * FROM records WHERE date_time BETWEEN $begin_time AND $end_time";
+			break;
+		case "LOCATION":
+				$sql="SELECT * FROM records WHERE location LIKE '%$search_str%'";				
+			break;
+		case "ALL":
+				$sql="SELECT * FROM records";	
+			break;
+		default:		
+			$sql="SELECT * FROM records WHERE location LIKE '%$search_str%'";	
+			break;
+	}
+	$search_result=get_all_sqlCommand($sql);
+	return $search_result;
+}
+
+
+
+function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
+						$location="",$begin_time="0",$end_time="3100-01-01")
+{
+
+	$all_child_user_id=get_all_child($user_id);
+	$str_command="user_id IN ($all_child_user_id[0]";	
+	for($i=1;$i<count($all_child_user_id);$i++)
+	{
+		$str_command .=",$all_child_user_id[$i]";
+	}
+	$str_command .=') AND ';
 	
+
+	$sql="SELECT * FROM records WHERE ".
+		"film_id IN (SELECT film_id FROM films WHERE film_name LIKE '%$film_name%') AND ".
+		"chain_id IN (SELECT chain_id FROM chains WHERE chain_name LIKE '%$chain_name%') AND ".
+		"user_id IN (SELECT user_id FROM users WHERE user_name LIKE '%$user_name%') AND ".
+		$str_command.
+		"location LIKE '%$location%' AND ".
+		"date_time BETWEEN '$begin_time' AND '$end_time'";	
+	$search_result=get_all_sqlCommand($sql);
+	return $search_result;
+}
+
 ?>

@@ -21,7 +21,7 @@
                 glyphicon-list"> 查看放映记录</span></a>
         </li>
         <li>
-        <a href="#"><span class="glyphicon glyphicon-search">
+        <a data-target="#search-record" data-toggle="modal" href="#"><span class="glyphicon glyphicon-search">
                 搜索放映记录</span></a>
         </li>
         <?php endif;?>

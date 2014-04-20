@@ -9,15 +9,46 @@ update_record();
 update_film();
 update_chain();
 update_user();
+$('#search-record-submit').click( function(){
+    film_name = $("#search-record #film-name").val();
+    chain_name = $("#search-record #chain-name").val();
+    date_time_begin = $("#search-record #date-time-begin").val();
+    date_time_end = $("#search-record #date-time-end").val();
+    the_location = $("#search-record #location").val();
+    user_name = $("#search-record #user-name").val();
+    window.location.replace("records.php?search=1&film="+film_name+"&chain="+chain_name+"&from="+date_time_begin+"&to="+date_time_end+"&location="+the_location+"&user="+user_name+"&page=1"); 
+});
+if ($("span#record-count").text() == ""){
+    update_record_count();
+}
+if ($("span#page-count").text() == "") {
+    update_page_count();
+}
+function update_page_count()
+{
+    $('span#page-count').load('logic/ajax_target.php', {'func' : 'records_get_default_page_count'});
+}
+function update_record_count()
+{
+   $('span#record-count').load('logic/ajax_target.php', {'func': 'records_get_default_record_count'}); 
+}
 function update_record()
 {
     update_record_list();
 }
 function update_record_list()
 {
-    $('#panel-record #record-list').load('logic/ajax_target.php', {
-        'func' : 'records_get_record_list'
-    });
+    if ($.urlParam("search") != null) {
+     $('#panel-record #record-list').load('logic/ajax_target.php',{
+        'func' : 'records_get_search_result', 'page': $.urlParam("page"), 'film' : $.urlParam('film'),  'chain': $.urlParam('chain'), 'from' :$.urlParam('from'), 'to': $.urlParam('to'), 'user' : $.urlParam('user')}
+    );
+   
+    }else
+    {
+    $('#panel-record #record-list').load('logic/ajax_target.php',{
+        'func' : 'records_get_record_list', 'page': $.urlParam("page")}
+    );
+    }
 }   
 function update_film()
 {

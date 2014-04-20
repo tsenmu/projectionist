@@ -2,6 +2,86 @@
 require_once(dirname(__FILE__).'/../control_record.php');
 require_once(dirname(__FILE__).'/../database.php');
 require_once(dirname(__FILE__).'/../output.php');
+define('RECORD_PER_PAGE', 1);
+function records_get_search_result()
+{
+    session_start();
+    $current_user = $_SESSION['current_user'];
+    $current_user_type = get_user_type($current_user);
+    $current_user_id = get_user_id($current_user);
+    $records= search_record($current_user_id, $_REQUEST['film'], $_REQUEST['chain'], $_REQUEST['user'], $_REQUEST['location'], $_REQUEST['from'], $_REQUEST['to']);
+    $page = $_REQUEST['page']; 
+    $_SESSION['record_count'] = count($records);
+    $_SESSION['page_count'] = ceil(1.0 * $_SESSION['record_count'] / RECORD_PER_PAGE);
+    $records = split_result($records, RECORD_PER_PAGE,$page);
+    if (count ($records) == 0)
+    {
+        echo '<thead><tr><th>当前管辖范围内暂无任何记录</th></tr></thead>';
+        return;
+    }
+    if ($current_user_type == 0 || $current_user_type == 3)
+    {
+    $ret =<<< EOD
+<thead><tr><th>电影</th><th>院线</th><th>放映员</th><th>时间</th><th>地点</th><th>操作</th></tr></thead>
+EOD;
+    }
+    else 
+    {
+    $ret =<<< EOD
+<thead><tr><th>电影</th><th>院线</th><th>放映员</th><th>时间</th><th>地点</th></tr></thead>
+EOD;
+
+    }
+    foreach ( $records as $record)
+    {
+        $record_id = $record['record_id'];
+        $record_text = show_record($record_id);    
+        print_r($record_text);
+        $film_name = $record_text['film_name'];
+        $user_name = $record_text['user_name'];
+        $chain_name = $record_text['chain_name'];
+        $user_name = $record_text['user_name'];
+        $user_id = $record['user_id'];
+        $film_id = $record['film_id'];
+        $chain_id = $record['chain_id'];
+        $date_time = $record['date_time'];
+        $location = $record['location'];
+        if ($current_user_type == 0 || $current_user_type == 3)
+        {
+        $push_str = <<<EOT
+<tr><td>$film_name</td><td>$chain_name</td><td>$user_name</td><td>$date_time</td><td>$location</td><td>
+<button role="update-record" class="btn btn-primary open-update-record-dialog" type="button" data-toggle="modal"data-target="#update-record" data-id="$record_id">
+<span class="glyphicon glyphicon-pencil"></span>
+编辑
+</button>
+<button role="delete-record" class="btn btn-danger open-delete-record-dialog" type="button" data-toggle="modal" data-target="#delete-record" data-id="$record_id">
+<span class="glyphicon glyphicon-trash"></span>
+删除
+</button>
+</td></tr>
+EOT;
+        }
+        else
+        {
+         $push_str = <<<EOT
+<tr><td>$film_name</td><td>$chain_name</td><td>$user_name</td><td>$date_time</td><td>$location</td>
+EOT;
+        }
+        $ret = $ret.$push_str;
+    }
+    echo $ret;
+}
+
+function records_get_default_page_count()
+{
+    session_start();
+    echo $_SESSION['page_count'];
+}
+function records_get_default_record_count()
+{
+    session_start();
+    echo $_SESSION['record_count']; 
+}
 function records_download_records()
 {
     session_start();
@@ -27,6 +107,10 @@ function records_get_record_list()
     $current_user_type = get_user_type($current_user);
     $current_user_id = get_user_id($current_user);
     $records= get_record_order_by_time($current_user_id);
+    $page = $_REQUEST['page']; 
+    $_SESSION['record_count'] = count($records);
+    $_SESSION['page_count'] = ceil(1.0 * $_SESSION['record_count'] / RECORD_PER_PAGE);
+    $records = split_result($records, RECORD_PER_PAGE,$page);
     if (count ($records) == 0)
     {
         echo '<thead><tr><th>当前管辖范围内暂无任何记录</th></tr></thead>';
