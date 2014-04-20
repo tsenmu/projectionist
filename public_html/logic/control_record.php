@@ -270,6 +270,7 @@ function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
 		"location LIKE '%$location%' AND ".
 		"date_time BETWEEN '$begin_time' AND '$end_time'";	
 	$search_result=get_all_sqlCommand($sql);
+	$search_result[]=count($search_result);
 	return $search_result;
 }
 
