@@ -252,7 +252,12 @@ function search_record_by_single_item($mode="",$search_str,$begin_time="1900-01-
 function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
 						$location="",$begin_time="0",$end_time="3100-01-01")
 {
-
+    if ($begin_time =="" ) {
+        $begin_time = '0';
+    }
+    if ($end_time = "") {
+        $end_time = '3100-01-01';
+    }
 	$all_child_user_id=get_all_child($user_id);
 	$str_command="user_id IN ($all_child_user_id[0]";	
 	for($i=1;$i<count($all_child_user_id);$i++)
@@ -270,7 +275,6 @@ function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
 		"location LIKE '%$location%' AND ".
 		"date_time BETWEEN '$begin_time' AND '$end_time'";	
 	$search_result=get_all_sqlCommand($sql);
-	$search_result[]=count($search_result);
 	return $search_result;
 }
 
