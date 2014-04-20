@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once('control_record.php');
 
 
