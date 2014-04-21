@@ -40,7 +40,7 @@ require_once('logic/entry.php');
                                         id="user-count"><?php echo
                                         $_REQUEST['total'];?></span>&nbsp;用户，</span>
                                 <span>当前显示第<span id="user-page">&nbsp;
-                                        <input class=""
+                                        <input id="current-page" class=""
                                             style="text-align: center;" value="<?php echo $_REQUEST['page'] ?>"
                                         size="3px" type="text"  >&nbsp; / <span id="page-count"></span> 页用户</span>
                                         <li class="previous <?php if($_REQUEST['page'] == 1): ?> disabled<?php endif;?> "><a href="#">上一页</a></li>

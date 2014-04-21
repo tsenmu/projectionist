@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="home.php"><span class="glyphicon glyphicon-facetime-video"></span>  电影放映管理系统</a>
+            <a class="navbar-brand" href="home.php"><span class="glyphicon glyphicon-facetime-video"> </span>&nbsp;&nbsp;电影放映管理系统</a>
         </div>
         <?php if (isset($_SESSION['current_user'])): ?>
         <div class="collapse navbar-collapse">

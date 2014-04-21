@@ -47,7 +47,20 @@ function update_pager()
 function update_page_count()
 {
     $('span#page-count').load('logic/ajax_target.php', {'func' : 'user_management_get_default_page_count'}, function() {
-        update_pager();
+        if(Number($('span#page-count').text()) < Number($('input#current-page').val())) {
+                    vars = getUrlVars();
+                    vars['page'] = vars['page'].replace('#', '');
+                    vars['page'] = Number($('span#page-count').text());
+                    new_page = "user-management.php?";
+                    jQuery.each(vars, function(index, key) {
+                        new_page = new_page + key + "=" + vars[key] + '&';
+                    });
+                    new_page = new_page.substr(0, new_page.length - 1);
+                    window.location.replace(new_page); 
+                    return;
+            }
+            update_pager();
+
     })
 }
 function update_user_count()
