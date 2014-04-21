@@ -40,16 +40,16 @@ require_once('logic/entry.php');
                                         <input class=""
                                             style="text-align: center;" value="<?php echo $_REQUEST['page'] ?>"
                                         size="3px" type="text"  >&nbsp; / <span id="page-count"></span> 页记录</span>
-                                <li class="previous"><a href="#">上一页</a></li>
-                                <li class="next"><a href="#">下一页</a></li>
+                                        <li class="previous <?php if($_REQUEST['page'] == 1): ?> disabled<?php endif;?> "><a href="#">上一页</a></li>
+                                <li class="next <?php session_start(); if($_REQUEST['page'] == $_SESSION['page_count']): ?> disabled<?php endif;?> "><a href="#">下一页</a></li>
                             </ul>
                             <div class="table-responsive">
                                 <table class="table table-striped" id="record-list">
                                 </table>
                             </div>
                             <ul class="pager">
-                                <li class="previous"><a href="#">上一页</a></li>
-                                <li class="next"><a href="#">下一页</a></li>
+                                <li class="previous <?php if($_REQUEST['page'] == 1): ?> disabled<?php endif;?>" ><a href="#">上一页</a></li>
+                                <li class="next <?php session_start(); if($_REQUEST['page'] == $_SESSION['page_count']): ?> disabled<?php endif;?> "><a href="#">下一页</a></li>
                             </ul>
 
                         </div>  

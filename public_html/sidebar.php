@@ -14,10 +14,10 @@
         <?php if (PAGE == 'records.php' || PAGE == 'home.php') : ?>
         <li class="divider"></li>
         <li  class="">
-        <a  data-target="#insert-record" data-toggle="modal" href="#"><span class="glyphicon glyphicon-plus"> 添加放映记录</span></a>
+        <a  class="open-insert-record-dialog" data-target="#insert-record" data-toggle="modal" data-target="#insert-record" href="#"><span class="glyphicon glyphicon-plus"> 添加放映记录</span></a>
         </li>
         <li>
-        <a href="#"><span class="glyphicon
+        <a href="records.php"><span class="glyphicon
                 glyphicon-list"> 查看放映记录</span></a>
         </li>
         <li>
@@ -31,7 +31,7 @@
         <a data-target="#insert-user" data-toggle="modal" href="#"><span class="glyphicon glyphicon-plus"> 添加新用户 </span></a>
         </li>
         <li>
-        <a href="#"><span class="glyphicon glyphicon-list"> 查看用户</span></a>
+        <a href="user-management.php"><span class="glyphicon glyphicon-list"> 查看用户</span></a>
         </li>
         <?php endif;?>
         <?php if (PAGE == 'movie-management.php' || PAGE == 'home.php') : ?> 
@@ -44,10 +44,9 @@
                 添加新院线</span></a>
         </li>
         <li>
-        <a href="#"><span class="glyphicon glyphicon-list">
+        <a href="movie-management.php"><span class="glyphicon glyphicon-list">
                 查看电影和院线</span></a>
         </li>
         <?php endif; ?>
     </ul>
 </div>
-

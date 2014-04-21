@@ -198,7 +198,7 @@ function output_record($user_id)
 //just for split show result
 function split_result($res,$per_page,$page_number)
 {
-	if(count($res)<$per_page)
+	if(count($res)<= $per_page)
 		return $res;
 	else
 	{
@@ -255,7 +255,7 @@ function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
     if ($begin_time =="" ) {
         $begin_time = '0';
     }
-    if ($end_time = "") {
+    if ($end_time == "") {
         $end_time = '3100-01-01';
     }
 	$all_child_user_id=get_all_child($user_id);

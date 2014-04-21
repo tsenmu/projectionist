@@ -29,6 +29,11 @@ error_reporting(E_ALL ^ E_NOTICE);
         </div>
         <!-- javascripts -->
         <?php require_once($config["includes"]["footer"]);?>
+        
+        <?php require_once(dirname(__FILE__) . '/records-insert.php'); ?>
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
+        <script src="js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+ 
         <script src="js/home.js"></script>
     </body>
 </html>

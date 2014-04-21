@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__).'/../control_record.php');
 require_once(dirname(__FILE__).'/../database.php');
 require_once(dirname(__FILE__).'/../output.php');
-define('RECORD_PER_PAGE', 1);
+define('RECORD_PER_PAGE', 2);
 function records_get_search_result()
 {
     session_start();
@@ -13,6 +13,10 @@ function records_get_search_result()
     $page = $_REQUEST['page']; 
     $_SESSION['record_count'] = count($records);
     $_SESSION['page_count'] = ceil(1.0 * $_SESSION['record_count'] / RECORD_PER_PAGE);
+    if ($_SESSION['page_count'] == 0)
+    {
+        $_SESSION['page_count'] = 1;
+    }
     $records = split_result($records, RECORD_PER_PAGE,$page);
     if (count ($records) == 0)
     {
@@ -36,7 +40,6 @@ EOD;
     {
         $record_id = $record['record_id'];
         $record_text = show_record($record_id);    
-        print_r($record_text);
         $film_name = $record_text['film_name'];
         $user_name = $record_text['user_name'];
         $chain_name = $record_text['chain_name'];
@@ -107,9 +110,16 @@ function records_get_record_list()
     $current_user_type = get_user_type($current_user);
     $current_user_id = get_user_id($current_user);
     $records= get_record_order_by_time($current_user_id);
+    if (count($records) == 1 && !is_array($records) && strpos($records, "ERROR") !== false) {
+        unset($records);
+    }
     $page = $_REQUEST['page']; 
     $_SESSION['record_count'] = count($records);
     $_SESSION['page_count'] = ceil(1.0 * $_SESSION['record_count'] / RECORD_PER_PAGE);
+    if ($_SESSION['page_count'] == 0)
+    {
+        $_SESSION['page_count'] = 1;
+    }
     $records = split_result($records, RECORD_PER_PAGE,$page);
     if (count ($records) == 0)
     {
@@ -133,7 +143,6 @@ EOD;
     {
         $record_id = $record['record_id'];
         $record_text = show_record($record_id);    
-        print_r($record_text);
         $film_name = $record_text['film_name'];
         $user_name = $record_text['user_name'];
         $chain_name = $record_text['chain_name'];
