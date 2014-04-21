@@ -3,15 +3,15 @@
         <li id="sidebar-records" class="">
         <a href="records.php"> <span class="glyphicon glyphicon-list-alt"></span></br>记录</a>
         </li>
-        <li id="sidebar-user-management" class="">
-        <a href="user-management.php"><span class="glyphicon glyphicon-user"></span></br>用户</a>
+        <li id="sidebar-user-management" class="<?php if ($_SESSION['current_user_type'] == 2):?>disabled <?php endif; ?>"  >
+        <a href="<?php if($_SESSION['current_user_type'] == 2):?>#<?php else: ?> user-management.php<?php endif; ?>" ><span class="glyphicon glyphicon-user"></span></br>用户</a>
         </li>
-        <li id="sidebar-movie-management" class="">
-        <a href="movie-management.php"><span class="glyphicon glyphicon-play-circle"></span></br>电影</a>
+        <li id="sidebar-movie-management" class="<?php if($_SESSION['current_user_type'] == 2):?>disabled <?php endif; ?>">
+        <a href="<?php if($_SESSION['current_user_type'] == 2):?>#<?php else: ?>movie-management.php<?php endif; ?>"><span class="glyphicon glyphicon-play-circle"></span></br>电影</a>
         </li>
     </ul>
     <ul class="nav nav-sidebar nav-pills nav-stacked">
-        <?php if (PAGE == 'records.php' || PAGE == 'home.php') : ?>
+        <?php if (PAGE == 'records.php' || PAGE == 'home.php' ) : ?>
         <li class="divider"></li>
         <li  class="">
         <a  class="open-insert-record-dialog" data-target="#insert-record" data-toggle="modal" data-target="#insert-record" href="#"><span class="glyphicon glyphicon-plus"> 添加放映记录</span></a>
@@ -25,7 +25,7 @@
                 搜索放映记录</span></a>
         </li>
         <?php endif;?>
-        <?php if (PAGE == 'user-management.php' || PAGE == 'home.php') : ?>
+        <?php if ((PAGE == 'user-management.php' || PAGE == 'home.php') && $_SESSION['current_user_type'] != 2) : ?>
         <li class="divider"></li>
         <li>
         <a data-target="#insert-user" data-toggle="modal" href="#"><span class="glyphicon glyphicon-plus"> 添加新用户 </span></a>
@@ -34,7 +34,7 @@
         <a href="user-management.php"><span class="glyphicon glyphicon-list"> 查看用户</span></a>
         </li>
         <?php endif;?>
-        <?php if (PAGE == 'movie-management.php' || PAGE == 'home.php') : ?> 
+        <?php if ((PAGE == 'movie-management.php' || PAGE == 'home.php') && $_SESSION['current_user_type'] != 2) : ?> 
         <li class="divider"></li>
         <li>
         <a href="#" data-target="#insert-film" data-toggle="modal"><span class="glyphicon glyphicon-plus"> 添加新电影</span></a>

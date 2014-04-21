@@ -50,7 +50,7 @@ $(document).ready(function() {
         {
             $('li.previous').removeClass('disabled');
         }
-        if ($.urlParam('page') != null && $.urlParam('page') == Number($('span#page-count').text())) {
+        if ($.urlParam('page') != null && Number($.urlParam('page')) == Number($('span#page-count').text())) {
             $('li.next').addClass('disabled');
         } else {
             $('li.next').removeClass('disabled');
@@ -68,6 +68,18 @@ $(document).ready(function() {
     function update_page_count()
     {
         $('span#page-count').load('logic/ajax_target.php', {'func' : 'records_get_default_page_count'}, function() {
+            if(Number($('span#page-count').text()) < Number($('input#current-page').val())) {
+                    vars = getUrlVars();
+                    vars['page'] = vars['page'].replace('#', '');
+                    vars['page'] = Number($('span#page-count').text());
+                    new_page = "records.php?";
+                    jQuery.each(vars, function(index, key) {
+                        new_page = new_page + key + "=" + vars[key] + '&';
+                    });
+                    new_page = new_page.substr(0, new_page.length - 1);
+                    window.location.replace(new_page); 
+                    return;
+            }
             update_pager();
         });
     }

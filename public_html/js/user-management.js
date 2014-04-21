@@ -1,4 +1,59 @@
 $(document).ready(function() {
+// pager
+$('li.previous').click(function() {
+    if ($("li.previous").hasClass('disabled')) return;
+    vars = getUrlVars();
+    vars['page'] = vars['page'].replace('#', '');
+    vars['page'] = Number(vars['page']) - 1;
+    new_page = "user-management.php?";
+    jQuery.each(vars, function(index, key) {
+        new_page = new_page + key + "=" + vars[key] + '&';
+    });
+    new_page = new_page.substr(0, new_page.length - 1);
+    window.location.replace(new_page);
+});
+$('li.next').click(function() {
+    if($('li.next').hasClass('disabled')) return;
+    vars = getUrlVars();
+    vars['page'] = vars['page'].replace('#', '');
+    vars['page'] = Number(vars['page']) + 1;
+    new_page = "user-management.php?";
+    jQuery.each(vars, function(index, key) {
+        new_page = new_page + key + "=" + vars[key] + '&';
+    });
+    new_page = new_page.substr(0, new_page.length - 1);
+    window.location.replace(new_page);
+});
+if ($("span#user-count").text() == "") {
+    update_user_count();
+}
+if ($("span#page-count").text() == "") {
+    update_page_count();
+}
+function update_pager()
+{
+    if ($.urlParam('page') != null  && Number($.urlParam('page') == 1)) {
+        $('li.previous').addClass('disabled');
+    } else
+    {
+        $('li.previous').removeClass('disabled');
+    }
+    if ($.urlParam('page') != null && Number($.urlParam('page')) == Number($('span#page-count').text())) {
+        $('li.next').addClass('disabled');
+    }else {
+        $('li.next').removeClass('disabled');
+    }
+}
+function update_page_count()
+{
+    $('span#page-count').load('logic/ajax_target.php', {'func' : 'user_management_get_default_page_count'}, function() {
+        update_pager();
+    })
+}
+function update_user_count()
+{
+    $('span#user-count').load('logic/ajax_target.php', {'func' : 'user_management_get_default_user_count' });
+}
 // init
     set_active_navbar_button('#user-management');  
     set_active_navbar_button('#management');
@@ -229,11 +284,13 @@ $(document).ready(function() {
     function update_user()
     {
         update_user_list();
+        update_user_count();
+        update_page_count();
         update_parent_options();
     }
     function update_user_list()
     {
-        $('#panel-user #user-list').load('logic/ajax_target.php', {'func':'user_management_get_user_list'});
+        $('#panel-user #user-list').load('logic/ajax_target.php', {'func':'user_management_get_user_list', 'page': $.urlParam('page')});
     }
     function update_parent_options()
     {

@@ -614,9 +614,29 @@ function get_all_film_name()
 	return $film_info;
 }
 
-
+function get_user_type_str($type)
+{
+    if ($type == 0) return "区级";
+    if ($type == 1 ) return "县级";
+    if ($type == 2) return "放映员";
+}
 //==============Control User Tree=========
+//just for split show result
+function split_result($res,$per_page,$page_number)
+{
+	if(count($res)<= $per_page)
+		return $res;
+	else
+	{
+		$start_index=($page_number-1)*$per_page;
+		for($i=$start_index;$i<$start_index+$per_page && $i<count($res);$i++)
+		{
+			$sub_res[]=$res[$i];
+		}
+	}
+	return $sub_res;
 
+}
 
 /*test*/
 //insert_user(77,"123qwe123",3);
