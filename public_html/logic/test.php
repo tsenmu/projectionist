@@ -23,11 +23,9 @@ require_once('control_record.php');
 
 //print_r(get_all_chain_info());
 //print_r(get_all_film_name());
-<<<<<<< HEAD
-$res=search_record(1,"","","","C");
-=======
-$res=search_record(50,"","","","","");
->>>>>>> 646b50736767d5ca197aa8defd5056ac6a1e0e02
+
+$res=get_all_user_info();
+
 print_r($res);
 echo "<br>";
 print_r(split_result($res,2,1));
