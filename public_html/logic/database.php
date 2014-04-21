@@ -138,7 +138,7 @@ function insert_user($user_name, $user_password,$parent_user_name)
 function get_parent_user_info()
 {
 	//放映员不显示
-	$sql = "SELECT * FROM users WHERE user_available ='1' AND user_type < '3'";
+	$sql = "SELECT * FROM users WHERE user_available ='1' AND user_type < '2'";
 	
 	$user_array=get_all_sqlCommand($sql);
 	
@@ -159,7 +159,7 @@ function get_child_user_info()
 
 function get_all_user_info()
 {
-	//管理员不显示
+
 	$sql = "SELECT * FROM users WHERE user_available ='1' ";
 	
 	$user_array=get_all_sqlCommand($sql);
