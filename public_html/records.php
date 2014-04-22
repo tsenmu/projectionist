@@ -24,16 +24,64 @@ require_once('logic/entry.php');
             <div class="row">
             <?php require_once(dirname(__FILE__) . '/sidebar.php'); ?>
                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2
-                    main">
-                    
+                    main"> 
                     <div id="panel-record" class="panel panel-default">
                         <div class="panel-heading"><h3 class="panel-title">放映记录</h3></div>
                         <div class="panel-body">
                             <div id="alert"></div>
-                            <?php if ($_SESSION['current_user_type'] == 0 || $_SESSION['current_user_type'] == 3) : ?>
-                            <button class="btn btn-success open-insert-record-dialog" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>添加放映记录</button>    
+                            <?php if ($_SESSION['current_user_type'] == 0 || $_SESSION['current_user_type'] == 2) : ?>
+                            <button class="btn btn-success open-insert-record-dialog" data-toggle="modal" data-target="#insert-record"> <span class="glyphicon glyphicon-plus"></span>&nbsp;添加放映记录</button>    
                             <?php endif; ?>
-                            <button class="btn btn-default btn-warning download-records"> <span class="glyphicon glyphicon-download"></span>导出放映记录</button>
+                            <?php if ($_SESSION['current_user_type'] != 2) : ?>
+                            <?php if (isset($_REQUEST['search'])) :?>
+<button class="btn btn-default download-search-records"> <span class="glyphicon glyphicon-download"></span>&nbsp;导出全部搜索结果</button>
+
+                            <?php else:?>
+                            <button class="btn btn-default download-records"> <span class="glyphicon glyphicon-download"></span>&nbsp;导出当管辖范围内所有放映记录</button>
+                            <?php endif;?>
+                            <?php endif;?>
+<?php
+    if (isset($_REQUEST['search'])) {
+        $ret = <<<EOR
+<div class="alert alert-info">
+当前您正在搜索：</br>
+EOR;
+    $s_film = $_REQUEST['film'];
+    $s_chain = $_REQUEST['chain'];
+    $s_from = $_REQUEST['from'];
+    $s_to = $_REQUEST['location'];
+    $s_user = $_REQUEST['user'];
+if ($s_film != '') {
+    $ret .= "电影：$s_film</br>";
+} else  {
+    $ret .= "电影：无限制</br>";
+}
+if ($s_chain != '') {
+    $ret .= "院线：$s_chain</br>";
+} else {
+    $ret .= "院线：无限制</br>";
+}
+if ($s_from != '') {
+    $ret .= "时间从：$s_from&nbsp;";
+} else {
+    $ret .= "时间从：无限制&nbsp;";
+}
+if ($s_to != '') {
+    $ret .= "到：$s_to</br>";
+} else {
+    $ret .= "到：无限制</br>";
+}
+if ($s_user != '') {
+    $ret .= "放映员： $s_user</br>";
+} else {
+    $ret .= "放映员：无限制</br>"; 
+}
+$ret.= <<<EOR
+</div>
+EOR;
+echo $ret;
+    }
+?>
                             <ul class="pager">
                                 <span>共&nbsp;<span
                                         id="record-count"><?php echo
