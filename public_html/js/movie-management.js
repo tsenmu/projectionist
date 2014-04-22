@@ -1,4 +1,143 @@
 $(document).ready(function() {
+// --BEG Pagers
+// Film
+$('li#previous-film').click(function() {
+    if ($('li#previous-film').hasClass('disabled')) return;
+    vars = getUrlVars();
+    vars['film-page'] = vars['film-page'].replace('#', '');
+    vars['film-page'] = Number(vars['film-page']) - 1;
+    new_page = 'movie-management.php?';
+    jQuery.each(vars, function(index, key) {
+        new_page = new_page + key + "=" + vars[key] + '&';
+    });
+    new_page = new_page.substr(0, new_page.length - 1);
+    window.location.replace(new_page);
+});
+$('li#next-film').click(function() {
+    if($('li#next-film').hasClass('disabled')) return;
+    vars = getUrlVars();
+    vars['film-page'] = vars['film-page'].replace('#', '');
+    vars['film-page'] = Number(vars['film-page']) + 1;
+    new_page = 'movie-management.php?';
+    jQuery.each(vars, function(index, key) {
+        new_page = new_page + key + "=" + vars[key] + '&';
+    });
+    new_page = new_page.substr(0, new_page.length - 1);
+    window.location.replace(new_page);
+});
+if($("span#film-count").text() == "") {
+    update_film_count();
+}
+if($("span#page-count-film").text() == "") {
+    update_page_count_film();
+}
+function update_pager_film()
+{
+    if($.urlParam('film-page') != null && Number($.urlParam('film-page')) == 1)
+    {
+        $('li#previous-film').addClass('disabled');
+    } else {
+        $('li#previous-film').removeClass('disabled');
+    }
+    if($.urlParam('film-page') != null && Number($.urlParam('film-page')) == Number($("span#page-count-film").text())) {
+        $('li#next-film').addClass('disabled');
+    } else {
+        $('li#next-film').removeClass('disabled');
+    }
+}
+function update_page_count_film()
+{
+    $('span#page-count-film').load('logic/ajax_target.php', {'func' : 'movie_management_get_default_page_count_film'}, function() {
+        if (Number($('span#page-count-film').text()) < Number($('input#current-page-film').val())) {
+            vars = getUrlVars();
+            vars['film-page'] = vars['film-page'].replace('#', '');
+            vars['film-page'] = Number($('span#page-count-film').text());
+            new_page = "movie-management.php?";
+            jQuery.each(vars, function(index, key) {
+                new_page = new_page + key + "=" + vars[key] + '&';
+            });
+            new_page = new_page.substr(0, new_page.length - 1);
+            window.location.replace(new_page);
+            return;
+        }
+        update_pager_film();
+    });
+}
+function update_film_count()
+{
+    $('span#film-count').load('logic/ajax_target.php', {'func' : 'movie_management_get_default_film_count' });
+}
+
+
+// - Chain
+$('li#previous-chain').click(function() {
+    if ($('li#previous-chain').hasClass('disabled')) return;
+    vars = getUrlVars();
+    vars['chain-page'] = vars['chain-page'].replace('#', '');
+    vars['chain-page'] = Number(vars['chain-page']) - 1;
+    new_page = 'movie-management.php?';
+    jQuery.each(vars, function(index, key) {
+        new_page = new_page + key + "=" + vars[key] + '&';
+    });
+    new_page = new_page.substr(0, new_page.length - 1);
+    window.location.replace(new_page);
+});
+$('li#next-chain').click(function() {
+    if($('li#next-chain').hasClass('disabled')) return;
+    vars = getUrlVars();
+    vars['chain-page'] = vars['chain-page'].replace('#', '');
+    vars['chain-page'] = Number(vars['chain-page']) + 1;
+    new_page = 'movie-management.php?';
+    jQuery.each(vars, function(index, key) {
+        new_page = new_page + key + "=" + vars[key] + '&';
+    });
+    new_page = new_page.substr(0, new_page.length - 1);
+    window.location.replace(new_page);
+});
+if($("span#chain-count").text() == "") {
+    update_chain_count();
+}
+if($("span#page-count-chain").text() == "") {
+    update_page_count_chain();
+}
+function update_pager_chain()
+{
+    if($.urlParam('chain-page') != null && Number($.urlParam('chain-page')) == 1)
+    {
+        $('li#previous-chain').addClass('disabled');
+    } else {
+        $('li#previous-chain').removeClass('disabled');
+    }
+    if($.urlParam('chain-page') != null && Number($.urlParam('chain-page')) == Number($("span#page-count-chain").text())) {
+        $('li#next-chain').addClass('disabled');
+    } else {
+        $('li#next-chain').removeClass('disabled');
+    }
+}
+function update_page_count_chain()
+{
+    $('span#page-count-chain').load('logic/ajax_target.php', {'func' : 'movie_management_get_default_page_count_chain'}, function() {
+        if (Number($('span#page-count-chain').text()) < Number($('input#current-page-chain').val())) {
+            vars = getUrlVars();
+            vars['chain-page'] = vars['chain-page'].replace('#', '');
+            vars['chain-page'] = Number($('span#page-count-chain').text());
+            new_page = "movie-management.php?";
+            jQuery.each(vars, function(index, key) {
+                new_page = new_page + key + "=" + vars[key] + '&';
+            });
+            new_page = new_page.substr(0, new_page.length - 1);
+            window.location.replace(new_page);
+            return;
+        }
+        update_pager_chain();
+    });
+}
+function update_chain_count()
+{
+    $('span#chain-count').load('logic/ajax_target.php', {'func' : 'movie_management_get_default_chain_count' });
+}
+
+// -- END Pagers
     set_active_navbar_button('#movie-management');  
     set_active_navbar_button('#management');
     set_active_sidebar_button('#sidebar-movie-management');
@@ -84,7 +223,7 @@ $(document).ready(function() {
     }
     function update_chain_list()
     {
-        $("#chain-list").load('logic/ajax_target.php', {'func' : 'movie_management_get_chain_list'});
+        $("#chain-list").load('logic/ajax_target.php', {'func' : 'movie_management_get_chain_list', 'chain-page': $.urlParam('chain-page')}, function() { update_chain_count(); update_page_count_chain();  });
     }
     function update_chain_name_options()
     {
@@ -99,7 +238,7 @@ $(document).ready(function() {
     }
     function update_film_list()
     {
-        $("#film-list").load('logic/ajax_target.php', {'func' : 'movie_management_get_film_list'});
+        $("#film-list").load('logic/ajax_target.php', {'func' : 'movie_management_get_film_list', 'film-page' : $.urlParam('film-page')}, function() { update_film_count(); update_page_count_film();});
     }
     function validate_update_film()
     {

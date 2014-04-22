@@ -7,6 +7,11 @@ function records_get_search_result()
 {
     session_start();
     $current_user = $_SESSION['current_user'];
+    foreach($_REQUEST as $key => $val)
+    {
+        $_REQUEST[$key] =  urldecode($_REQUEST[$key]);
+    }
+    print_r($_REQUEST);
     $current_user_type = get_user_type($current_user);
     $current_user_id = get_user_id($current_user);
     $records= search_record($current_user_id, $_REQUEST['film'], $_REQUEST['chain'], $_REQUEST['user'], $_REQUEST['location'], $_REQUEST['from'], $_REQUEST['to']);
