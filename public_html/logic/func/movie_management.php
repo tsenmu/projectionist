@@ -1,6 +1,6 @@
 <?php
-define('CHAIN_PER_PAGE',2);
-define('FILM_PER_PAGE', 2);
+define('CHAIN_PER_PAGE', 10);
+define('FILM_PER_PAGE', 15);
 require_once(dirname(__FILE__).'/../database.php');
 function movie_management_get_default_chain_count() {
     session_start();

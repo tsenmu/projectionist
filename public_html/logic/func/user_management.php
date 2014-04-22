@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/../database.php');
-define('USER_PER_PAGE', 2);
+define('USER_PER_PAGE', 15);
 function user_management_get_default_page_count()
 {
     session_start();

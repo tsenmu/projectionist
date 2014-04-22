@@ -146,13 +146,11 @@ $(document).ready(function() {
         if (!validate_update_record()) {
             return;
         }
-        console.log('update record submit');
         film_name = $("#update-record #film-name").val();
         chain_name = $("#update-record #chain-name").val();
         date_time = $("#update-record #date-time").val();
         the_location = $("#update-record #location").val();
         user_name = $("#update-record #user-name").val();
-        console.log(user_name);
         $.post(
             "logic/ajax_target.php",
             {
@@ -165,7 +163,6 @@ $(document).ready(function() {
             'record-id' : update_record_id
             },
             function(data, status) {
-                console.log(data);
                 if (data.indexOf('SUCCESS') != -1) {
                     generate_alert('#update-record #alert', 'alert-success', '记录更新成功');
                     update_record();
@@ -224,8 +221,6 @@ $(document).ready(function() {
             $('#update-record #div-chain-name').addClass('has-error');
             ret = false;
         }
-
-        console.log();
         if (film_name.val() == null || trim_all_white_space(film_name.val()).length == 0) {
             $('#update-record #div-film-name').addClass('has-error');
             ret = false;

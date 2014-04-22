@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__).'/../control_record.php');
 require_once(dirname(__FILE__).'/../database.php');
 require_once(dirname(__FILE__).'/../output.php');
-define('RECORD_PER_PAGE', 2);
+define('RECORD_PER_PAGE', 15);
 function records_download_search_records()
 {
     session_start();

@@ -29,7 +29,7 @@ error_reporting(E_ALL ^ E_NOTICE);
         </div>
         <!-- javascripts -->
         <?php require_once($config["includes"]["footer"]);?>
-        
+        <?php require_once(dirname(__FILE__) . '/records-search.php'); ?>
         <?php require_once(dirname(__FILE__) . '/records-insert.php'); ?>
         <?php require_once(dirname(__FILE__) . '/user-management-insert.php'); ?>
         <?php require_once(dirname(__FILE__) . '/movie-management-film-insert.php'); ?>
