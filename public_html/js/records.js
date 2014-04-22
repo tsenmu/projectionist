@@ -287,6 +287,15 @@ $(document).ready(function() {
         e.preventDefault();
         window.location.href='logic/ajax_target.php?func=records_download_records';
     });
+    $(document).on('click', '.download-search-records', function(e) {
+        e.preventDefault();
+        new_page = 'logic/ajax_target.php?func=records_download_search_records&';
+        params = getUrlVars();
+        jQuery.each(params, function(index, key) {
+            new_page = new_page + key + "=" + params[key] + '&';
+        });
+        window.location.href=new_page;
+    });
     $(document).on('click', '.open-delete-record-dialog', function() {
         delete_record_id = $(this).data('id'); 
     });
