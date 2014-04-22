@@ -1,5 +1,22 @@
 <?php
 require_once(dirname(__FILE__).'/../database.php');
+function movie_management_get_default_chain_count() {
+    session_start();
+    echo $_SESSION['chain_count'];
+}
+function movie_management_get_default_page_count_chain() {
+    session_start();
+    echo $_SESSION['page_count_chain'];
+}
+function movie_management_get_default_film_count() {
+session_start();
+echo $_SESSION['film_count'];
+}
+function movie_management_get_default_page_count_film() {
+session_start();
+echo $_SESSION['page_count_film'];
+}
+
 function movie_management_insert_film()
 {
     // Input variables
@@ -17,8 +34,10 @@ function movie_management_insert_chain()
     $ret = insert_chain($chain_name);
     echo $ret; // ERROR_CHAIN_EXIST or INSERT_CHAIN_SUCCESS
 }
+define('CHAIN_PER_PAGE',2);
 function movie_management_get_chain_list()
 {
+    session_start();
     $chains = get_all_chain_info();
     if (count($chains) == 0)
     {
@@ -27,6 +46,14 @@ echo "<thead><tr><th>暂无院线</th></tr></thead>";
         return;
     }
     $ret = '<thead><th>院线名称</th><th>操作</th></thead>';
+    $chain_page = $_REQUEST['chain-page'];
+    $_SESSION['chain_count'] = count($chains);
+    $_SESSION['page_count_chain'] = ceil(1.0 * $_SESSION['chain_count'] / CHAIN_PER_PAGE);
+    if ($_SESSION['page_count_chain'] == 0)
+    {
+        $_SESSION['page_count_chain'] = 1;
+    }
+    $chains = split_result($chains, CHAIN_PER_PAGE, $chain_page);
     foreach ($chains as $chain)
     {
         $chain_name = $chain['chain_name'];
@@ -66,7 +93,7 @@ function movie_management_get_chain_name_options()
     }
     echo $ret;
 }
-
+define('FILM_PER_PAGE', 2);
 function movie_management_get_film_list()
 {
     $films = get_all_film_info();
@@ -76,6 +103,11 @@ function movie_management_get_film_list()
         return;
     }
     $ret= '<thead><tr><th>电影名称</th><th>电影编号</th><th>电影院线</th><th>电影路径</th><th>操作</th></tr></thead><tbody>';
+    session_start();
+    $film_page = $_REQUEST['film-page'];
+    $_SESSION['film_count'] = count($films);
+    $_SESSION['page_count_film'] = ceil(1.0 * $_SESSION['film_count'] / FILM_PER_PAGE);
+    $films = split_result($films, FILM_PER_PAGE, $film_page);
     foreach ($films as $film)
     {
         $film_id = $film['film_id'];

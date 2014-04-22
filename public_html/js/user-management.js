@@ -32,7 +32,7 @@ if ($("span#page-count").text() == "") {
 }
 function update_pager()
 {
-    if ($.urlParam('page') != null  && Number($.urlParam('page') == 1)) {
+    if ($.urlParam('page') != null  && Number($.urlParam('page')) == 1) {
         $('li.previous').addClass('disabled');
     } else
     {
