@@ -241,11 +241,8 @@ function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
         $begin_time = "0";
     }
     if ($end_time == "") {
-<<<<<<< HEAD
+
         $end_time = "3100-01-01";
-=======
-        $end_time = '3100-01-01';
->>>>>>> 5aeb92a70e386d58c590dde5a1b2ddc43f907c03
     }
 	$all_child_user_id=get_all_child($user_id);
 	$str_command="user_id IN ($all_child_user_id[0]";	
