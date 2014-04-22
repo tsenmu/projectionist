@@ -195,22 +195,7 @@ function output_record($user_id)
 
 //===============Search Records====================
 
-//just for split show result
-function split_result($res,$per_page,$page_number)
-{
-	if(count($res)<= $per_page)
-		return $res;
-	else
-	{
-		$start_index=($page_number-1)*$per_page;
-		for($i=$start_index;$i<$start_index+$per_page && $i<count($res);$i++)
-		{
-			$sub_res[]=$res[$i];
-		}
-	}
-	return $sub_res;
 
-}
 //user restrict: itself and its child
 function search_record_by_single_item($mode="",$search_str,$begin_time="1900-01-01",$end_time="2300-12-12")
 {
@@ -256,7 +241,11 @@ function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
         $begin_time = "0";
     }
     if ($end_time == "") {
+<<<<<<< HEAD
         $end_time = "3100-01-01";
+=======
+        $end_time = '3100-01-01';
+>>>>>>> 5aeb92a70e386d58c590dde5a1b2ddc43f907c03
     }
 	$all_child_user_id=get_all_child($user_id);
 	$str_command="user_id IN ($all_child_user_id[0]";	

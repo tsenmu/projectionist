@@ -22,9 +22,9 @@
             <input id="password" type="password" class="form-control" placeholder="密码" required>
             <span class="help-inline">密码不正确</span>
         </div>
-        <label class="checkbox">
+<!--        <label class="checkbox">
           <input id="remember" type="checkbox" value="remember-me"> 在这台电脑上记住我 
-        </label>
+        </label> -->
         <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
       </form>
         <p id="feedback"></p>

@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="home.php"><span class="glyphicon glyphicon-facetime-video"></span>  电影放映管理系统</a>
+            <a class="navbar-brand" href="home.php"><span class="glyphicon glyphicon-facetime-video"> </span>&nbsp;&nbsp;电影放映管理系统</a>
         </div>
         <?php if (isset($_SESSION['current_user'])): ?>
         <div class="collapse navbar-collapse">
@@ -24,7 +24,9 @@
                 </li>-->
                 <?php endif; ?>
                 <li class="dropdown" id="user">
-                <a  href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> 用户选项 <b class="caret"></b></a>
+                    <a  href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user">&nbsp;<?php 
+require_once('logic/database.php'); echo get_user_type_str($_SESSION['current_user_type'])."用户："; 
+echo $_SESSION['current_user'];?>&nbsp;</span ><b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li id="change-password"><a href="user.php?option=cp">更改密码</a></li>
                     <li class="divider"></li> 

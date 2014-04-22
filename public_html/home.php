@@ -31,6 +31,9 @@ error_reporting(E_ALL ^ E_NOTICE);
         <?php require_once($config["includes"]["footer"]);?>
         
         <?php require_once(dirname(__FILE__) . '/records-insert.php'); ?>
+        <?php require_once(dirname(__FILE__) . '/user-management-insert.php'); ?>
+        <?php require_once(dirname(__FILE__) . '/movie-management-film-insert.php'); ?>
+        <?php require_once(dirname(__FILE__) . '/movie-management-chain-insert.php'); ?>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
         <script src="js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
  

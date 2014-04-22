@@ -1,5 +1,16 @@
 <?php
 require_once(dirname(__FILE__).'/../database.php');
+define('USER_PER_PAGE', 2);
+function user_management_get_default_page_count()
+{
+    session_start();
+    echo $_SESSION['user_page_count'];
+}
+function user_management_get_default_user_count()
+{
+    session_start();
+    echo $_SESSION['user_count'];
+}
 function user_management_get_parent_options()
 {
     $users = get_parent_user_info();
@@ -25,7 +36,12 @@ EOS;
 }
 function user_management_get_user_list()
 {
+    session_start();
     $users = get_all_user_info();    // no admin
+    $page = $_REQUEST['page'];
+    $_SESSION['user_count'] = count($users);
+    $_SESSION['user_page_count'] = ceil(1.0 * $_SESSION['user_count'] / USER_PER_PAGE);
+    if ($_SESSION['page_count'] == 0) $_SESSION['page_count'] = 1;
     $ret = '';
     if ( count($users) == 0)
     {
@@ -33,17 +49,20 @@ function user_management_get_user_list()
         echo $ret;
         return; 
     }
-    $ret = '<thead><tr><th>用户</th><th>密码</th><th>上级行政单位</th><th>操作</th><tr></thead><tbody>';
+    $users = split_result($users, USER_PER_PAGE, $page);
+    
+    $ret = '<thead><tr><th>用户</th><th>密码</th><th>行政级别</th><th>上级行政单位</th><th>操作</th><tr></thead><tbody>';
     foreach ($users as $user)
     {
         $user_id = $user['user_id'];
         $user_name = $user['user_name'];
         $user_type = $user['user_type'];
+        $user_type_str = get_user_type_str($user_type);
         $user_parent = get_user_name_by_id(get_parent_user_id($user['user_id']));
         if ( $user_type == 0)
         {
         $append_str = <<< EM
-<tr><td>$user_name</td><td>********</td><td>无</td>
+<tr><td>$user_name</td><td>********</td><td>$user_type_str</td><td>无</td>
 <td>
 <span data-toggle="tooltip" data-placement="left" title="请在屏幕右上角更改区级用户信息">
 <button role="update-user" class="btn btn-primary open-update-user-dialog" type="button" disabled>
@@ -64,7 +83,7 @@ EM;
         else 
         {
             $append_str = <<< EM
-<tr><td>$user_name</td><td>********</td><td>$user_parent</td>
+<tr><td>$user_name</td><td>********</td><td>$user_type_str</td><td>$user_parent</td>
 <td>
 <button role="update-user" class="btn btn-primary open-update-user-dialog" type="button" data-toggle="modal"data-target="#update-user" data-id="$user_id">
 <span class="glyphicon glyphicon-pencil"></span>

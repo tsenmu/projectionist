@@ -232,7 +232,7 @@ function records_get_user_name_options()
         $ret = '';
         foreach ($users as $user)
         {
-            if ($user['user_type'] == 3)
+            if ($user['user_type'] == 2)
             {
                 $user_name = $user['user_name'];
                 $append_str = <<<EOS
@@ -242,7 +242,7 @@ EOS;
             }
         }
             echo $ret;
-    } elseif ($current_user_type == 3) {
+    } elseif ($current_user_type == 2) {
         $ret = <<<EOS
 <option>$current_user</option>
 EOS;
