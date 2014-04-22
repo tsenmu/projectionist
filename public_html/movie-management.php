@@ -22,6 +22,16 @@ if (!isset($_REQUEST['chain-page'])) {
     }
     $new_url = substr($new_url, 0, strlen($new_url) - 1);
     header($new_url);
+} elseif ($_REQUEST['chain-page'] < 1) {
+    $new_url = "Location: movie-management.php?";
+    $_REQUEST["chain-page"] = 1;
+    foreach($_REQUEST as $key => $val)
+    {
+        $new_url .= "$key=$val&";
+    }
+    $new_url = substr($new_url, 0, strlen($new_url) - 1);
+    header($new_url);
+
 }
 if (!isset($_REQUEST['film-page'])) {
     $new_url = "Location: movie-management.php?";
@@ -32,6 +42,16 @@ if (!isset($_REQUEST['film-page'])) {
     }
     $new_url = substr($new_url, 0, strlen($new_url) - 1);
     header($new_url);
+} elseif ($_REQUEST['film-page'] < 1) {
+    $new_url = "Location: movie-management.php?";
+    $_REQUEST['film-page'] = 1;
+    foreach($_REQUEST as $key => $val)
+    {
+        $new_url .= "$key=$val&";
+    }
+    $new_url = substr($new_url, 0, strlen($new_url) - 1);
+    header($new_url);
+
 }
 ?>
  
