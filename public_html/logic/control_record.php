@@ -264,4 +264,13 @@ function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
 	return $search_result;
 }
 
+function get_search_result_name($result)
+{
+	foreach($result as $re)
+	{
+		$res[]=show_record($re["record_id"]);
+	}
+	return $res;
+}
+
 ?>
