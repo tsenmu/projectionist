@@ -47,6 +47,7 @@ function export_record_excel($user_id)
  
  function export_result_excel($result)
  {
-	exportexcel($result,array('电影',"院线",'放映员','放映时间','地点'),'放映记录搜索结果');
+	$res=get_search_result_name($result);
+	exportexcel($res,array('电影',"院线",'放映员','放映时间','地点'),'放映记录搜索结果');
  }
 ?>

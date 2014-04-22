@@ -186,6 +186,7 @@ function get_record_order_by_time($user_id)
 function output_record($user_id)
 {
 	$resval=get_record_order_by_time($user_id);
+	if($resval==NULL)return "ERROR_RECORD_NULL";
     foreach($resval as $res)
 	{
 		$records[]=show_record($res["record_id"]);
@@ -241,7 +242,8 @@ function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
         $begin_time = "0";
     }
     if ($end_time == "") {
-        $end_time = '3100-01-01';
+
+        $end_time = "3100-01-01";
     }
 	$all_child_user_id=get_all_child($user_id);
 	$str_command="user_id IN ($all_child_user_id[0]";	
@@ -261,6 +263,15 @@ function search_record($user_id="",$film_name="",$chain_name="",$user_name="",
 		"date_time BETWEEN '$begin_time' AND '$end_time'";	
 	$search_result=get_all_sqlCommand($sql);
 	return $search_result;
+}
+
+function get_search_result_name($result)
+{
+	foreach($result as $re)
+	{
+		$res[]=show_record($re["record_id"]);
+	}
+	return $res;
 }
 
 ?>
