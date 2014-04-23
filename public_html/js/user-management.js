@@ -1,5 +1,19 @@
 $(document).ready(function() {
 // pager
+$('#current-page').keypress(function(e) {
+    if (e.which == 13) {
+        vars = getUrlVars();
+        vars['page'] = vars['page'].replace('#', '');
+        vars['page'] = Number($('#current-page').val());
+        new_page = "user-management.php?";
+        jQuery.each(vars, function(index, key) {
+            new_page = new_page + key + "=" + vars[key] + '&';
+        });
+        new_page = new_page.substr(0, new_page.length - 1);
+        window.location.replace(new_page);
+    }
+});
+
 $('li.previous').click(function() {
     if ($("li.previous").hasClass('disabled')) return;
     vars = getUrlVars();

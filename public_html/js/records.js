@@ -1,5 +1,17 @@
 $(document).ready(function() {
-
+    $('#current-page').keypress(function(e) {
+        if(e.which == 13) {
+            vars = getUrlVars();
+            vars['page'] = vars['page'].replace('#', '');
+            vars['page'] = Number($('#current-page').val());
+            new_page = 'records.php?';
+            jQuery.each(vars, function(index, key) {
+                new_page = new_page + key + "=" + vars[key] + '&';
+            });
+            new_page = new_page.substr(0, new_page.length - 1);
+            window.location.replace(new_page);
+        }
+    });
     set_active_navbar_button('#records');  
     set_active_sidebar_button('#sidebar-records');
     $(".form_datetime").datetimepicker({

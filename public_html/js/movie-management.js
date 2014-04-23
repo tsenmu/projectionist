@@ -1,6 +1,33 @@
 $(document).ready(function() {
 // --BEG Pagers
 // Film
+$('#current-page-film').keypress(function(e) {
+    if (e.which == 13) {
+        vars = getUrlVars();
+        vars['film-page'] = vars['film-page'].replace('#', '');
+        vars['film-page'] = Number($('#current-page-film').val());
+        new_page = 'movie-management.php?';
+        jQuery.each(vars, function(index, key) {
+            new_page = new_page + key + "=" + vars[key] + '&';
+        });
+        new_page = new_page.substr(0, new_page.length - 1);
+        window.location.replace(new_page);
+    }
+});
+$('#current-page-chain').keypress(function(e) {
+    if (e.which == 13) {
+        vars = getUrlVars();
+        vars['chain-page'] = vars['film-page'].replace('#', '');
+        vars['chain-page'] = Number($('#current-page-chain').val());
+        new_page = 'movie-management.php?';
+        jQuery.each(vars, function(index, key) {
+            new_page = new_page + key + "=" + vars[key] + '&';
+        });
+        new_page = new_page.substr(0, new_page.length - 1);
+        window.location.replace(new_page);
+    }
+});
+
 $('li#previous-film').click(function() {
     if ($('li#previous-film').hasClass('disabled')) return;
     vars = getUrlVars();
