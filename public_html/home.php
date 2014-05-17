@@ -21,9 +21,7 @@ error_reporting(E_ALL ^ E_NOTICE);
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2
                     main">
                     <div class="cover text-center pagination-center">
-                        <h1>
-                                电影放映管理系统</span> </h1>
-                        <p>asdads</p>
+                        <h1>电影放映管理系统</span> </h1>
                     </div>
             </div>
         </div>

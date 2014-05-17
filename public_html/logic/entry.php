@@ -11,7 +11,7 @@ if (!isset($_SESSION['current_user']))
 else if (PAGE == 'index.php')
 {
     set_session_info();
-    header("Location: ../home.php");
+    header("Location: ../records.php");
     exit;
 }
 
